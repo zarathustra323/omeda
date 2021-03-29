@@ -1,0 +1,22 @@
+{
+  "name": "omeda",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "private": true,
+  "repository": "https://github.com/parameter1/omeda.git",
+  "license": "MIT",
+  "scripts": {
+    "lerna": "lerna",
+    "test": "lerna run test",
+    "lint": "lerna run lint"
+  },
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ],
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=12"
+  }
+}
