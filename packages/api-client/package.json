@@ -1,0 +1,22 @@
+{
+  "name": "@parameter1/omeda-api-client",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/api-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/omeda.git",
+    "directory": "packages/api-client"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
