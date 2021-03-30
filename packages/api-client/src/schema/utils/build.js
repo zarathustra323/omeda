@@ -14,7 +14,7 @@ module.exports = ({ schema, obj } = {}) => {
       data[name] = trimmed || null;
       return;
     }
-    if (type === 'Integer' || type === 'Short') {
+    if (type === 'Integer' || type === 'Short' || type === 'Byte') {
       data[name] = value == null ? null : value;
     }
   });
