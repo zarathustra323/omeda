@@ -1,5 +1,5 @@
 const build = require('../../schema/utils/build');
-const schema = require('../../schema/basic-customer-elements');
+const schema = require('../../schema/customer/basic-elements');
 
 class BasicCustomerEntity {
   constructor(obj) {

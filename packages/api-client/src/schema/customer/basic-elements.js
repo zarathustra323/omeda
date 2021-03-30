@@ -1,7 +1,7 @@
-const load = require('./utils/from-four-col');
+const load = require('../utils/from-four-col');
 
 module.exports = load(`
-<table border="#c0c0c0" cellspacing="0" cellpadding="5">
+<table>
   <tbody>
     <tr>
       <th>Element Name</th>
