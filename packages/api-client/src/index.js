@@ -1,5 +1,7 @@
-const { cleanPath, get } = require('@parameter1/utils');
+const { cleanPath } = require('@parameter1/utils');
 const fetch = require('node-fetch');
+const OmedaApiClientResponse = require('./response/client');
+const OmedaApiResponseError = require('./response/error');
 const CustomerResource = require('./resources/customer');
 
 class OmedaApiClient {
@@ -60,6 +62,7 @@ class OmedaApiClient {
    *
    * @param {object} params
    * @param {string} params.endpoint
+   * @returns {Promise<OmedaApiClientResponse>}
    */
   get({ endpoint } = {}) {
     return this.request({ method: 'GET', endpoint });
@@ -73,7 +76,7 @@ class OmedaApiClient {
    * @param {string} params.endpoint The brand endpoint
    * @param {object} [params.body] The request body object
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
-   * @returns {Promise<object>}
+   * @returns {Promise<OmedaApiClientResponse>}
    */
   async request({
     method,
@@ -94,16 +97,11 @@ class OmedaApiClient {
       },
       ...(body && { body: JSON.stringify(body) }),
     });
-    const data = await response.json();
+    const json = await response.json();
     if (!response.ok) {
-      const message = get(data, 'Errors.0.Error', response.statusText);
-      const error = new Error(message);
-      error.status = response.status || 500;
-      error.data = data;
-      error.response = response;
-      throw error;
+      throw new OmedaApiResponseError({ json, fetchResponse: response });
     }
-    return { data, response };
+    return new OmedaApiClientResponse({ json, fetchResponse: response });
   }
 }
 
