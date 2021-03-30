@@ -1,4 +1,5 @@
 const dayjs = require('../../dayjs');
+const AddressContactType = require('../../types-and-codes/address-contact-type');
 const EmailContactType = require('../../types-and-codes/email-contact-type');
 
 module.exports = ({ schema, obj } = {}) => {
@@ -7,6 +8,11 @@ module.exports = ({ schema, obj } = {}) => {
     const value = obj[name];
     if (schema.type === 'customer-email-elements' && name === 'EmailContactType') {
       data[name] = new EmailContactType(value);
+      return;
+    }
+
+    if (schema.type === 'customer-address-elements' && name === 'AddressContactType') {
+      data[name] = new AddressContactType(value);
       return;
     }
 
