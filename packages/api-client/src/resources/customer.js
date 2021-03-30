@@ -1,6 +1,6 @@
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
-const { getAsArray } = require('@parameter1/utils');
+const OmedaApiResourceResponse = require('../response/resource');
 const AbstractResource = require('./abstract');
 
 class CustomerResource extends AbstractResource {
@@ -12,10 +12,9 @@ class CustomerResource extends AbstractResource {
    * @param {object} params
    * @param {string} params.emailAddress
    * @param {number} [params.productId]
-   * @param {boolean} [params.returnObjects=false] Whether to return full customer objects
    */
   async lookupByEmailAddress(params = {}) {
-    const { emailAddress, productId, returnObjects } = await validateAsync(Joi.object({
+    const { emailAddress, productId } = await validateAsync(Joi.object({
       emailAddress: this.schema.emailAddress.required(),
       productId: this.schema.productId,
       returnObjects: this.schema.returnObjects,
@@ -25,15 +24,9 @@ class CustomerResource extends AbstractResource {
       ? `customer/email/${emailAddress}/productid/${productId}/*`
       : `customer/email/${emailAddress}/*`;
 
-    const { data } = await this.client.get({ endpoint });
-    const CustomerIds = getAsArray(data, 'Customers').map((customer) => customer.Id);
-    if (returnObjects) {
-      return Promise.all(CustomerIds.map((customerId) => this.lookupById({ customerId })));
-    }
-    return {
-      CustomerIds,
-      SubmissionId: data.SubmissionId,
-    };
+    const response = await this.client.get({ endpoint });
+    const CustomerIds = response.getAsArray('Customers').map((customer) => customer.Id);
+    return new OmedaApiResourceResponse({ data: { CustomerIds }, response });
   }
 
   /**

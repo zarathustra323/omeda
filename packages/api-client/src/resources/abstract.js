@@ -12,7 +12,6 @@ class AbstractResource {
       customerId: Joi.number().integer().min(1),
       emailAddress: Joi.string().trim().email(),
       productId: Joi.number().integer().min(1),
-      returnObjects: Joi.boolean().default(false),
     };
   }
 }
