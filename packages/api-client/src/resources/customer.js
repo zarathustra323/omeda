@@ -2,6 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
+const CustomerEmailsResponse = require('../response/customer/emails');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
 const AbstractResource = require('./abstract');
 
@@ -81,12 +82,33 @@ class CustomerResource extends AbstractResource {
   }
 
   /**
+   * This API provides the ability look up a Customer’s Email Addresses by the Customer Id.
+   * This service returns all active email address information stored for the given customer.
+   *
+   * @link https://main.omeda.com/knowledge-base/email-address-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find emails for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerEmailsResponse>} The customer emails.
+   */
+  async lookupEmails(params = {}) {
+    const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/customer/${customerId}/email/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerEmailsResponse({ response });
+  }
+
+  /**
    * This API provides the ability look up a Customer’s Address by the Customer Id.
    * The response will return all active addresses stored for a given customer.
    *
    * @link https://main.omeda.com/knowledge-base/postal-address-lookup-by-customer-id/
    * @param {object} params
-   * @param {number} params.customerId
+   * @param {number} params.customerId The customer ID to find postal addresses for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
    * @returns {Promise<CustomerPostalAddressesResponse>} The customer addresses.
    */
   async lookupPostalAddresses(params = {}) {

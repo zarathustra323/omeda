@@ -15,7 +15,14 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
-   * Retrieves the postal address from the API for this customer.
+   * Retrieves the customer's email addresses from the API.
+   */
+  async emails() {
+    return this.resource.lookupEmails({ customerId: this.get('Id') });
+  }
+
+  /**
+   * Retrieves the customer's postal addresses from the API.
    */
   async postalAddresses() {
     return this.resource.lookupPostalAddresses({ customerId: this.get('Id') });
