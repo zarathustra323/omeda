@@ -62,11 +62,12 @@ class OmedaApiClient {
    * Performs a GET request against the brand API.
    *
    * @param {object} params
-   * @param {string} params.endpoint
+   * @param {string} params.endpoint The brand API endpoint
+   * @param {boolean} [params.errorOnNotFound=true] Whether to error when a 404 is encountered
    * @returns {Promise<ApiClientResponse>}
    */
-  get({ endpoint } = {}) {
-    return this.request({ method: 'GET', endpoint });
+  get({ endpoint, errorOnNotFound = true } = {}) {
+    return this.request({ method: 'GET', endpoint, errorOnNotFound });
   }
 
   /**
@@ -74,9 +75,10 @@ class OmedaApiClient {
    *
    * @param {object} params
    * @param {string} params.method The request method, e.g. GET or POST
-   * @param {string} params.endpoint The brand endpoint
+   * @param {string} params.endpoint The brand API endpoint
    * @param {object} [params.body] The request body object
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
+   * @param {boolean} [params.errorOnNotFound=true] Whether to error when a 404 is encountered
    * @returns {Promise<ApiClientResponse>}
    */
   async request({
@@ -84,6 +86,7 @@ class OmedaApiClient {
     endpoint,
     body,
     inputId,
+    errorOnNotFound = true,
   } = {}) {
     const start = process.hrtime();
     if (!endpoint) throw new Error('An API endpoint is required.');
@@ -101,12 +104,14 @@ class OmedaApiClient {
       ...(body && { body: JSON.stringify(body) }),
     });
     const json = await response.json();
-    if (!response.ok) {
-      throw new ApiResponseError({ json, fetchResponse: response });
-    }
     const [secs, ns] = process.hrtime(start);
     const time = (secs * 1000) + (ns / 1000000);
-    return new ApiClientResponse({ json, fetchResponse: response, time });
+    if (response.ok) return new ApiClientResponse({ json, fetchResponse: response, time });
+
+    if (errorOnNotFound === false && response.status === 404) {
+      return new ApiClientResponse({ json: {}, fetchResponse: response, time });
+    }
+    throw new ApiResponseError({ json, fetchResponse: response });
   }
 }
 
