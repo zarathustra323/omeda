@@ -6,10 +6,12 @@ class OmedaApiClientResponse {
    * @param {object} params
    * @param {object} params.json The parsed response JSON body.
    * @param {object} params.fetchResponse The Fetch response.
+   * @param {number} params.time The time (in MS) it took to retrieve the response.
    */
-  constructor({ json, fetchResponse } = {}) {
+  constructor({ json, fetchResponse, time } = {}) {
     this.json = json;
     this.fetchResponse = fetchResponse;
+    this.time = time;
   }
 
   /**

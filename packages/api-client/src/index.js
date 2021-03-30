@@ -85,6 +85,7 @@ class OmedaApiClient {
     body,
     inputId,
   } = {}) {
+    const start = process.hrtime();
     if (!endpoint) throw new Error('An API endpoint is required.');
     const url = `${this.brandUrl}/${cleanPath(endpoint)}`;
 
@@ -103,7 +104,9 @@ class OmedaApiClient {
     if (!response.ok) {
       throw new OmedaApiResponseError({ json, fetchResponse: response });
     }
-    return new OmedaApiClientResponse({ json, fetchResponse: response });
+    const [secs, ns] = process.hrtime(start);
+    const time = (secs * 1000) + (ns / 1000000);
+    return new OmedaApiClientResponse({ json, fetchResponse: response, time });
   }
 }
 
