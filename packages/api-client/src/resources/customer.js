@@ -10,6 +10,7 @@ class CustomerResource extends AbstractResource {
    * The response will include a list of customer records including the Customer Id(s)
    * and the Customer Lookup URL(s).
    *
+   * @link https://main.omeda.com/knowledge-base/customer-lookup-by-email/
    * @param {object} params
    * @param {string} params.emailAddress The customer's email address.
    * @param {number} [params.productId] An optional product ID.
@@ -31,16 +32,36 @@ class CustomerResource extends AbstractResource {
   }
 
   /**
+   * This API provides the ability look up a Customer by the Encrypted Customer id.
+   * The response will include basic Customer information.
+   *
+   * @link https://main.omeda.com/knowledge-base/customer-lookup-by-encryptedcustomerid/
+   * @param {object} params
+   * @param {number} params.encryptedId
+   * @returns {Promise<BasicCustomerResponse>} The basic Customer properties
+   */
+  async lookupByEncryptedId(params = {}) {
+    const { encryptedId } = await validateAsync(Joi.object({
+      encryptedId: this.schema.encryptedCustomerId.required(),
+    }).required(), params);
+    const endpoint = `/customer/${encryptedId}/encrypted/*`;
+    const response = await this.client.get({ endpoint });
+    return new BasicCustomerResponse({ response });
+  }
+
+  /**
    * This API provides the ability look up a Customer by the Customer id.
    * The response will include basic Customer information.
    *
+   * @link https://main.omeda.com/knowledge-base/customer-lookup-by-customer-id/
    * @param {object} params
    * @param {number} params.customerId
-   * @returns {Promise<BasicCustomerResponse>}
+   * @returns {Promise<BasicCustomerResponse>} The basic Customer properties
    */
   async lookupById(params = {}) {
-    const { customerId } = await validateAsync(Joi.object({
+    const { customerId, reQueryOnInactive } = await validateAsync(Joi.object({
       customerId: this.schema.customerId.required(),
+      reQueryOnInactive: Joi.boolean().default(true),
     }).required(), params);
     const endpoint = `/customer/${customerId}/*`;
     try {
@@ -48,9 +69,11 @@ class CustomerResource extends AbstractResource {
       return new BasicCustomerResponse({ response });
     } catch (e) {
       // on inactive, re-query.
-      const inactive = /^customer id \d+ is valid but not active.+please use (\d+)/i.exec(e.message);
-      if (inactive && inactive[1]) {
-        return this.lookupById({ customerId: parseInt(inactive[1], 10) });
+      if (reQueryOnInactive) {
+        const inactive = /^customer id \d+ is valid but not active.+please use (\d+)/i.exec(e.message);
+        if (inactive && inactive[1]) {
+          return this.lookupById({ customerId: parseInt(inactive[1], 10) });
+        }
       }
       throw e;
     }
