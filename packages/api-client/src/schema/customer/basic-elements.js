@@ -1,6 +1,6 @@
 const load = require('../utils/from-four-col');
 
-module.exports = load(`
+module.exports = load('basic-customer-elements', `
 <table>
   <tbody>
     <tr>

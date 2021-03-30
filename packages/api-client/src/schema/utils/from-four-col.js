@@ -1,8 +1,9 @@
 const cheerio = require('cheerio');
 
-module.exports = (html) => {
+module.exports = (type, html) => {
   const $ = cheerio.load(html);
   const data = [];
+  data.type = type;
   $('tr').each(function handleRow() {
     const line = {};
     $(this).find('> td').each(function handleCell(col) {

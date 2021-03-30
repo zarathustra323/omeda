@@ -1,6 +1,6 @@
 const load = require('../utils/from-four-col');
 
-module.exports = load(`
+module.exports = load('customer-address-elements', `
 <table>
   <tbody>
     <tr>
