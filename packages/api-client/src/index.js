@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const OmedaApiClientResponse = require('./response/client');
 const OmedaApiResponseError = require('./response/error');
 const CustomerResource = require('./resources/customer');
+const pkg = require('../package.json');
 
 class OmedaApiClient {
   /**
@@ -92,6 +93,7 @@ class OmedaApiClient {
       method,
       headers: {
         'x-omeda-appid': this.appId,
+        'user-agent': `${pkg.name} v${pkg.version}`,
         ...(iid && { 'x-omeda-inputid': iid }),
         ...(body && { 'content-type': 'application/json' }),
       },
