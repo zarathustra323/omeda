@@ -3,6 +3,7 @@ const { validateAsync } = require('@parameter1/joi/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerEmailsResponse = require('../response/customer/emails');
+const CustomerPhonesResponse = require('../response/customer/phones');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
 const AbstractResource = require('./abstract');
 
@@ -99,6 +100,25 @@ class CustomerResource extends AbstractResource {
     const endpoint = `/customer/${customerId}/email/*`;
     const response = await this.client.get({ endpoint, errorOnNotFound });
     return new CustomerEmailsResponse({ response });
+  }
+
+  /**
+   * This API provides the ability look up a Customer’s Phone Numbers by the Customer id.
+   *
+   * @link https://main.omeda.com/knowledge-base/phone-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find phone numbers for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerPhonesResponse>} The customer phone numbers.
+   */
+  async lookupPhoneNumbers(params = {}) {
+    const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/customer/${customerId}/phone/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerPhonesResponse({ response });
   }
 
   /**

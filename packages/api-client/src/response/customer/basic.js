@@ -22,6 +22,13 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's phone numbers from the API.
+   */
+  async phoneNumbers() {
+    return this.resource.lookupPhoneNumbers({ customerId: this.get('Id') });
+  }
+
+  /**
    * Retrieves the customer's postal addresses from the API.
    */
   async postalAddresses() {
