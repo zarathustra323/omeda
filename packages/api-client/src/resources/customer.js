@@ -43,8 +43,17 @@ class CustomerResource extends AbstractResource {
       customerId: this.schema.customerId.required(),
     }).required(), params);
     const endpoint = `/customer/${customerId}/*`;
-    const response = await this.client.get({ endpoint });
-    return new BasicCustomerResponse({ response });
+    try {
+      const response = await this.client.get({ endpoint });
+      return new BasicCustomerResponse({ response });
+    } catch (e) {
+      // on inactive, re-query.
+      const inactive = /^customer id \d+ is valid but not active.+please use (\d+)/i.exec(e.message);
+      if (inactive && inactive[1]) {
+        return this.lookupById({ customerId: parseInt(inactive[1], 10) });
+      }
+      throw e;
+    }
   }
 }
 
