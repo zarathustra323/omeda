@@ -18,6 +18,5 @@ module.exports = ({ schema, obj } = {}) => {
       data[name] = value == null ? null : value;
     }
   });
-  console.log(data);
   return data;
 };

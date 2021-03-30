@@ -1,6 +1,6 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/utils');
 
-class OmedaApiClientResponse {
+class ApiClientResponse {
   /**
    *
    * @param {object} params
@@ -45,4 +45,4 @@ class OmedaApiClientResponse {
   }
 }
 
-module.exports = OmedaApiClientResponse;
+module.exports = ApiClientResponse;

@@ -1,7 +1,7 @@
 const { cleanPath } = require('@parameter1/utils');
 const fetch = require('node-fetch');
-const OmedaApiClientResponse = require('./response/client');
-const OmedaApiResponseError = require('./response/error');
+const ApiClientResponse = require('./response/client');
+const ApiResponseError = require('./response/error');
 const CustomerResource = require('./resources/customer');
 const pkg = require('../package.json');
 
@@ -63,7 +63,7 @@ class OmedaApiClient {
    *
    * @param {object} params
    * @param {string} params.endpoint
-   * @returns {Promise<OmedaApiClientResponse>}
+   * @returns {Promise<ApiClientResponse>}
    */
   get({ endpoint } = {}) {
     return this.request({ method: 'GET', endpoint });
@@ -77,7 +77,7 @@ class OmedaApiClient {
    * @param {string} params.endpoint The brand endpoint
    * @param {object} [params.body] The request body object
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
-   * @returns {Promise<OmedaApiClientResponse>}
+   * @returns {Promise<ApiClientResponse>}
    */
   async request({
     method,
@@ -102,11 +102,11 @@ class OmedaApiClient {
     });
     const json = await response.json();
     if (!response.ok) {
-      throw new OmedaApiResponseError({ json, fetchResponse: response });
+      throw new ApiResponseError({ json, fetchResponse: response });
     }
     const [secs, ns] = process.hrtime(start);
     const time = (secs * 1000) + (ns / 1000000);
-    return new OmedaApiClientResponse({ json, fetchResponse: response, time });
+    return new ApiClientResponse({ json, fetchResponse: response, time });
   }
 }
 

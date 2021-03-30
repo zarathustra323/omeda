@@ -1,6 +1,6 @@
 const { get } = require('@parameter1/utils');
 
-class OmedaApiResponseError extends Error {
+class ApiResponseError extends Error {
   /**
    *
    * @param {object} params
@@ -16,4 +16,4 @@ class OmedaApiResponseError extends Error {
   }
 }
 
-module.exports = OmedaApiResponseError;
+module.exports = ApiResponseError;

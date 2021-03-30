@@ -1,11 +1,11 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/utils');
 
-class OmedaApiResourceResponse {
+class ApiResourceResponse {
   /**
    *
    * @param {object} params
    * @param {object} params.data The formatted response data.
-   * @param {OmedaApiClientResponse} params.response The client response.
+   * @param {ApiClientResponse} params.response The client response.
    */
   constructor({ data, response } = {}) {
     this.data = data;
@@ -43,4 +43,4 @@ class OmedaApiResourceResponse {
   }
 }
 
-module.exports = OmedaApiResourceResponse;
+module.exports = ApiResourceResponse;
