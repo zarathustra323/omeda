@@ -2,6 +2,7 @@ const { cleanPath } = require('@parameter1/utils');
 const fetch = require('node-fetch');
 const ApiClientResponse = require('./response/client');
 const ApiResponseError = require('./response/error');
+const BrandResource = require('./resources/brand');
 const CustomerResource = require('./resources/customer');
 const pkg = require('../package.json');
 
@@ -27,7 +28,21 @@ class OmedaApiClient {
     this.inputId = inputId;
     this.useStaging = useStaging;
 
-    this.customer = new CustomerResource({ client: this });
+    this.resources = {
+      brand: new BrandResource({ client: this }),
+      customer: new CustomerResource({ client: this }),
+    };
+  }
+
+  /**
+   * Returns an API resource for the provided name.
+   *
+   * @param {*} name The resource name, e.g. `customer` or `brand`
+   */
+  resource(name) {
+    const resource = this.resources[name];
+    if (!resource) throw new Error(`No API resource found for '${name}'`);
+    return resource;
   }
 
   /**
