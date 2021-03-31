@@ -1,0 +1,26 @@
+{
+  "name": "@parameter1/omeda-api-ioredis-cache",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/api-ioredis-cache#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/omeda.git",
+    "directory": "packages/api-ioredis-cache"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/omeda-api-client": "^0.0.0",
+    "ioredis": "^4.24.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
