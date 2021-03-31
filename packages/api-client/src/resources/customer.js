@@ -192,6 +192,30 @@ class CustomerResource extends AbstractResource {
   }
 
   /**
+   * This API provides the ability look up all available Order History information
+   * for a customer by the Customer id or for a specific product if the Product Id is included.
+   *
+   * @link https://main.omeda.com/knowledge-base/order-history-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find history for.
+   * @param {number} [params.productId] An optional product ID to filter by.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerOrderHistoryResponse>} The customer order history.
+   */
+  async lookupOrderHistory(params = {}) {
+    const { customerId, productId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      productId: this.schema.productId,
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = productId
+      ? `customer/${customerId}/orderhistory/product/${productId}/*`
+      : `customer/${customerId}/orderhistory/*`;
+    await this.client.get({ endpoint, errorOnNotFound });
+    throw new Error('The Order History Lookup is not yet implemented.');
+  }
+
+  /**
    * This API provides the ability look up a Customer’s Phone Numbers by the Customer id.
    *
    * @link https://main.omeda.com/knowledge-base/phone-lookup-by-customer-id/

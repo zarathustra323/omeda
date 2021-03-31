@@ -53,6 +53,16 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's order history from the API.
+   *
+   * @param {object} params
+   * @param {number} [params.productId] An optional product ID to filter by.
+   */
+  async orderHistory({ productId } = {}) {
+    return this.resource.lookupOrderHistory({ customerId: this.get('Id'), productId });
+  }
+
+  /**
    * Retrieves the customer's phone numbers from the API.
    */
   async phoneNumbers() {
