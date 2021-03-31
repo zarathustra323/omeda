@@ -916,17 +916,17 @@
   dependencies:
     "@octokit/openapi-types" "^6.0.0"
 
-"@parameter1/joi@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@parameter1/joi/-/joi-1.2.1.tgz#501dab1cadefd35180aba7b2a616247f148b8e5a"
-  integrity sha512-RSMpHcA7A6jhDXy1o5yA+JfSfMsemJ0+mVNDRvruH8TwCSo/yxaDYSjwSMTMzdkKnLHs5gSvyTRs+/87NG3eQw==
+"@parameter1/joi@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@parameter1/joi/-/joi-1.2.2.tgz#d3f71a385151e7ae86f4ae395976722b45750cd2"
+  integrity sha512-MnjI96UB5lsj+Pa0ztRkYIMbi7b0RE2iGJ1KrJxP7D6CXQKdQk8/QRT3dCP3zuQwTmDmNlLpKE5HRBjl3N2vDQ==
   dependencies:
     joi "^17.4.0"
 
-"@parameter1/utils@^1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@parameter1/utils/-/utils-1.1.14.tgz#80a9583ce1070ae5c101a3fd2b1e4e622a21a1c6"
-  integrity sha512-jFc2jx8WNwcZi8MEVPCOqQWhULb4XgcXEambLPc/V918AZMpMu4Ki0i31KvaB02sIKlemiaQOrbPCASnLr6hwg==
+"@parameter1/utils@^1.1.15":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@parameter1/utils/-/utils-1.1.15.tgz#c0349f7a229efe47cd1b4805876d7a78ddf039e9"
+  integrity sha512-Mw9mYDZMWBEELGelp7OjLc3RiDTIECVOgVT/JTiBU2SdkNnBTTV1X9qXr8FvDHMTafnDrRJRGJImUrekDdwSaQ==
   dependencies:
     object-path "^0.11.5"
 
