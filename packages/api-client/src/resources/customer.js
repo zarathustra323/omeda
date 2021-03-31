@@ -2,6 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
+const CustomerBehaviorsResponse = require('../response/customer/behaviors');
 const CustomerDemographicsResponse = require('../response/customer/demographics');
 const CustomerEmailsResponse = require('../response/customer/emails');
 const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers');
@@ -82,6 +83,32 @@ class CustomerResource extends AbstractResource {
       }
       throw e;
     }
+  }
+
+  /**
+   * This API provides the ability look up a Customer’s Behaviors by the Customer Id.
+   * The response returns behavior information for the specified customer.
+   * Behavior information can be requested for a specific behavior OR for behaviors
+   * associated with a specific product OR all behaviors
+   *
+   * @link https://main.omeda.com/knowledge-base/demographic-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find behaviors for.
+   * @param {number} [params.productId] An optional behavior ID to filter by.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerBehaviorsResponse>} The customer behaviors.
+   */
+  async lookupBehaviors(params = {}) {
+    const { customerId, behaviorId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      behaviorId: this.schema.behaviorId,
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = behaviorId
+      ? `customer/${customerId}/behavior/${behaviorId}/*`
+      : `customer/${customerId}/behavior/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerBehaviorsResponse({ response });
   }
 
   /**

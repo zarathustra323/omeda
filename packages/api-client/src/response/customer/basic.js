@@ -15,6 +15,16 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's behaviors from the API.
+   *
+   * @param {object} params
+   * @param {number} [params.behaviorId] An optional behavior ID to filter by.
+   */
+  async behaviors({ behaviorId } = {}) {
+    return this.resource.lookupBehaviors({ customerId: this.get('Id'), behaviorId });
+  }
+
+  /**
    * Retrieves the customer's demographics from the API.
    */
   async demographics() {
