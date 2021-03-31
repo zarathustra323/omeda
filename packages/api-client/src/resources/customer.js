@@ -49,7 +49,7 @@ class CustomerResource extends AbstractResource {
     }).required(), params);
     const endpoint = `/customer/${encryptedId}/encrypted/*`;
     const response = await this.client.get({ endpoint });
-    return new BasicCustomerResponse({ response });
+    return new BasicCustomerResponse({ response, resource: this });
   }
 
   /**
