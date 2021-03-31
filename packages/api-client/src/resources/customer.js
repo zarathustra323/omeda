@@ -5,6 +5,7 @@ const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerBehaviorsResponse = require('../response/customer/behaviors');
 const CustomerDemographicsResponse = require('../response/customer/demographics');
 const CustomerEmailsResponse = require('../response/customer/emails');
+const CustomerExternalIdsResponse = require('../response/customer/external-ids');
 const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
 const CustomerSubscriptionsResponse = require('../response/customer/subscriptions');
@@ -149,6 +150,25 @@ class CustomerResource extends AbstractResource {
     const endpoint = `/customer/${customerId}/email/*`;
     const response = await this.client.get({ endpoint, errorOnNotFound });
     return new CustomerEmailsResponse({ response });
+  }
+
+  /**
+   * This API provides the ability look up a Customer’s External Ids by the Customer Id.
+   *
+   * @link https://main.omeda.com/knowledge-base/external-id-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find external IDs for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerExternalIdsResponse>} The customer external IDs.
+   */
+  async lookupExternalIds(params = {}) {
+    const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/customer/${customerId}/externalid/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerExternalIdsResponse({ response });
   }
 
   /**

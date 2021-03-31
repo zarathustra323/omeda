@@ -39,6 +39,13 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's external identifiers from the API.
+   */
+  async externalIds() {
+    return this.resource.lookupExternalIds({ customerId: this.get('Id') });
+  }
+
+  /**
    * Retrieves the customer's merge history from the API.
    */
   async mergeHistory() {
