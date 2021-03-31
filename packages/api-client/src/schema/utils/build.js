@@ -8,39 +8,61 @@ module.exports = ({ schema, obj } = {}) => {
   const data = {};
   schema.forEach(({ name, type }) => {
     const value = obj[name];
+
+    // enums (codes & types)
     if (schema.type === 'customer-demographic-elements' && name === 'DemographicType') {
       data[name] = new DemographicType(value);
       return;
     }
-
     if (schema.type === 'customer-email-elements' && name === 'EmailContactType') {
       data[name] = new EmailContactType(value);
       return;
     }
-
     if (schema.type === 'customer-address-elements' && name === 'AddressContactType') {
       data[name] = new AddressContactType(value);
       return;
     }
-
     if (schema.type === 'customer-phone-elements' && name === 'PhoneContactType') {
       data[name] = new PhoneContactType(value);
       return;
     }
 
-    if (type === 'DateTime') {
+    // links (skip)
+    if (type === 'link') return;
+
+    // dates
+    if (['datetime', 'date'].includes(type)) {
       const date = value ? dayjs.tz(value, 'America/Chicago') : null;
       data[name] = date && date.isValid() ? date.toDate() : null;
       return;
     }
-    if (type === 'String') {
+    // strings
+    if (type === 'string') {
       const trimmed = value ? `${value}`.trim() : null;
       data[name] = trimmed || null;
       return;
     }
-    if (type === 'Integer' || type === 'Short' || type === 'Byte') {
-      data[name] = value == null ? null : value;
+    // booleans
+    if (['boolean', 'short (boolean)'].includes(type)) {
+      data[name] = value == null ? null : Boolean(value);
+      return;
     }
+    // integers
+    if (['integer', 'short', 'byte', 'int'].includes(type)) {
+      data[name] = value == null ? null : parseInt(value, 10);
+      return;
+    }
+    // floats
+    if (type === 'decimal') {
+      data[name] = value == null ? null : Number(value);
+      return;
+    }
+    // arrays
+    if (type === 'array') {
+      data[name] = Array.isArray(value) ? value : [];
+      return;
+    }
+    throw new TypeError(`An unknown Omeda data type was encountered: '${type}'`);
   });
   return data;
 };

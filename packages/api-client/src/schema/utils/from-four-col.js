@@ -14,7 +14,7 @@ module.exports = (type, html) => {
         case 1:
           line.always = text; break;
         case 2:
-          line.type = text; break;
+          line.type = text.trim().toLowerCase(); break;
         case 3:
           line.description = text; break;
         default:
