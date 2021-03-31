@@ -25,6 +25,7 @@ class OmedaApiCacheInterface {
    *
    * @param {string} cacheKey The cache key to use.
    * @param {object} parsed The raw, parsed JSON data from the API response.
+   * @param {number} [ttl] The TTL for this request, in seconds.
    */
   async set(cacheKey, parsed, ttl) {
     throw new Error('The `set` method must be implemented in your cache class.');
@@ -37,7 +38,7 @@ class OmedaApiCacheInterface {
    * @param {string} params.environment The API environment, e.g. production
    * @param {string} params.brand The API brand database
    * @param {string} params.operation The current operation, usually `brand`
-   * @param {string} params.ttl The TTL of the specific request.
+   * @param {number} [params.ttl] The TTL of the specific request, in seconds.
    * @returns {string}
    */
   buildKey({
