@@ -1,13 +1,13 @@
 {
-  "name": "@parameter1/omeda-api-ioredis-cache",
+  "name": "@parameter1/omeda-api-cache-ioredis",
   "version": "0.0.0",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
-  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/api-ioredis-cache#readme",
+  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/api-cache-ioredis#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/parameter1/omeda.git",
-    "directory": "packages/api-ioredis-cache"
+    "directory": "packages/api-cache-ioredis"
   },
   "license": "MIT",
   "scripts": {
