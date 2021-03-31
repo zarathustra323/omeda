@@ -1,5 +1,11 @@
 const load = require('../utils/from-three-col');
 
+/**
+ * @note The `FirstOccurrenceDate` and `LastOccurrenceDate` on the Omeda website
+ * are spelled wrong and had to be manually changed.
+ *
+ * @note The data type for the fields were also changed to `DateTime`
+ */
 module.exports = load('customer-behavior-elements', `
 <table>
   <tbody>
