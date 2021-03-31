@@ -41,6 +41,16 @@ class BasicCustomerResponse extends ApiResourceResponse {
   async postalAddresses() {
     return this.resource.lookupPostalAddresses({ customerId: this.get('Id') });
   }
+
+  /**
+   * Retrieves the customer's subscriptions from the API.
+   *
+   * @param {object} params
+   * @param {number} [params.productId] An optional product ID to filter by.
+   */
+  async subscriptions({ productId } = {}) {
+    return this.resource.lookupSubscriptions({ customerId: this.get('Id'), productId });
+  }
 }
 
 module.exports = BasicCustomerResponse;

@@ -6,6 +6,7 @@ const CustomerDemographicsResponse = require('../response/customer/demographics'
 const CustomerEmailsResponse = require('../response/customer/emails');
 const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
+const CustomerSubscriptionsResponse = require('../response/customer/subscriptions');
 const AbstractResource = require('./abstract');
 
 class CustomerResource extends AbstractResource {
@@ -160,6 +161,32 @@ class CustomerResource extends AbstractResource {
     const endpoint = `/customer/${customerId}/address/*`;
     const response = await this.client.get({ endpoint, errorOnNotFound });
     return new CustomerPostalAddressesResponse({ response });
+  }
+
+  /**
+   * This service returns all available subscription information stored
+   * for a given Customer Id and optional Product Id.
+   *
+   * Note, this includes both current subscription and deactivated subscriptions.
+   *
+   * @link https://main.omeda.com/knowledge-base/subscription-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find subscriptions for.
+   * @param {number} [params.productId] An optional product ID.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerSubscriptionsResponse>} The customer subscriptions.
+   */
+  async lookupSubscriptions(params = {}) {
+    const { customerId, productId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      productId: this.schema.productId,
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = productId
+      ? `customer/${customerId}/subscription/product/${productId}/*`
+      : `customer/${customerId}/subscription/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerSubscriptionsResponse({ response });
   }
 }
 
