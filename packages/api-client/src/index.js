@@ -14,12 +14,14 @@ class OmedaApiClient {
    * @param {string} params.brand The brand abbreviation. Required.
    * @param {string} [params.inputId] The Omeda API input ID. Required when doing write calls.
    * @param {string} [params.useStaging=false] Whether to use the staging API.
+   * @param {OmedaApiCacheInterface} [params.cache] A response cache implementation.
    */
   constructor({
     appId,
     brand,
     inputId,
     useStaging = false,
+    cache,
   } = {}) {
     if (!appId) throw new Error('The Omeda API App ID is required.');
     if (!brand) throw new Error('The Omeda brand abbreviation is required.');
@@ -28,6 +30,7 @@ class OmedaApiClient {
     this.inputId = inputId;
     this.useStaging = useStaging;
 
+    this.cache = cache;
     this.resources = {
       brand: new BrandResource({ client: this }),
       customer: new CustomerResource({ client: this }),
@@ -46,22 +49,22 @@ class OmedaApiClient {
   }
 
   /**
+   * Gets the API environment. Either staging or production.
+   *
+   * @returns {string}
+   */
+  get environment() {
+    return this.useStaging ? 'staging' : 'prodcution';
+  }
+
+  /**
    * Gets the API host name.
    *
    * @returns {string}
    */
   get host() {
-    const root = this.useStaging ? 'omedastaging' : 'omeda';
+    const root = this.environment === 'staging' ? 'omedastaging' : 'omeda';
     return `ows.${root}.com`;
-  }
-
-  /**
-   * Gets the brand API URL.
-   *
-   * @returns {string}
-   */
-  get brandUrl() {
-    return `${this.url}/webservices/rest/brand/${this.brand}`;
   }
 
   /**
@@ -74,6 +77,26 @@ class OmedaApiClient {
   }
 
   /**
+   * Generates a brand API URL for the provided endpoint.
+   *
+   * @param {string} endpoint
+   * @returns {string}
+   */
+  brandUrl(endpoint) {
+    return `${this.url}/webservices/rest/brand/${this.brand}/${cleanPath(endpoint)}`;
+  }
+
+  buildCacheKey({ operation = 'brand', endpoint, ttl } = {}) {
+    return this.cache.buildKey({
+      environment: this.environment,
+      brand: this.brand,
+      operation,
+      endpoint,
+      ttl,
+    });
+  }
+
+  /**
    * Performs a GET request against the brand API.
    *
    * @param {object} params
@@ -81,8 +104,28 @@ class OmedaApiClient {
    * @param {boolean} [params.errorOnNotFound=true] Whether to error when a 404 is encountered
    * @returns {Promise<ApiClientResponse>}
    */
-  get({ endpoint, errorOnNotFound = true } = {}) {
-    return this.request({ method: 'GET', endpoint, errorOnNotFound });
+  async get({
+    endpoint,
+    errorOnNotFound = true,
+    cache = true,
+    ttl,
+  } = {}) {
+    const shouldCache = Boolean(cache && this.cache);
+    if (!shouldCache) return this.request({ method: 'GET', endpoint, errorOnNotFound });
+
+    const start = process.hrtime();
+    const cacheKey = this.buildCacheKey({ endpoint, ttl });
+    const parsed = await this.cache.get(cacheKey);
+
+    if (parsed) {
+      const [secs, ns] = process.hrtime(start);
+      const time = (secs * 1000) + (ns / 1000000);
+      return new ApiClientResponse({ json: parsed, fromCache: true, time });
+    }
+
+    const response = await this.request({ method: 'GET', endpoint, errorOnNotFound });
+    await this.cache.set(cacheKey, response.json, ttl);
+    return response;
   }
 
   /**
@@ -105,7 +148,7 @@ class OmedaApiClient {
   } = {}) {
     const start = process.hrtime();
     if (!endpoint) throw new Error('An API endpoint is required.');
-    const url = `${this.brandUrl}/${cleanPath(endpoint)}`;
+    const url = this.brandUrl(endpoint);
 
     const iid = inputId || this.inputId;
     const response = await fetch(url, {

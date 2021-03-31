@@ -7,11 +7,18 @@ class ApiClientResponse {
    * @param {object} params.json The parsed response JSON body.
    * @param {object} params.fetchResponse The Fetch response.
    * @param {number} params.time The time (in MS) it took to retrieve the response.
+   * @param {boolean} [params.fromCache=false] Whether the JSON was retrieved from cache.
    */
-  constructor({ json, fetchResponse, time } = {}) {
+  constructor({
+    json,
+    fetchResponse,
+    time,
+    fromCache = false,
+  } = {}) {
     this.json = json;
-    this.fetchResponse = fetchResponse;
+    if (!fromCache) this.fetchResponse = fetchResponse;
     this.time = time;
+    this.fromCache = fromCache;
   }
 
   /**
