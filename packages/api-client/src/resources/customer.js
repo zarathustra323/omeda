@@ -3,7 +3,7 @@ const { validateAsync } = require('@parameter1/joi/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerEmailsResponse = require('../response/customer/emails');
-const CustomerPhonesResponse = require('../response/customer/phones');
+const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
 const AbstractResource = require('./abstract');
 
@@ -109,7 +109,7 @@ class CustomerResource extends AbstractResource {
    * @param {object} params
    * @param {number} params.customerId The customer ID to find phone numbers for.
    * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
-   * @returns {Promise<CustomerPhonesResponse>} The customer phone numbers.
+   * @returns {Promise<CustomerPhoneNumbersResponse>} The customer phone numbers.
    */
   async lookupPhoneNumbers(params = {}) {
     const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
@@ -118,7 +118,7 @@ class CustomerResource extends AbstractResource {
     }).required(), params);
     const endpoint = `/customer/${customerId}/phone/*`;
     const response = await this.client.get({ endpoint, errorOnNotFound });
-    return new CustomerPhonesResponse({ response });
+    return new CustomerPhoneNumbersResponse({ response });
   }
 
   /**
