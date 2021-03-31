@@ -4,6 +4,14 @@ const DemographicType = require('../../types-and-codes/demographic-type');
 const EmailContactType = require('../../types-and-codes/email-contact-type');
 const PhoneContactType = require('../../types-and-codes/phone-contact-type');
 
+const SubscriptionAutoRenewalCode = require('../../types-and-codes/subscriptions/auto-renewal.js');
+const SubscriptionInstallmentBillingCode = require('../../types-and-codes/subscriptions/installment-billing.js');
+const SubscriptionLockCode = require('../../types-and-codes/subscriptions/lock.js');
+const SubscriptionMarketingClassCode = require('../../types-and-codes/subscriptions/marketing-class.js');
+const SubscriptionPaymentStatusCode = require('../../types-and-codes/subscriptions/payment-status.js');
+const SubscriptionStatusCode = require('../../types-and-codes/subscriptions/status.js');
+const SubscriptionVersionCode = require('../../types-and-codes/subscriptions/version.js');
+
 module.exports = ({ schema, obj } = {}) => {
   const data = {};
   schema.forEach(({ name, type }) => {
@@ -25,6 +33,38 @@ module.exports = ({ schema, obj } = {}) => {
     if (schema.type === 'customer-phone-elements' && name === 'PhoneContactType') {
       data[name] = new PhoneContactType(value);
       return;
+    }
+
+    // subscription enums (codes)
+    if (schema.type === 'customer-subscription-elements') {
+      if (['RequestedVersion', 'RequestedVersionCode', 'ActualVersionCode'].includes(name)) {
+        data[name] = new SubscriptionVersionCode(value);
+        return;
+      }
+      if (name === 'DataLockCode') {
+        data[name] = new SubscriptionLockCode(value);
+        return;
+      }
+      if (name === 'MarketingClassId') {
+        data[name] = new SubscriptionMarketingClassCode(value);
+        return;
+      }
+      if (name === 'PaymentStatus') {
+        data[name] = new SubscriptionPaymentStatusCode(value);
+        return;
+      }
+      if (name === 'AutoRenewalCode') {
+        data[name] = new SubscriptionAutoRenewalCode(value);
+        return;
+      }
+      if (name === 'InstallmentCode') {
+        data[name] = new SubscriptionInstallmentBillingCode(value);
+        return;
+      }
+      if (name === 'Status') {
+        data[name] = new SubscriptionStatusCode(value);
+        return;
+      }
     }
 
     // links (skip)
