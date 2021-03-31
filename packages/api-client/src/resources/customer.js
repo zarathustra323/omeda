@@ -92,7 +92,7 @@ class CustomerResource extends AbstractResource {
    * Behavior information can be requested for a specific behavior OR for behaviors
    * associated with a specific product OR all behaviors
    *
-   * @link https://main.omeda.com/knowledge-base/demographic-lookup-by-customer-id/
+   * @link https://main.omeda.com/knowledge-base/behavior-lookup-by-customer-id/
    * @param {object} params
    * @param {number} params.customerId The customer ID to find behaviors for.
    * @param {number} [params.productId] An optional behavior ID to filter by.
