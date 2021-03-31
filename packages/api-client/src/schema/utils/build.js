@@ -53,7 +53,7 @@ module.exports = ({ schema, obj } = {}) => {
       return;
     }
     // floats
-    if (type === 'decimal') {
+    if (['decimal', 'long'].includes(type)) {
       data[name] = value == null ? null : Number(value);
       return;
     }
