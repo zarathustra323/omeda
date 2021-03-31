@@ -97,7 +97,7 @@ class OmedaApiClient {
       method,
       headers: {
         'x-omeda-appid': this.appId,
-        'user-agent': `${pkg.name} v${pkg.version}`,
+        'user-agent': `${pkg.name} v${pkg.version} (+${pkg.homepage})`,
         ...(iid && { 'x-omeda-inputid': iid }),
         ...(body && { 'content-type': 'application/json' }),
       },
