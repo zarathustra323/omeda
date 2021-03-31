@@ -108,8 +108,7 @@ class OmedaApiClient {
     const parsed = await this.cache.get(cacheKey);
 
     if (parsed) {
-      const [secs, ns] = process.hrtime(start);
-      const time = (secs * 1000) + (ns / 1000000);
+      const time = OmedaApiClient.calculateTime(start);
       return new ApiClientResponse({ json: parsed, fromCache: true, time });
     }
 
@@ -152,8 +151,7 @@ class OmedaApiClient {
       ...(body && { body: JSON.stringify(body) }),
     });
     const json = await response.json();
-    const [secs, ns] = process.hrtime(start);
-    const time = (secs * 1000) + (ns / 1000000);
+    const time = OmedaApiClient.calculateTime(start);
     if (response.ok) return new ApiClientResponse({ json, fetchResponse: response, time });
 
     if (errorOnNotFound === false && response.status === 404) {
@@ -179,6 +177,16 @@ class OmedaApiClient {
       endpoint,
       ttl,
     });
+  }
+
+  /**
+   * Calculates operation time, in milliseconds, for a provided hrtime start value.
+   *
+   * @param {*} start
+   */
+  static calculateTime(start) {
+    const [secs, ns] = process.hrtime(start);
+    return (secs * 1000) + (ns / 1000000);
   }
 }
 
