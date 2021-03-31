@@ -86,16 +86,6 @@ class OmedaApiClient {
     return `${this.url}/webservices/rest/brand/${this.brand}/${cleanPath(endpoint)}`;
   }
 
-  buildCacheKey({ operation = 'brand', endpoint, ttl } = {}) {
-    return this.cache.buildKey({
-      environment: this.environment,
-      brand: this.brand,
-      operation,
-      endpoint,
-      ttl,
-    });
-  }
-
   /**
    * Performs a GET request against the brand API.
    *
@@ -170,6 +160,25 @@ class OmedaApiClient {
       return new ApiClientResponse({ json: {}, fetchResponse: response, time });
     }
     throw new ApiResponseError({ json, fetchResponse: response });
+  }
+
+  /**
+   * Builds a cache key for the provided operation and endpoint.
+   *
+   * @param {object} params
+   * @param {string} params.endpoint
+   * @param {string} [params.operation=brand]
+   * @param {number} [params.ttl]
+   * @returns
+   */
+  buildCacheKey({ endpoint, operation = 'brand', ttl } = {}) {
+    return this.cache.buildKey({
+      environment: this.environment,
+      brand: this.brand,
+      operation,
+      endpoint,
+      ttl,
+    });
   }
 }
 
