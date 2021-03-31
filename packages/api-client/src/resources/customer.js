@@ -125,6 +125,26 @@ class CustomerResource extends AbstractResource {
   }
 
   /**
+   * This API provides capabilities to retrieve the merge history for the requested Customer Id.
+   *
+   * @link https://main.omeda.com/knowledge-base/customer-merge-history-lookup/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find history for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<ApiSetResponse>} The customer merge history.
+   */
+  async lookupMergeHistory(params = {}) {
+    const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/customer/${customerId}/mergehistory/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    const customerIds = response.getAsArray('CustomerMergeHistory').map((customer) => customer.Id);
+    return new ApiSetResponse({ data: customerIds, response });
+  }
+
+  /**
    * This API provides the ability look up a Customer’s Phone Numbers by the Customer id.
    *
    * @link https://main.omeda.com/knowledge-base/phone-lookup-by-customer-id/

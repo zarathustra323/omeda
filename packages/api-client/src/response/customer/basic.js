@@ -29,6 +29,13 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's merge history from the API.
+   */
+  async mergeHistory() {
+    return this.resource.lookupMergeHistory({ customerId: this.get('Id') });
+  }
+
+  /**
    * Retrieves the customer's phone numbers from the API.
    */
   async phoneNumbers() {
