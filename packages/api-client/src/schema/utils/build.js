@@ -1,68 +1,17 @@
 const dayjs = require('../../dayjs');
-const AddressContactType = require('../../types-and-codes/address-contact-type');
-const DemographicType = require('../../types-and-codes/demographic-type');
-const EmailContactType = require('../../types-and-codes/email-contact-type');
-const PhoneContactType = require('../../types-and-codes/phone-contact-type');
 
-const SubscriptionAutoRenewalCode = require('../../types-and-codes/subscriptions/auto-renewal.js');
-const SubscriptionInstallmentBillingCode = require('../../types-and-codes/subscriptions/installment-billing.js');
-const SubscriptionLockCode = require('../../types-and-codes/subscriptions/lock.js');
-const SubscriptionMarketingClassCode = require('../../types-and-codes/subscriptions/marketing-class.js');
-const SubscriptionPaymentStatusCode = require('../../types-and-codes/subscriptions/payment-status.js');
-const SubscriptionStatusCode = require('../../types-and-codes/subscriptions/status.js');
-const SubscriptionVersionCode = require('../../types-and-codes/subscriptions/version.js');
-
-module.exports = ({ schema, obj } = {}) => {
+module.exports = ({ schema, obj, builder } = {}) => {
   const data = {};
   schema.forEach(({ name, type }) => {
     const value = obj[name];
 
-    // enums (codes & types)
-    if (schema.type === 'customer-demographic-elements' && name === 'DemographicType') {
-      data[name] = new DemographicType(value);
-      return;
-    }
-    if (schema.type === 'customer-email-elements' && name === 'EmailContactType') {
-      data[name] = new EmailContactType(value);
-      return;
-    }
-    if (schema.type === 'customer-address-elements' && name === 'AddressContactType') {
-      data[name] = new AddressContactType(value);
-      return;
-    }
-    if (schema.type === 'customer-phone-elements' && name === 'PhoneContactType') {
-      data[name] = new PhoneContactType(value);
-      return;
-    }
-
-    // subscription enums (codes)
-    if (schema.type === 'customer-subscription-elements') {
-      if (['RequestedVersion', 'RequestedVersionCode', 'ActualVersionCode'].includes(name)) {
-        data[name] = new SubscriptionVersionCode(value);
-        return;
-      }
-      if (name === 'DataLockCode') {
-        data[name] = new SubscriptionLockCode(value);
-        return;
-      }
-      if (name === 'MarketingClassId') {
-        data[name] = new SubscriptionMarketingClassCode(value);
-        return;
-      }
-      if (name === 'PaymentStatus') {
-        data[name] = new SubscriptionPaymentStatusCode(value);
-        return;
-      }
-      if (name === 'AutoRenewalCode') {
-        data[name] = new SubscriptionAutoRenewalCode(value);
-        return;
-      }
-      if (name === 'InstallmentCode') {
-        data[name] = new SubscriptionInstallmentBillingCode(value);
-        return;
-      }
-      if (name === 'Status') {
-        data[name] = new SubscriptionStatusCode(value);
+    // if a builder function is present, it should either return a value or null/undefined.
+    // if null, the schema builder will continue to handle the value, otherwise will
+    // use the value provided by the hook function
+    if (builder && typeof builder === 'function') {
+      const built = builder({ name, type, value });
+      if (built != null) {
+        data[name] = built;
         return;
       }
     }
@@ -98,7 +47,7 @@ module.exports = ({ schema, obj } = {}) => {
       return;
     }
     // arrays
-    if (type === 'array') {
+    if (['array', 'list'].includes(type)) {
       data[name] = Array.isArray(value) ? value : [];
       return;
     }
