@@ -2,6 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
+const CustomerDemographicsResponse = require('../response/customer/demographics');
 const CustomerEmailsResponse = require('../response/customer/emails');
 const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers');
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
@@ -80,6 +81,26 @@ class CustomerResource extends AbstractResource {
       }
       throw e;
     }
+  }
+
+  /**
+   * This service returns all available customer demographics stored for a
+   * given customer by using the Customer ID.
+   *
+   * @link https://main.omeda.com/knowledge-base/demographic-lookup-by-customer-id/
+   * @param {object} params
+   * @param {number} params.customerId The customer ID to find demographics for.
+   * @param {boolean} [params.errorOnNotFound=false] Whether to error when not found.
+   * @returns {Promise<CustomerDemographicsResponse>} The customer demographics.
+   */
+  async lookupDemographics(params = {}) {
+    const { customerId, errorOnNotFound } = await validateAsync(Joi.object({
+      customerId: this.schema.customerId.required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/customer/${customerId}/demographic/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new CustomerDemographicsResponse({ response });
   }
 
   /**

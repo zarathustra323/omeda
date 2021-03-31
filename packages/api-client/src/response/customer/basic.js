@@ -15,6 +15,13 @@ class BasicCustomerResponse extends ApiResourceResponse {
   }
 
   /**
+   * Retrieves the customer's demographics from the API.
+   */
+  async demographics() {
+    return this.resource.lookupDemographics({ customerId: this.get('Id') });
+  }
+
+  /**
    * Retrieves the customer's email addresses from the API.
    */
   async emails() {
