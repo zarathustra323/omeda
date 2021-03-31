@@ -1,4 +1,6 @@
-const descriptions = {
+const IntegerCode = require('./integer-code');
+
+const map = {
   0: 'Type Not Known',
   200: 'Business Phone',
   210: 'Home Phone',
@@ -9,13 +11,9 @@ const descriptions = {
   270: 'Pager',
 };
 
-const values = Object.keys(descriptions).map((code) => parseInt(code, 10));
-
-class PhoneContactType {
+class PhoneContactType extends IntegerCode {
   constructor(value) {
-    const v = parseInt(value, 10);
-    this.Value = values.includes(v) ? v : 0;
-    this.Description = descriptions[this.Value];
+    super({ map, value, def: 0 });
   }
 }
 
