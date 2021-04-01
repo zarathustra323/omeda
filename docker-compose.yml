@@ -1,0 +1,51 @@
+version: '3.7'
+
+x-env-defaults: &env
+  NEW_RELIC_ENABLED: ${NEW_RELIC_ENABLED-0}
+  NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY-(unset)}
+  NODE_ENV: development
+  TERMINUS_TIMEOUT: 1000
+  TERMINUS_SHUTDOWN_DELAY: 0
+  YARN_CACHE_FOLDER: /.yarn-cache
+
+x-node-defaults: &node
+  tty: true
+  init: true
+  image: node:14.16-alpine
+  working_dir: /omeda
+  restart: always
+  volumes:
+    - .:/omeda:cached
+    - ./node_modules:/omeda/node_modules:delegated
+    - yarn-cache:/.yarn-cache
+  environment:
+    <<: *env
+
+services:
+  mongodb:
+    image: mongo:3.4
+    volumes:
+      - mongodb:/data/db
+
+  redis:
+    tty: true
+    image: redis:6.2-alpine
+    ports:
+      - "9911:6379"
+
+  graphql:
+    <<: *node
+    working_dir: /omeda/services/graphql
+    entrypoint: ["yarn"]
+    command: ["dev"]
+    environment:
+      <<: *env
+    depends_on:
+      - mongodb
+      - redis
+    ports:
+      - "8990:8990"
+
+volumes:
+  yarn-cache: {}
+  mongodb: {}
