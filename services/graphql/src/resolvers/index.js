@@ -1,4 +1,10 @@
+const GraphQLJSON = require('graphql-type-json');
+
+const { GraphQLJSONObject } = GraphQLJSON;
+
 module.exports = {
+  JSON: GraphQLJSON,
+  JSONObject: GraphQLJSONObject,
 
   /**
    *
