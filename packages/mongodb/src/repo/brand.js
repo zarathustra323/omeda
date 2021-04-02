@@ -27,6 +27,24 @@ class BrandRepo extends Repo {
   /**
    *
    * @param {object} params
+   * @param {string} params.brand
+   * @param {number} [params.ttl=60*60*24]
+   */
+  async hasData(params = {}) {
+    const { brand, ttl } = await validateAsync(Joi.object({
+      brand: Joi.string().lowercase().trim().required(),
+      ttl: Joi.number().integer().min(60).default(60 * 60 * 24),
+    }).required(), params);
+    const date = new Date(Date.now() - (ttl * 1000));
+    const query = { _id: brand, updatedAt: { $gte: date } };
+    const options = { projection: { _id: 1 } };
+    const data = await this.findOne({ query, options });
+    return Boolean(data);
+  }
+
+  /**
+   *
+   * @param {object} params
    * @param {string} params.brand The brand abbreviation.
    * @param {object} params.data The data to upsert.
    */
