@@ -2,14 +2,14 @@ const { Repo } = require('@parameter1/mongodb/repo');
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 
-class BrandDemographicRepo extends Repo {
+class BrandProductRepo extends Repo {
   /**
    *
    */
   constructor({ client, dbName } = {}) {
     super({
-      name: 'brand demographic',
-      collectionName: 'brand-demographics',
+      name: 'brand product',
+      collectionName: 'brand-products',
       dbName,
       client,
     });
@@ -19,29 +19,29 @@ class BrandDemographicRepo extends Repo {
    *
    * @param {object} params
    * @param {string} params.brand The brand abbreviation.
-   * @param {object[]} params.demographics The demographics to upsert.
+   * @param {object[]} params.products The products to upsert.
    */
   async upsert(params = {}) {
-    const { brand, demographics } = await validateAsync(Joi.object({
+    const { brand, products } = await validateAsync(Joi.object({
       brand: Joi.string().lowercase().trim().required(),
-      demographics: Joi.array().items(Joi.object().required()).required(),
+      products: Joi.array().items(Joi.object().required()).required(),
     }).required(), params);
-    if (!demographics.length) return null;
+    if (!products.length) return null;
 
     const now = new Date();
     const ids = [];
-    const operations = demographics.map((demographic) => {
-      const { Id } = demographic;
+    const operations = products.map((product) => {
+      const { Id } = product;
       ids.push(Id);
       const filter = { brand, 'data.Id': Id };
       const update = {
         $setOnInsert: { brand, createdAt: now },
-        $set: { data: demographic, updatedAt: now },
+        $set: { data: product, updatedAt: now },
       };
       return { updateOne: { filter, update, upsert: true } };
     });
 
-    // delete any remaining demographics that weren't included in this dataset
+    // delete any remaining products that weren't included in this dataset
     operations.push({
       deleteMany: { filter: { 'data.Id': { $nin: ids }, brand } },
     });
@@ -50,4 +50,4 @@ class BrandDemographicRepo extends Repo {
   }
 }
 
-module.exports = BrandDemographicRepo;
+module.exports = BrandProductRepo;

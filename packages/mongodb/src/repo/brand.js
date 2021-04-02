@@ -6,7 +6,12 @@ class BrandRepo extends Repo {
   /**
    *
    */
-  constructor({ client, dbName, demographicRepo } = {}) {
+  constructor({
+    client,
+    dbName,
+    demographicRepo,
+    productRepo,
+  } = {}) {
     super({
       name: 'brand',
       collectionName: 'brands',
@@ -14,6 +19,7 @@ class BrandRepo extends Repo {
       client,
     });
     this.demographicRepo = demographicRepo;
+    this.productRepo = productRepo;
   }
 
   /**
@@ -30,7 +36,7 @@ class BrandRepo extends Repo {
 
     const now = new Date();
     const query = { _id: brand };
-    const toUpsert = ['Id', 'Description', 'BrandAbbrev', 'CustomerCount'].reduce((o, key) => ({ ...o, [key]: data[key] }), {});
+    const toUpsert = ['Id', 'Description', 'BrandAbbrev', 'CustomerCount', 'ContactTypes'].reduce((o, key) => ({ ...o, [key]: data[key] }), {});
     const update = {
       $setOnInsert: { ...query, createdAt: now },
       $set: { data: toUpsert, updatedAt: now },
@@ -38,6 +44,7 @@ class BrandRepo extends Repo {
     return Promise.all([
       this.updateOne({ query, update, options: { upsert: true } }),
       this.demographicRepo.upsert({ brand, demographics: data.Demographics }),
+      this.productRepo.upsert({ brand, products: data.Products }),
     ]);
   }
 }
