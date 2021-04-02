@@ -15,6 +15,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/joi": "^1.2.2",
     "@parameter1/mongodb": "^1.4.9"
   },
   "devDependencies": {
