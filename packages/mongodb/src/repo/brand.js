@@ -6,13 +6,14 @@ class BrandRepo extends Repo {
   /**
    *
    */
-  constructor({ client, dbName } = {}) {
+  constructor({ client, dbName, demographicRepo } = {}) {
     super({
       name: 'brand',
       collectionName: 'brands',
       dbName,
       client,
     });
+    this.demographicRepo = demographicRepo;
   }
 
   /**
@@ -34,7 +35,10 @@ class BrandRepo extends Repo {
       $setOnInsert: { ...query, createdAt: now },
       $set: { data: toUpsert, updatedAt: now },
     };
-    return this.updateOne({ query, update, options: { upsert: true } });
+    return Promise.all([
+      this.updateOne({ query, update, options: { upsert: true } }),
+      this.demographicRepo.upsert({ brand, demographics: data.Demographics }),
+    ]);
   }
 }
 
