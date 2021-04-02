@@ -19,6 +19,7 @@
   "dependencies": {
     "@parameter1/omeda-api-cache-ioredis": "^0.0.0",
     "@parameter1/omeda-api-client": "^0.0.0",
+    "@parameter1/omeda-mongodb": "^0.0.0",
     "@parameter1/terminus": "^1.6.0",
     "@parameter1/utils": "^1.1.15",
     "apollo-server-express": "^2.22.2",
