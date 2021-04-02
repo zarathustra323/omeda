@@ -10,6 +10,7 @@ class BrandRepo extends Repo {
     client,
     dbName,
     demographicRepo,
+    deploymentTypeRepo,
     productRepo,
   } = {}) {
     super({
@@ -19,6 +20,7 @@ class BrandRepo extends Repo {
       client,
     });
     this.demographicRepo = demographicRepo;
+    this.deploymentTypeRepo = deploymentTypeRepo;
     this.productRepo = productRepo;
   }
 
@@ -44,6 +46,7 @@ class BrandRepo extends Repo {
     return Promise.all([
       this.updateOne({ query, update, options: { upsert: true } }),
       this.demographicRepo.upsert({ brand, demographics: data.Demographics }),
+      this.deploymentTypeRepo.upsert({ brand, deploymentTypes: data.DeploymentTypes }),
       this.productRepo.upsert({ brand, products: data.Products }),
     ]);
   }

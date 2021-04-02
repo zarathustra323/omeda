@@ -3,6 +3,10 @@ module.exports = {
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
   ],
+  'brand-deployment-types': [
+    { brand: 1 },
+    [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
   'brand-products': [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
