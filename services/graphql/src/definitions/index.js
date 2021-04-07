@@ -5,10 +5,16 @@ module.exports = gql`
 
 ${formatDateDirectives.typeDefs}
 directive @brandData on FIELD_DEFINITION
+directive @value(path: String, as: ValueDirectiveAsEnum) on FIELD_DEFINITION
 
 scalar Date
 scalar JSON
 scalar JSONObject
+
+enum ValueDirectiveAsEnum {
+  ARRAY
+  OBJECT
+}
 
 type Query {
   "A generic ping/pong test query."
