@@ -15,4 +15,21 @@ module.exports = {
     DELETED_INACTIVE: 0,
     PROSPECT: 2,
   },
+
+  /**
+   *
+   */
+  PostalAddressContactTypeEnum: {
+    BUSINESS: 100,
+    HOME: 110,
+    UNKNOWN: 0,
+  },
+
+  /**
+   *
+   */
+  PostalAddressStatusCodeEnum: {
+    ACTIVE: 2,
+    PRIMARY: 1,
+  },
 };

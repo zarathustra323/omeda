@@ -25,6 +25,25 @@ type Customer {
   changedDate: Date @value
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
+
+  postalAddresses: [CustomerPostalAddress!]!
+}
+
+type CustomerPostalAddress {
+  id: Int! @value
+  addressContactType: PostalAddressContactType @codeOrType(instance: "AddressContactType")
+  company: String @value
+  street: String @value
+  apartmentMailStop: String @value
+  extraAddress: String @value
+  city: String @value
+  regionCode: String @value
+  region: String @value
+  postalCode: String @value
+  countryCode: String @value
+  country: String @value
+  changedDate: Date! @value
+  statusCode: PostalAddressStatusCode! @codeOrType(instance: "AddressStatusCode")
 }
 
 input CustomerByIdQueryInput {

@@ -2,6 +2,22 @@ module.exports = {
   /**
    *
    */
+  Customer: {
+    /**
+     *
+     */
+    async postalAddresses({ Id }, _, { apiClient }) {
+      const response = await apiClient.resource('customer').lookupPostalAddresses({
+        customerId: Id,
+        errorOnNotFound: false,
+      });
+      return response.data;
+    },
+  },
+
+  /**
+   *
+   */
   Query: {
     /**
      *
