@@ -4,6 +4,7 @@ const DemographicType = require('./demographic-type');
 const DemographicValueType = require('./demographic-value-type');
 const EmailContactType = require('./email-contact-type');
 const PhoneContactType = require('./phone-contact-type');
+const WebformViewCode = require('./webform-view-code');
 
 const customer = require('./customer');
 const subscriptions = require('./subscriptions');
@@ -15,6 +16,7 @@ module.exports = {
   DemographicValueType,
   EmailContactType,
   PhoneContactType,
+  WebformViewCode,
   ...customer,
   ...subscriptions,
 };
