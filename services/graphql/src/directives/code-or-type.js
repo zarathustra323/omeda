@@ -17,7 +17,7 @@ class CodeOrTypeDirective extends SchemaDirectiveVisitor {
       const CodeOrType = typesAndCodes[instance];
       if (!CodeOrType) throw new Error(`No code or type class instance found for '${instance}'`);
       const code = new CodeOrType(value);
-      return code.Value ? code : null;
+      return code.Value == null ? null : code;
     };
   }
 }
