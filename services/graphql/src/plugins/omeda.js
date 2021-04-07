@@ -35,12 +35,13 @@ class OmedaGraphQLPlugin {
     // let introspection queries pass through.
     if (this.isIntrospectionQuery(operation)) return;
     const appId = headers.get('x-omeda-appid');
+    const inputId = headers.get('x-omeda-inputid');
     const brand = headers.get('x-omeda-brand');
     if (!appId) throw new UserInputError('You must provide an Omeda application ID via the `x-omeda-appid` header.');
     if (!brand) throw new UserInputError('You must provide an Omeda brand via the `x-omeda-brand` header.');
 
     context.brand = brand;
-    context.apiClient = new OmedaApiClient({ appId, brand });
+    context.apiClient = new OmedaApiClient({ appId, brand, inputId });
     context.repos = createRepos({ brandKey: brand, client: mongodb });
 
     if (isFn(this.setContext)) {
