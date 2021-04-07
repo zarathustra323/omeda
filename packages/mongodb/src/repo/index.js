@@ -3,11 +3,16 @@ const BrandDemographicRepo = require('./brand-demographic');
 const BrandDeploymentTypeRepo = require('./brand-deployment-type');
 const BrandProductRepo = require('./brand-product');
 
-module.exports = ({ client, dbName = 'omeda-api-data' }) => {
-  const brandDemographic = new BrandDemographicRepo({ client, dbName });
-  const brandDeploymentType = new BrandDeploymentTypeRepo({ client, dbName });
-  const brandProduct = new BrandProductRepo({ client, dbName });
+module.exports = ({
+  brandKey,
+  client,
+  dbName = 'omeda-api-data',
+}) => {
+  const brandDemographic = new BrandDemographicRepo({ brandKey, client, dbName });
+  const brandDeploymentType = new BrandDeploymentTypeRepo({ brandKey, client, dbName });
+  const brandProduct = new BrandProductRepo({ brandKey, client, dbName });
   const brand = new BrandRepo({
+    brandKey,
     client,
     dbName,
     demographicRepo: brandDemographic,

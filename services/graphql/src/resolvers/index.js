@@ -36,14 +36,10 @@ module.exports = merge({
     },
 
     /**
-     * @todo need to handle "hydration" more generically with api entities
-     * For now, save the data raw (E.g. the parsed json from the api)
      *
-     * @todo create generic brand repos that look up by brand id
      */
-    async brandComprehensiveLookup(_, __, { brand, repos }) {
-      const query = { _id: brand };
-      return repos.brand.findOne({ query });
+    async brandComprehensiveLookup(_, __, { repos }) {
+      return repos.brand.findById();
     },
   },
 }, codesAndTypes, customer);

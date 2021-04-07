@@ -1,13 +1,14 @@
-const { Repo } = require('@parameter1/mongodb/repo');
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
+const OmedaRepo = require('./abstract');
 
-class BrandDemographicRepo extends Repo {
+class BrandDemographicRepo extends OmedaRepo {
   /**
    *
    */
-  constructor({ client, dbName } = {}) {
+  constructor({ brandKey, client, dbName } = {}) {
     super({
+      brandKey,
       name: 'brand demographic',
       collectionName: 'brand-demographics',
       dbName,
@@ -22,12 +23,12 @@ class BrandDemographicRepo extends Repo {
    * @param {object[]} params.demographics The demographics to upsert.
    */
   async upsert(params = {}) {
-    const { brand, demographics } = await validateAsync(Joi.object({
-      brand: Joi.string().lowercase().trim().required(),
+    const { demographics } = await validateAsync(Joi.object({
       demographics: Joi.array().items(Joi.object().required()).required(),
     }).required(), params);
     if (!demographics.length) return null;
 
+    const { brandKey: brand } = this;
     const now = new Date();
     const ids = [];
     const operations = demographics.map((demographic) => {

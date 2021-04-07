@@ -2,7 +2,8 @@
 const { UserInputError } = require('apollo-server-express');
 const OmedaApiClient = require('@parameter1/omeda-api-client');
 const { isFunction: isFn } = require('@parameter1/utils');
-const repos = require('../mongodb/repos');
+const { createRepos } = require('@parameter1/omeda-mongodb');
+const mongodb = require('../mongodb');
 
 class OmedaGraphQLPlugin {
   /**
@@ -40,7 +41,7 @@ class OmedaGraphQLPlugin {
 
     context.brand = brand;
     context.apiClient = new OmedaApiClient({ appId, brand });
-    context.repos = repos;
+    context.repos = createRepos({ brandKey: brand, client: mongodb });
 
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);

@@ -1,13 +1,14 @@
-const { Repo } = require('@parameter1/mongodb/repo');
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
+const OmedaRepo = require('./abstract');
 
-class BrandDeploymentTypeRepo extends Repo {
+class BrandDeploymentTypeRepo extends OmedaRepo {
   /**
    *
    */
-  constructor({ client, dbName } = {}) {
+  constructor({ brandKey, client, dbName } = {}) {
     super({
+      brandKey,
       name: 'brand deployment type',
       collectionName: 'brand-deployment-types',
       dbName,
@@ -22,12 +23,12 @@ class BrandDeploymentTypeRepo extends Repo {
    * @param {object[]} params.deploymentTypes The deployment types to upsert.
    */
   async upsert(params = {}) {
-    const { brand, deploymentTypes } = await validateAsync(Joi.object({
-      brand: Joi.string().lowercase().trim().required(),
+    const { deploymentTypes } = await validateAsync(Joi.object({
       deploymentTypes: Joi.array().items(Joi.object().required()).required(),
     }).required(), params);
     if (!deploymentTypes.length) return null;
 
+    const { brandKey: brand } = this;
     const now = new Date();
     const ids = [];
     const operations = deploymentTypes.map((deploymentType) => {

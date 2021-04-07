@@ -9,12 +9,12 @@ class BrandDataDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve } = field;
     field.resolve = async (...args) => {
-      const [, , { apiClient, brand, repos }] = args;
-      const hasData = await repos.brand.hasData({ brand });
+      const [, , { apiClient, repos }] = args;
+      const hasData = await repos.brand.hasData();
       if (!hasData) {
         // refresh and save brand data from the API
         const response = await apiClient.resource('brand').comprehensiveLookup();
-        await repos.brand.upsert({ brand: response.get('BrandAbbrev'), data: response.data });
+        await repos.brand.upsert({ data: response.data });
       }
       if (typeof resolve === 'function') return resolve(...args);
       return null;
