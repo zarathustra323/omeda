@@ -118,6 +118,24 @@ class OmedaApiClient {
   }
 
   /**
+   * Performs a POST request against the brand API.
+   *
+   * @param {object} params
+   * @param {string} params.endpoint The brand API endpoint
+   * @param {object} params.body The body/payload to send with the request.
+   * @param {string} [params.inputId] An input ID to use. Overrides the default.
+   * @returns {Promise<ApiClientResponse>}
+   */
+  async post({ endpoint, body, inputId } = {}) {
+    return this.request({
+      method: 'POST',
+      endpoint,
+      body,
+      inputId,
+    });
+  }
+
+  /**
    * Performs a request against the brand API.
    *
    * @param {object} params
