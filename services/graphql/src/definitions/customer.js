@@ -34,7 +34,7 @@ type Customer {
 
 type CustomerEmailAddress {
   id: Int! @value
-  emailContactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType")
+  contactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType", path: "EmailContactType")
   emailAddress: String! @value
   changedDate: Date! @value
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
@@ -48,7 +48,7 @@ type CustomerExternalId {
 
 type CustomerPhoneNumber {
   id: String! @value
-  phoneContactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType")
+  contactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType", path: "PhoneContactType")
   phoneNumber: String! @value
   extension: String @value
   changedDate: Date! @value
@@ -57,7 +57,7 @@ type CustomerPhoneNumber {
 
 type CustomerPostalAddress {
   id: Int! @value
-  addressContactType: PostalAddressContactType! @codeOrType(instance: "AddressContactType")
+  contactType: PostalAddressContactType! @codeOrType(instance: "AddressContactType", path: "AddressContactType")
   company: String @value
   street: String @value
   apartmentMailStop: String @value
