@@ -38,6 +38,7 @@ type CustomerDemographic {
   demographicId: Int! @apiValue
   demographicType: DemographicType! @codeOrType(instance: "DemographicType")
   demographicAge: Int @apiValue
+  demographic: Demographic!
   valueId: Int @apiValue
   valueText: String @apiValue
   valueDate: Date @apiValue

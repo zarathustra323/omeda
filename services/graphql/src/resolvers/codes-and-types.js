@@ -68,4 +68,13 @@ module.exports = {
     HOME: 110,
     UNKNOWN: 0,
   },
+
+  /**
+   *
+   */
+  WebformViewCodeEnum: {
+    HIDDEN: 0,
+    OPTIONAL: 2,
+    REQUIRED: 1,
+  },
 };

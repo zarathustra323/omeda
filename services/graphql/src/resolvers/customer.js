@@ -62,6 +62,18 @@ module.exports = {
   /**
    *
    */
+  CustomerDemographic: {
+    /**
+     *
+     */
+    demographic({ DemographicId }, _, { repos }) {
+      return repos.brandDemographic.findById({ id: DemographicId });
+    },
+  },
+
+  /**
+   *
+   */
   Query: {
     /**
      *

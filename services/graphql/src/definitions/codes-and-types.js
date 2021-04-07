@@ -51,6 +51,12 @@ enum PostalAddressContactTypeEnum {
   UNKNOWN
 }
 
+enum WebformViewCodeEnum {
+  HIDDEN
+  OPTIONAL
+  REQUIRED
+}
+
 type ContactTypeStatusCode {
   id: ContactTypeStatusCodeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
@@ -89,6 +95,12 @@ type PhoneNumberContactType {
 
 type PostalAddressContactType {
   id: PostalAddressContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type WebformViewCode {
+  id: WebformViewCodeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
   description: String! @apiValue
 }

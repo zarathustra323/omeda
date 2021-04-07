@@ -3,6 +3,7 @@ const formatDateDirectives = require('@parameter1/graphql-directive-format-date/
 
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
+const demographic = require('./demographic');
 
 module.exports = gql`
 
@@ -31,7 +32,14 @@ type Mutation {
   ping: String!
 }
 
+type Webform {
+  text: String @apiValue(path: "OmedaWebformText")
+  viewCode: WebformViewCode @codeOrType(instance: "WebformViewCode", path: "OmedaWebformViewCode")
+  sequence: Int @apiValue(path: "OmedaWebformSequence")
+}
+
 ${codesAndTypes}
 ${customer}
+${demographic}
 
 `;
