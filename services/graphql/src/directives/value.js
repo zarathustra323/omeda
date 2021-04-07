@@ -10,7 +10,7 @@ class ValueDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     field.resolve = async (obj) => {
       const { name } = field;
-      const path = this.args.path || `${name.charAt(0).toUppserCase()}${name.slice(1)}`;
+      const path = this.args.path || `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
       switch (this.args.as) {
         case 'ARRAY':
           return getAsArray(obj, path);
