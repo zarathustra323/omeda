@@ -10,19 +10,19 @@ extend type Query {
 }
 
 type Customer {
-  id: Int! @value
-  readerId: String @value
-  encryptedCustomerId: String! @value
-  salutation: String @value
-  firstName: String @value
-  middleName: String @value
-  lastName: String @value
-  suffix: String @value
-  title: String @value
-  gender: String @value
-  promoCode: String @value
-  signUpDate: Date @value
-  changedDate: Date @value
+  id: Int! @apiValue
+  readerId: String @apiValue
+  encryptedCustomerId: String! @apiValue
+  salutation: String @apiValue
+  firstName: String @apiValue
+  middleName: String @apiValue
+  lastName: String @apiValue
+  suffix: String @apiValue
+  title: String @apiValue
+  gender: String @apiValue
+  promoCode: String @apiValue
+  signUpDate: Date @apiValue
+  changedDate: Date @apiValue
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
@@ -34,55 +34,55 @@ type Customer {
 }
 
 type CustomerDemographic {
-  id: Int! @value
-  demographicId: Int! @value
+  id: Int! @apiValue
+  demographicId: Int! @apiValue
   demographicType: DemographicType! @codeOrType(instance: "DemographicType")
-  demographicAge: Int @value
-  valueId: Int @value
-  valueText: String @value
-  valueDate: Date @value
-  writeInDesc: String @value
-  alternateId: String @value
-  changedDate: Date @value
+  demographicAge: Int @apiValue
+  valueId: Int @apiValue
+  valueText: String @apiValue
+  valueDate: Date @apiValue
+  writeInDesc: String @apiValue
+  alternateId: String @apiValue
+  changedDate: Date @apiValue
 }
 
 type CustomerEmailAddress {
-  id: Int! @value
+  id: Int! @apiValue
   contactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType", path: "EmailContactType")
-  emailAddress: String! @value
-  changedDate: Date! @value
+  emailAddress: String! @apiValue
+  changedDate: Date! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
-  hashedEmailAddress: String @value
+  hashedEmailAddress: String @apiValue
 }
 
 type CustomerExternalId {
-  id: String! @value
-  namespace: String! @value
+  id: String! @apiValue
+  namespace: String! @apiValue
 }
 
 type CustomerPhoneNumber {
-  id: String! @value
+  id: String! @apiValue
   contactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType", path: "PhoneContactType")
-  phoneNumber: String! @value
-  extension: String @value
-  changedDate: Date! @value
+  phoneNumber: String! @apiValue
+  extension: String @apiValue
+  changedDate: Date! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 
 type CustomerPostalAddress {
-  id: Int! @value
+  id: Int! @apiValue
   contactType: PostalAddressContactType! @codeOrType(instance: "AddressContactType", path: "AddressContactType")
-  company: String @value
-  street: String @value
-  apartmentMailStop: String @value
-  extraAddress: String @value
-  city: String @value
-  regionCode: String @value
-  region: String @value
-  postalCode: String @value
-  countryCode: String @value
-  country: String @value
-  changedDate: Date! @value
+  company: String @apiValue
+  street: String @apiValue
+  apartmentMailStop: String @apiValue
+  extraAddress: String @apiValue
+  city: String @apiValue
+  regionCode: String @apiValue
+  region: String @apiValue
+  postalCode: String @apiValue
+  countryCode: String @apiValue
+  country: String @apiValue
+  changedDate: Date! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 

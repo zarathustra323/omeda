@@ -2,7 +2,7 @@
 const { SchemaDirectiveVisitor } = require('apollo-server-express');
 const { get, getAsArray, getAsObject } = require('@parameter1/utils');
 
-class ValueDirective extends SchemaDirectiveVisitor {
+class ApiValueDirective extends SchemaDirectiveVisitor {
   /**
    *
    * @param {*} field
@@ -23,4 +23,4 @@ class ValueDirective extends SchemaDirectiveVisitor {
   }
 }
 
-module.exports = ValueDirective;
+module.exports = ApiValueDirective;

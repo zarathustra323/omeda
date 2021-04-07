@@ -52,45 +52,45 @@ enum PostalAddressContactTypeEnum {
 }
 
 type ContactTypeStatusCode {
-  id: ContactTypeStatusCodeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: ContactTypeStatusCodeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type CustomerStatusCode {
-  id: CustomerStatusCodeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: CustomerStatusCodeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type CustomerMergeCode {
-  id: CustomerMergeCodeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: CustomerMergeCodeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type DemographicType {
-  id: DemographicTypeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: DemographicTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type EmailAddressContactType {
-  id: EmailAddressContactTypeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: EmailAddressContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type PhoneNumberContactType {
-  id: PhoneNumberContactTypeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: PhoneNumberContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 type PostalAddressContactType {
-  id: PostalAddressContactTypeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
+  id: PostalAddressContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
 }
 
 `;

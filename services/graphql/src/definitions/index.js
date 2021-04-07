@@ -9,13 +9,13 @@ module.exports = gql`
 ${formatDateDirectives.typeDefs}
 directive @brandData on FIELD_DEFINITION
 directive @codeOrType(instance: String!, path: String) on FIELD_DEFINITION
-directive @value(path: String, as: ValueDirectiveAsEnum) on FIELD_DEFINITION
+directive @apiValue(path: String, as: ApiValueDirectiveAsEnum) on FIELD_DEFINITION
 
 scalar Date
 scalar JSON
 scalar JSONObject
 
-enum ValueDirectiveAsEnum {
+enum ApiValueDirectiveAsEnum {
   ARRAY
   OBJECT
 }
