@@ -28,6 +28,13 @@ enum DemographicTypeEnum {
   DECIMAL
 }
 
+enum DemographicValueTypeEnum {
+  OTHER
+  NONE_OF_THE_ABOVE
+  STANDARD
+}
+
+
 enum EmailAddressContactTypeEnum {
   PRIMARY
   SECONDARY
@@ -77,6 +84,12 @@ type CustomerMergeCode {
 
 type DemographicType {
   id: DemographicTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type DemographicValueType {
+  id: DemographicValueTypeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
   description: String! @apiValue
 }

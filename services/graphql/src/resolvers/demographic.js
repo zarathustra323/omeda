@@ -10,4 +10,16 @@ module.exports = {
       return parent;
     },
   },
+
+  /**
+   *
+   */
+  DemographicValue: {
+    /**
+     *
+     */
+    webform(parent) {
+      return parent;
+    },
+  },
 };

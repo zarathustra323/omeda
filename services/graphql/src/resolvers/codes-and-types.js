@@ -40,6 +40,15 @@ module.exports = {
   /**
    *
    */
+  DemographicValueTypeEnum: {
+    OTHER: 4,
+    NONE_OF_THE_ABOVE: 3,
+    STANDARD: 0,
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,
