@@ -27,6 +27,7 @@ type Customer {
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
   emailAddresses: [CustomerEmailAddress!]!
+  externalIds: [CustomerExternalId!]!
   postalAddresses: [CustomerPostalAddress!]!
 }
 
@@ -37,6 +38,11 @@ type CustomerEmailAddress {
   changedDate: Date! @value
   statusCode: EmailAddressStatusCode @codeOrType(instance: "EmailStatusCode")
   hashedEmailAddress: String @value
+}
+
+type CustomerExternalId {
+  id: String! @value
+  namespace: String! @value
 }
 
 type CustomerPostalAddress {
