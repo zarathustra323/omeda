@@ -85,6 +85,66 @@ module.exports = {
   /**
    *
    */
+  RapidCustomerIdentification: {
+    /**
+     *
+     */
+    async customer({ CustomerId }, _, { apiClient }) {
+      const response = await apiClient.resource('customer').lookupById({
+        customerId: CustomerId,
+      });
+      return response.data;
+    },
+  },
+
+  /**
+   *
+   */
+  Mutation: {
+    /**
+     *
+     */
+    async rapidCustomerIdentification(_, { input }, { apiClient }) {
+      const {
+        firstName,
+        lastName,
+        title,
+        companyName,
+        regionCode,
+        countryCode,
+        postalCode,
+      } = input;
+
+      const hasAddress = companyName || regionCode || countryCode || postalCode;
+      const body = {
+        RunProcessor: 1,
+        Products: [{ OmedaProductId: input.productId }],
+        Emails: [{ EmailAddress: input.email }],
+        ...(firstName && { FirstName: firstName }),
+        ...(lastName && { LastName: lastName }),
+        ...(title && { Title: title }),
+        ...(hasAddress && {
+          Addresses: [
+            {
+              ...(companyName && { Company: companyName }),
+              ...(regionCode && { RegionCode: regionCode }),
+              ...(countryCode && { CountryCode: countryCode }),
+              ...(postalCode && { PostalCode: postalCode }),
+            },
+          ],
+        }),
+      };
+      const response = await apiClient.resource('customer').storeCustomerAndOrder({
+        body,
+        inputId: input.inputId,
+      });
+      return response.data;
+    },
+  },
+
+  /**
+   *
+   */
   Query: {
     /**
      *

@@ -9,6 +9,11 @@ extend type Query {
   customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer!
 }
 
+extend type Mutation {
+  "Rapidly identifies (upserts) user data into an Omeda customer."
+  rapidCustomerIdentification(input: RapidCustomerIdentificationMutationInput!): RapidCustomerIdentification!
+}
+
 type Customer {
   id: Int! @apiValue
   readerId: String @apiValue
@@ -89,6 +94,14 @@ type CustomerPostalAddress {
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 
+type RapidCustomerIdentification {
+  id: Int! @apiValue(path: "CustomerId")
+  encryptedCustomerId: String! @apiValue
+  customer: Customer!
+  orderId: Int! @apiValue
+  transactionId: Int! @apiValue
+}
+
 input CustomerByIdQueryInput {
   "The customer ID to lookup."
   id: Int!
@@ -99,6 +112,29 @@ input CustomerByIdQueryInput {
 input CustomerByEncryptedIdQueryInput {
   "The encrypted customer ID to lookup."
   id: String!
+}
+
+input RapidCustomerIdentificationMutationInput {
+  "The product ID to associate with this rapid identification."
+  productId: Int!
+  "The customer's email address."
+  email: String!
+  "First name of customer, up to 100 characters long"
+  firstName: String
+  "Last name of customer, up to 100 characters long"
+  lastName: String
+  "Job title, up to 100 characters long"
+  title: String
+  "The customer's company name."
+  companyName: String
+  "3-character country code"
+  countryCode: String
+  "For country_code=’USA’ or ‘CAN’, this must be the 2-character US state or Canadian code used by the postal service. Omeda also has region codes for other countries of the world"
+  regionCode: String
+  "ZIP code or postal code."
+  postalCode: String
+  "An optional input ID to use when identifying."
+  inputId: Int
 }
 
 `;
