@@ -1,8 +1,10 @@
 const GraphQLJSON = require('graphql-type-json');
+const GraphQLDate = require('@parameter1/graphql-type-date');
 
 const { GraphQLJSONObject } = GraphQLJSON;
 
 module.exports = {
+  Date: GraphQLDate,
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,
 

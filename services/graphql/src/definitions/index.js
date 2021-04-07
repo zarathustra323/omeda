@@ -1,9 +1,12 @@
 const { gql } = require('apollo-server-express');
+const formatDateDirectives = require('@parameter1/graphql-directive-format-date/directives');
 
 module.exports = gql`
 
+${formatDateDirectives.typeDefs}
 directive @brandData on FIELD_DEFINITION
 
+scalar Date
 scalar JSON
 scalar JSONObject
 

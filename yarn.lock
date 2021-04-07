@@ -1018,6 +1018,19 @@
   dependencies:
     "@octokit/openapi-types" "^6.0.0"
 
+"@parameter1/graphql-directive-format-date@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-format-date/-/graphql-directive-format-date-2.2.5.tgz#85a3f3261638bbb52694f09534e34bf5f802428c"
+  integrity sha512-wlLql1f0oD/nDFX+MtI8hpeMcZxggZN+pyuCklKbod95WW8jZVq+9oeLqOw2oF+2mq/RAdpCvNYM+te7mljKLQ==
+  dependencies:
+    "@parameter1/utils" "^1.1.15"
+    dayjs "^1.10.4"
+
+"@parameter1/graphql-type-date@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-type-date/-/graphql-type-date-1.0.14.tgz#ca88771456853a6d4c44dd92af10da9e6cb36449"
+  integrity sha512-mr9gn9dru5MbIgNvXG92/yadmYKjXGM6r1v0zXm8ebmRZgbUUVEmQsm3Nbh+Llvzl+bq9vTHkqJqY/584dHd2g==
+
 "@parameter1/gulp@^1.1.13":
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.1.13.tgz#f71771e956e81068a0ef79759febcbaceef04ba1"
