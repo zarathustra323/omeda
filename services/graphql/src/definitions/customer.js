@@ -35,10 +35,12 @@ type Customer {
 
 type CustomerDemographic {
   id: Int! @apiValue
+  demographic: Demographic!
   demographicId: Int! @apiValue
   demographicType: DemographicType! @codeOrType(instance: "DemographicType")
   demographicAge: Int @apiValue
-  demographic: Demographic!
+  "The demographic value object. Only applicable when \`valueId\` is present."
+  value: DemographicValue
   valueId: Int @apiValue
   valueText: String @apiValue
   valueDate: Date @apiValue

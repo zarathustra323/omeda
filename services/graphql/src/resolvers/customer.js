@@ -69,6 +69,17 @@ module.exports = {
     demographic({ DemographicId }, _, { repos }) {
       return repos.brandDemographic.findById({ id: DemographicId });
     },
+
+    /**
+     *
+     */
+    value({ DemographicId, ValueId }, _, { repos }) {
+      if (!DemographicId || !ValueId) return null;
+      return repos.brandDemographic.findValueById({
+        demographicId: DemographicId,
+        valueId: ValueId,
+      });
+    },
   },
 
   /**
