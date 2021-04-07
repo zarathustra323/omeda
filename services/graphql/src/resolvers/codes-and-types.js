@@ -2,6 +2,14 @@ module.exports = {
   /**
    *
    */
+  ContactTypeStatusCodeEnum: {
+    ACTIVE: 2,
+    PRIMARY: 1,
+  },
+
+  /**
+   *
+   */
   CustomerMergeCodeEnum: {
     MERGEABLE: 1,
     NON_MERGABLE: 0,
@@ -28,25 +36,9 @@ module.exports = {
   /**
    *
    */
-  EmailAddressStatusCodeEnum: {
-    ACTIVE: 2,
-    PRIMARY: 1,
-  },
-
-  /**
-   *
-   */
   PostalAddressContactTypeEnum: {
     BUSINESS: 100,
     HOME: 110,
     UNKNOWN: 0,
-  },
-
-  /**
-   *
-   */
-  PostalAddressStatusCodeEnum: {
-    ACTIVE: 2,
-    PRIMARY: 1,
   },
 };

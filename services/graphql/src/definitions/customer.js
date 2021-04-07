@@ -36,7 +36,7 @@ type CustomerEmailAddress {
   emailContactType: EmailAddressContactType @codeOrType(instance: "EmailContactType")
   emailAddress: String! @value
   changedDate: Date! @value
-  statusCode: EmailAddressStatusCode @codeOrType(instance: "EmailStatusCode")
+  statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
   hashedEmailAddress: String @value
 }
 
@@ -59,7 +59,7 @@ type CustomerPostalAddress {
   countryCode: String @value
   country: String @value
   changedDate: Date! @value
-  statusCode: PostalAddressStatusCode! @codeOrType(instance: "AddressStatusCode")
+  statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 
 input CustomerByIdQueryInput {

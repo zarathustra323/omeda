@@ -2,6 +2,11 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 
+enum ContactTypeStatusCodeEnum {
+  ACTIVE
+  PRIMARY
+}
+
 enum CustomerStatusCodeEnum {
   ACTIVE
   DELETED_INACTIVE
@@ -19,20 +24,16 @@ enum EmailAddressContactTypeEnum {
   UNKNOWN
 }
 
-enum EmailAddressStatusCodeEnum {
-  ACTIVE
-  PRIMARY
-}
-
 enum PostalAddressContactTypeEnum {
   BUSINESS
   HOME
   UNKNOWN
 }
 
-enum PostalAddressStatusCodeEnum {
-  ACTIVE
-  PRIMARY
+type ContactTypeStatusCode {
+  id: ContactTypeStatusCodeEnum! @value(path: "Value")
+  value: Int! @value
+  description: String! @value
 }
 
 type CustomerStatusCode {
@@ -53,20 +54,8 @@ type EmailAddressContactType {
   description: String! @value
 }
 
-type EmailAddressStatusCode {
-  id: EmailAddressStatusCodeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
-}
-
 type PostalAddressContactType {
   id: PostalAddressContactTypeEnum! @value(path: "Value")
-  value: Int! @value
-  description: String! @value
-}
-
-type PostalAddressStatusCode {
-  id: PostalAddressStatusCodeEnum! @value(path: "Value")
   value: Int! @value
   description: String! @value
 }
