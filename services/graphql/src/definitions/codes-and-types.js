@@ -18,6 +18,16 @@ enum CustomerMergeCodeEnum {
   NON_MERGABLE
 }
 
+enum DemographicTypeEnum {
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  TEXT
+  YES_NO
+  DATE
+  WHOLE_NUMBER
+  DECIMAL
+}
+
 enum EmailAddressContactTypeEnum {
   PRIMARY
   SECONDARY
@@ -55,6 +65,12 @@ type CustomerStatusCode {
 
 type CustomerMergeCode {
   id: CustomerMergeCodeEnum! @value(path: "Value")
+  value: Int! @value
+  description: String! @value
+}
+
+type DemographicType {
+  id: DemographicTypeEnum! @value(path: "Value")
   value: Int! @value
   description: String! @value
 }

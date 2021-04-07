@@ -27,6 +27,19 @@ module.exports = {
   /**
    *
    */
+  DemographicTypeEnum: {
+    SINGLE_CHOICE: 1,
+    MULTIPLE_CHOICE: 2,
+    TEXT: 3,
+    YES_NO: 5,
+    DATE: 6,
+    WHOLE_NUMBER: 7,
+    DECIMAL: 8,
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,

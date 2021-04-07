@@ -26,10 +26,24 @@ type Customer {
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
+  demographics: [CustomerDemographic!]!
   emailAddresses: [CustomerEmailAddress!]!
   externalIds: [CustomerExternalId!]!
   phoneNumbers: [CustomerPhoneNumber!]!
   postalAddresses: [CustomerPostalAddress!]!
+}
+
+type CustomerDemographic {
+  id: Int! @value
+  demographicId: Int! @value
+  demographicType: DemographicType! @codeOrType(instance: "DemographicType")
+  demographicAge: Int @value
+  valueId: Int @value
+  valueText: String @value
+  valueDate: Date @value
+  writeInDesc: String @value
+  alternateId: String @value
+  changedDate: Date @value
 }
 
 type CustomerEmailAddress {
