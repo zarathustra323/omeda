@@ -36,6 +36,20 @@ module.exports = {
   /**
    *
    */
+  PhoneNumberContactTypeEnum: {
+    BUSINESS: 200,
+    FAX: 240,
+    FOREIGN: 250,
+    FOREIGN_FAX: 260,
+    HOME: 210,
+    MOBILE: 230,
+    PAGER: 270,
+    UNKNOWN: 0,
+  },
+
+  /**
+   *
+   */
   PostalAddressContactTypeEnum: {
     BUSINESS: 100,
     HOME: 110,

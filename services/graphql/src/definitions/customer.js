@@ -28,12 +28,13 @@ type Customer {
 
   emailAddresses: [CustomerEmailAddress!]!
   externalIds: [CustomerExternalId!]!
+  phoneNumbers: [CustomerPhoneNumber!]!
   postalAddresses: [CustomerPostalAddress!]!
 }
 
 type CustomerEmailAddress {
   id: Int! @value
-  emailContactType: EmailAddressContactType @codeOrType(instance: "EmailContactType")
+  emailContactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType")
   emailAddress: String! @value
   changedDate: Date! @value
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
@@ -45,9 +46,18 @@ type CustomerExternalId {
   namespace: String! @value
 }
 
+type CustomerPhoneNumber {
+  id: String! @value
+  phoneContactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType")
+  phoneNumber: String! @value
+  extension: String @value
+  changedDate: Date! @value
+  statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
+}
+
 type CustomerPostalAddress {
   id: Int! @value
-  addressContactType: PostalAddressContactType @codeOrType(instance: "AddressContactType")
+  addressContactType: PostalAddressContactType! @codeOrType(instance: "AddressContactType")
   company: String @value
   street: String @value
   apartmentMailStop: String @value

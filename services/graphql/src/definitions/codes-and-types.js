@@ -24,6 +24,17 @@ enum EmailAddressContactTypeEnum {
   UNKNOWN
 }
 
+enum PhoneNumberContactTypeEnum {
+  BUSINESS
+  FAX
+  FOREIGN
+  FOREIGN_FAX
+  HOME
+  MOBILE
+  PAGER
+  UNKNOWN
+}
+
 enum PostalAddressContactTypeEnum {
   BUSINESS
   HOME
@@ -50,6 +61,12 @@ type CustomerMergeCode {
 
 type EmailAddressContactType {
   id: EmailAddressContactTypeEnum! @value(path: "Value")
+  value: Int! @value
+  description: String! @value
+}
+
+type PhoneNumberContactType {
+  id: PhoneNumberContactTypeEnum! @value(path: "Value")
   value: Int! @value
   description: String! @value
 }
