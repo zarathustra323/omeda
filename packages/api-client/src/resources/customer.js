@@ -1,5 +1,6 @@
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
+const { getAsObject } = require('@parameter1/utils');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerBehaviorsResponse = require('../response/customer/behaviors');
@@ -287,7 +288,7 @@ class CustomerResource extends AbstractResource {
    * @param {object} params
    * @param {object} params.body
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
-   * @returns {Promise<ApiClientResponse>}
+   * @returns {Promise<object>}
    */
   async storeCustomerAndOrder(params = {}) {
     const { body, inputId } = await validateAsync(Joi.object({
@@ -295,7 +296,11 @@ class CustomerResource extends AbstractResource {
       inputId: this.schema.inputId,
     }).required(), params);
     const endpoint = '/storecustomerandorder/*';
-    return this.client.post({ endpoint, body, inputId });
+    const response = await this.client.post({ endpoint, body, inputId });
+    return {
+      data: getAsObject(response, 'json.ResponseInfo.0'),
+      response,
+    };
   }
 }
 
