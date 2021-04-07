@@ -279,6 +279,24 @@ class CustomerResource extends AbstractResource {
     const response = await this.client.get({ endpoint, errorOnNotFound });
     return new CustomerSubscriptionsResponse({ response });
   }
+
+  /**
+   * @todo Validate/format the body object.
+   * @todo Determine the response to return
+   *
+   * @param {object} params
+   * @param {object} params.body
+   * @param {string} [params.inputId] An input ID to use. Overrides the default.
+   * @returns {Promise<ApiClientResponse>}
+   */
+  async storeCustomerAndOrder(params = {}) {
+    const { body, inputId } = await validateAsync(Joi.object({
+      body: Joi.object().required(),
+      inputId: this.schema.inputId,
+    }).required(), params);
+    const endpoint = '/storecustomerandorder/*';
+    return this.client.post({ endpoint, body, inputId });
+  }
 }
 
 module.exports = CustomerResource;
