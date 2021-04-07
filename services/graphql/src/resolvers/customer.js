@@ -6,6 +6,17 @@ module.exports = {
     /**
      *
      */
+    async emailAddresses({ Id }, _, { apiClient }) {
+      const response = await apiClient.resource('customer').lookupEmails({
+        customerId: Id,
+        errorOnNotFound: false,
+      });
+      return response.data;
+    },
+
+    /**
+     *
+     */
     async postalAddresses({ Id }, _, { apiClient }) {
       const response = await apiClient.resource('customer').lookupPostalAddresses({
         customerId: Id,

@@ -13,6 +13,17 @@ enum CustomerMergeCodeEnum {
   NON_MERGABLE
 }
 
+enum EmailAddressContactTypeEnum {
+  PRIMARY
+  SECONDARY
+  UNKNOWN
+}
+
+enum EmailAddressStatusCodeEnum {
+  ACTIVE
+  PRIMARY
+}
+
 enum PostalAddressContactTypeEnum {
   BUSINESS
   HOME
@@ -32,6 +43,18 @@ type CustomerStatusCode {
 
 type CustomerMergeCode {
   id: CustomerMergeCodeEnum! @value(path: "Value")
+  value: Int! @value
+  description: String! @value
+}
+
+type EmailAddressContactType {
+  id: EmailAddressContactTypeEnum! @value(path: "Value")
+  value: Int! @value
+  description: String! @value
+}
+
+type EmailAddressStatusCode {
+  id: EmailAddressStatusCodeEnum! @value(path: "Value")
   value: Int! @value
   description: String! @value
 }

@@ -26,7 +26,17 @@ type Customer {
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
+  emailAddresses: [CustomerEmailAddress!]!
   postalAddresses: [CustomerPostalAddress!]!
+}
+
+type CustomerEmailAddress {
+  id: Int! @value
+  emailContactType: EmailAddressContactType @codeOrType(instance: "EmailContactType")
+  emailAddress: String! @value
+  changedDate: Date! @value
+  statusCode: EmailAddressStatusCode @codeOrType(instance: "EmailStatusCode")
+  hashedEmailAddress: String @value
 }
 
 type CustomerPostalAddress {

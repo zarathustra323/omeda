@@ -19,6 +19,23 @@ module.exports = {
   /**
    *
    */
+  EmailAddressContactTypeEnum: {
+    PRIMARY: 300,
+    SECONDARY: 310,
+    UNKNOWN: 0,
+  },
+
+  /**
+   *
+   */
+  EmailAddressStatusCodeEnum: {
+    ACTIVE: 2,
+    PRIMARY: 1,
+  },
+
+  /**
+   *
+   */
   PostalAddressContactTypeEnum: {
     BUSINESS: 100,
     HOME: 110,
