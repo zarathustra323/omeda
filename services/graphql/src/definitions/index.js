@@ -1,6 +1,9 @@
 const { gql } = require('apollo-server-express');
 const formatDateDirectives = require('@parameter1/graphql-directive-format-date/directives');
 
+const codesAndTypes = require('./codes-and-types');
+const customer = require('./customer');
+
 module.exports = gql`
 
 ${formatDateDirectives.typeDefs}
@@ -27,5 +30,8 @@ type Mutation {
   "A generic ping/pong test mutation."
   ping: String!
 }
+
+${codesAndTypes}
+${customer}
 
 `;
