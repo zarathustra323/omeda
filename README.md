@@ -14,6 +14,10 @@
 - A server-side Apollo GraphQL client factory for accessing the Omeda GraphQL service
 - `packages/graphql-client`
 
+### GraphQL Express Middleware
+- Express middleware for creating and using the Omeda GraphQL client
+- `packages/graphql-client-express`
+
 ### Omeda MongoDB
 - Provides repositories for reading and writing Omeda API data from and to MongoDB
 - `packages/mongodb`
