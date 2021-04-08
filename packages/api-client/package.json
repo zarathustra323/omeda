@@ -1,7 +1,7 @@
 {
   "name": "@parameter1/omeda-api-client",
   "version": "0.0.0",
-  "description": "NodeJS API client for making requests to Omeda's REST API",
+  "description": "A NodeJS API client for making requests to Omeda's REST API",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/omeda/tree/main/packages/api-client#readme",
