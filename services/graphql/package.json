@@ -31,7 +31,7 @@
     "graphql-type-json": "^0.3.2",
     "helmet": "^4.4.1",
     "lodash.merge": "^4.6.2",
-    "newrelic": "^7.2.1"
+    "newrelic": "^7.3.0"
   },
   "devDependencies": {
     "@parameter1/gulp": "^1.1.13",
