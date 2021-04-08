@@ -1,6 +1,7 @@
 {
   "name": "@parameter1/omeda-graphql-service",
   "version": "0.0.0",
+  "description": "Omeda GraphQL API service/server.",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/omeda/tree/main/services/graphql#readme",

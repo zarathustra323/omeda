@@ -1,6 +1,7 @@
 {
   "name": "@parameter1/omeda-mongodb",
   "version": "0.0.0",
+  "description": "Repositories for saving/quering Omeda data from MongoDB",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/omeda/tree/main/packages/mongodb#readme",
