@@ -33,6 +33,7 @@ module.exports = ({
   config = {},
   linkConfig = {},
 } = {}) => () => {
+  if (!uri) throw new Error('The Omeda GraphQL `uri` is required.');
   if (!brandKey) throw new Error('The Omeda `brandKey` is required.');
   if (!appId) throw new Error('The Omeda `appId` is required.');
   const headers = {
