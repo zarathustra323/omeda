@@ -1,7 +1,7 @@
 {
   "name": "@parameter1/omeda-graphql-client",
   "version": "0.0.0",
-  "description": "Factory for creating server-side Omeda GraphQL clients.",
+  "description": "A server-side Apollo GraphQL client factory for accessing the Omeda GraphQL service",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
   "homepage": "https://github.com/parameter1/omeda/tree/main/packages/graphql-client#readme",
