@@ -1,0 +1,29 @@
+{
+  "name": "@parameter1/omeda-graphql-client-express",
+  "version": "0.1.0",
+  "description": "Express middleware for creating and using the Omeda GraphQL client",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/graphql-client-express#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/omeda.git",
+    "directory": "packages/graphql-client-express"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "@parameter1/omeda-graphql-client": "^0.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
