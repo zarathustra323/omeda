@@ -1,2 +1,2 @@
-# Omeda MongoDB
-Provides repositories for reading and writing Omeda API data from and to MongoDB
+# Omeda SSR GraphQL Client
+A server-side Apollo GraphQL client factory for accessing the Omeda GraphQL service
