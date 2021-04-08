@@ -7,6 +7,7 @@ ADD packages /app/packages
 RUN yarn --production --pure-lockfile
 WORKDIR /app/services/graphql
 
+
 FROM node:14.16-alpine
 ENV NODE_ENV production
 ENV PORT 80

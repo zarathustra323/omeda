@@ -40,15 +40,16 @@ jobs:
     needs: [vars, build]
     steps:
     - uses: 8398a7/action-slack@v3
-      status: custom
-      fields: repo,ref,author
-      custom_payload: |
-        {
-          attachments: [{
-            color: '#1d9bd1',
-            text: `Deployment of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} has started.`,
-          }]
-        }
+      with:
+        status: custom
+        fields: repo,ref,author
+        custom_payload: |
+          {
+            attachments: [{
+              color: '#1d9bd1',
+              text: `Deployment of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} has started.`,
+            }]
+          }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -59,16 +60,17 @@ jobs:
         RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
         RANCHER_URL: ${{ secrets.RANCHER_URL }}
     - uses: 8398a7/action-slack@v3
-      status: custom
-      fields: repo,ref,author,took
-      if: always()
-      custom_payload: |
-        {
-          attachments: [{
-            color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-            text: `Deployment of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-          }]
-        }
+      with:
+        status: custom
+        fields: repo,ref,author,took
+        if: always()
+        custom_payload: |
+          {
+            attachments: [{
+              color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+              text: `Deployment of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+            }]
+          }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
