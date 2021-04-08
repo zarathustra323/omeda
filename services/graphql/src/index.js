@@ -2,6 +2,7 @@ require('./newrelic');
 const bootService = require('@parameter1/terminus/boot-service');
 const { log } = require('@parameter1/terminus/utils');
 const { buildIndexes } = require('@parameter1/omeda-mongodb');
+const { filterUri } = require('@parameter1/mongodb/utils');
 const newrelic = require('./newrelic');
 const mongodb = require('./mongodb');
 const server = require('./server');
@@ -21,7 +22,7 @@ bootService({
   port: PORT,
   onError: newrelic.noticeError.bind(newrelic),
   onStart: async () => {
-    await mongodb.connect().then((client) => log(`MongoDB connected ${client.s.url}`));
+    await mongodb.connect().then((client) => log(`MongoDB connected ${filterUri(client)}`));
     if (isDevelopment) {
       log('Creating MongoDB indexes...');
       await buildIndexes({ client: mongodb });
