@@ -7,14 +7,14 @@
 - `packages/api-cache-ioredis`
 
 ### Omeda API Client
-- NodeJS API client for making requests to Omeda's REST API
+- A NodeJS API client for making requests to Omeda's REST API
 - `packages/api-client`
 
 ### GraphQL Client
 - A server-side Apollo GraphQL client factory for accessing the Omeda GraphQL service
 - `packages/graphql-client`
 
-### MongoDB
+### Omeda MongoDB
 - Provides repositories for reading and writing Omeda API data from and to MongoDB
 - `packages/mongodb`
 
