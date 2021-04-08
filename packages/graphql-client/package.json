@@ -1,0 +1,30 @@
+{
+  "name": "@parameter1/omeda-graphql-client",
+  "version": "0.0.0",
+  "description": "Omeda Apollo GraphQL client.",
+  "main": "src/index.js",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "homepage": "https://github.com/parameter1/omeda/tree/main/packages/graphql-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parameter1/omeda.git",
+    "directory": "packages/graphql-client"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js --max-warnings 5 ./",
+    "test": "yarn lint"
+  },
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link-http": "^1.5.17",
+    "graphql": "^15.5.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
