@@ -13,11 +13,7 @@ const app = express();
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(helmet({ contentSecurityPolicy: false }));
 
-app.get('/', (req, res) => {
-  res.redirect(301, '/graphql');
-});
-
-const path = '/graphql';
+const path = '/';
 const server = new ApolloServer({
   schema,
   tracing: false,
