@@ -1,0 +1,1 @@
+# Omeda SSR GraphQL Client
