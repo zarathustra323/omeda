@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/omeda-graphql-client-express",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "Express middleware for creating and using the Omeda GraphQL client",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -16,7 +16,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/omeda-graphql-client": "^0.2.0"
+    "@parameter1/omeda-graphql-client": "^0.2.3"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
