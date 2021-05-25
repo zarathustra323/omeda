@@ -47,6 +47,17 @@ enum DeploymentStatusEnum {
   WAITING_REVIEW
 }
 
+enum DeploymentStatusSearchEnum {
+  CANCELLED
+  NEW
+  SCHEDULED
+  SENDING
+  SENT
+  SENT_OR_SENDING
+  WAITING_REVIEW
+}
+
+
 
 enum EmailAddressContactTypeEnum {
   PRIMARY

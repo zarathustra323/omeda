@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
 
 extend type Query {
-  emailDeploymentSearch: [DeploymentListItem!]!
+  emailDeploymentSearch(input: EmailDeploymentSearchQueryInput = {}): [DeploymentListItem!]!
 }
 
 type DeploymentListItem {
@@ -19,6 +19,10 @@ type DeploymentListItem {
   sentDate: Date @apiValue
   status: DeploymentStatusEnum! @apiValue
   trackId: String! @apiValue
+}
+
+input EmailDeploymentSearchQueryInput {
+  statuses: [DeploymentStatusSearchEnum!] = []
 }
 
 `;

@@ -6,8 +6,10 @@ module.exports = {
     /**
      *
      */
-    async emailDeploymentSearch(_, __, { apiClient }) {
-      const response = await apiClient.resource('email').deploymentSearch({});
+    async emailDeploymentSearch(_, { input }, { apiClient }) {
+      const response = await apiClient.resource('email').deploymentSearch({
+        statuses: input.statuses,
+      });
       return response.data;
     },
   },
