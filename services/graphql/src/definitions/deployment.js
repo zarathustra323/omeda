@@ -23,10 +23,18 @@ type DeploymentListItem {
 }
 
 input EmailDeploymentSearchQueryInput {
+  "An array of Deployment Designations."
   deploymentDesignations: [DeploymentDesignationEnum!] = []
+  "Text match for deployment name."
+  deploymentName: String
+  "The deployment type ID you wish to filter the results by."
   deploymentTypeId: Int
+  "Maximum number of deployments returned."
   numResults: Int = 50
+  "An array of internal Omail deployment statuses."
   statuses: [DeploymentStatusSearchEnum!] = []
+  "Text match for deployment trackId."
+  trackId: String
 }
 
 `;
