@@ -34,6 +34,20 @@ enum DemographicValueTypeEnum {
   STANDARD
 }
 
+enum DeploymentDesignationEnum {
+  ADVERTISER_PROMOTION
+  AUDIENCE_PROMOTION
+  DIGITAL_MAGAZINE
+  LIVE_CONFERENCES
+  MARKETING
+  NEWSLETTER
+  OTHER_COMMUNICATIONS
+  RESEARCH
+  THIRD_PARTY
+  VIRTUAL_CONFERENCES
+  WEBINAR
+}
+
 enum DeploymentStatusEnum {
   ACCEPTED
   APPROVED
@@ -44,6 +58,7 @@ enum DeploymentStatusEnum {
   SENDING
   SENT
   SUBMITTED
+  UNSCHEDULING
   WAITING_REVIEW
 }
 
@@ -56,8 +71,6 @@ enum DeploymentStatusSearchEnum {
   SENT_OR_SENDING
   WAITING_REVIEW
 }
-
-
 
 enum EmailAddressContactTypeEnum {
   PRIMARY

@@ -49,6 +49,23 @@ module.exports = {
   /**
    *
    */
+  DeploymentDesignationEnum: {
+    ADVERTISER_PROMOTION: 'Advertiser Promotion',
+    AUDIENCE_PROMOTION: 'Audience Promotion',
+    DIGITAL_MAGAZINE: 'Digital Magazine',
+    LIVE_CONFERENCES: 'Live Conferences',
+    MARKETING: 'Marketing',
+    NEWSLETTER: 'Newsletter',
+    OTHER_COMMUNICATIONS: 'Other Communications',
+    RESEARCH: 'Research',
+    THIRD_PARTY: 'Third Party',
+    VIRTUAL_CONFERENCES: 'Virtual Conferences',
+    WEBINAR: 'Webinar',
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,

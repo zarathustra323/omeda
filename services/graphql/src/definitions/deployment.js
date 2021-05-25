@@ -10,6 +10,7 @@ type DeploymentListItem {
   id: String! @apiValue(path: "TrackId")
   createdBy: String! @apiValue
   createdDate: Date! @apiValue
+  deploymentDesignation: DeploymentDesignationEnum! @apiValue
   deploymentName: String! @apiValue
   deploymentTypeId: Int! @apiValue
   deploymentTypeDescription: String! @apiValue
@@ -22,6 +23,7 @@ type DeploymentListItem {
 }
 
 input EmailDeploymentSearchQueryInput {
+  deploymentDesignations: [DeploymentDesignationEnum!] = []
   statuses: [DeploymentStatusSearchEnum!] = []
 }
 
