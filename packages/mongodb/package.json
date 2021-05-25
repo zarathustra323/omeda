@@ -16,13 +16,13 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/joi": "^1.2.2",
-    "@parameter1/mongodb": "^1.4.9"
+    "@parameter1/joi": "^1.2.6",
+    "@parameter1/mongodb": "^1.4.14"
   },
   "devDependencies": {
-    "eslint": "^7.23.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.23.3"
   },
   "publishConfig": {
     "access": "public"
