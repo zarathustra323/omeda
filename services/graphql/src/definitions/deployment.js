@@ -10,7 +10,7 @@ type DeploymentListItem {
   id: String! @apiValue(path: "TrackId")
   createdBy: String! @apiValue
   createdDate: Date! @apiValue
-  deploymentDesignation: DeploymentDesignation! @codeOrType(instance: "DeploymentDesignation")
+  deploymentDesignation: DeploymentDesignation @codeOrType(instance: "DeploymentDesignation")
   deploymentName: String! @apiValue
   deploymentTypeId: Int! @apiValue
   deploymentTypeDescription: String! @apiValue
@@ -23,6 +23,10 @@ type DeploymentListItem {
 }
 
 input EmailDeploymentSearchQueryInput {
+  "Deployments have been sent after this date."
+  deploymentDateStart: Date
+  "Deployments have been sent prior to this date."
+  deploymentDateEnd: Date
   "An array of Deployment Designations."
   deploymentDesignations: [DeploymentDesignationEnum!] = []
   "Text match for deployment name."

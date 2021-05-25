@@ -10,6 +10,8 @@ class EmailResource extends AbstractResource {
    */
   async deploymentSearch(params = {}) {
     const {
+      deploymentDateStart,
+      deploymentDateEnd,
       deploymentDesignations,
       deploymentName,
       deploymentTypeId,
@@ -19,6 +21,8 @@ class EmailResource extends AbstractResource {
       trackId,
     } = await validateAsync(Joi.object({
       deploymentDesignations: Joi.array().items(Joi.string()).default([]),
+      deploymentDateStart: Joi.date(),
+      deploymentDateEnd: Joi.date(),
       deploymentName: Joi.string().trim(),
       deploymentTypeId: Joi.number().min(1),
       enteredByOrAssignedTo: Joi.string().trim(),
@@ -28,6 +32,8 @@ class EmailResource extends AbstractResource {
     }).required(), params);
     const endpoint = '/omail/deployment/search/*';
     const body = {
+      ...(deploymentDateStart && { DeploymentDateStart: deploymentDateStart.toISOString() }),
+      ...(deploymentDateEnd && { DeploymentDateEnd: deploymentDateEnd.toISOString() }),
       ...(deploymentDesignations.length && { DeploymentDesignations: deploymentDesignations }),
       ...(deploymentName && { DeploymentName: deploymentName }),
       ...(deploymentTypeId && { Type: deploymentTypeId }),
