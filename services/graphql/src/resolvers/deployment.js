@@ -11,6 +11,7 @@ module.exports = {
         deploymentDesignations: input.deploymentDesignations,
         deploymentName: input.deploymentName,
         deploymentTypeId: input.deploymentTypeId,
+        enteredByOrAssignedTo: input.enteredByOrAssignedTo,
         numResults: input.numResults,
         statuses: input.statuses,
         trackId: input.trackId,

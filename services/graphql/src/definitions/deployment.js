@@ -29,6 +29,8 @@ input EmailDeploymentSearchQueryInput {
   deploymentName: String
   "The deployment type ID you wish to filter the results by."
   deploymentTypeId: Int
+  "Text match for user. Matches both the deployment Owner and the deployment creator. In the case of API deployments, the owner and the creator will be the same user."
+  enteredByOrAssignedTo: String
   "Maximum number of deployments returned."
   numResults: Int = 50
   "An array of internal Omail deployment statuses."
