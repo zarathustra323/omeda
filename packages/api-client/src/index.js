@@ -4,6 +4,7 @@ const ApiClientResponse = require('./response/client');
 const ApiResponseError = require('./response/error');
 const BrandResource = require('./resources/brand');
 const CustomerResource = require('./resources/customer');
+const EmailResource = require('./resources/email');
 const pkg = require('../package.json');
 
 class OmedaApiClient {
@@ -34,6 +35,7 @@ class OmedaApiClient {
     this.resources = {
       brand: new BrandResource({ client: this }),
       customer: new CustomerResource({ client: this }),
+      email: new EmailResource({ client: this }),
     };
   }
 
