@@ -24,6 +24,7 @@ type DeploymentListItem {
 
 input EmailDeploymentSearchQueryInput {
   deploymentDesignations: [DeploymentDesignationEnum!] = []
+  numResults: Int = 50
   statuses: [DeploymentStatusSearchEnum!] = []
 }
 
