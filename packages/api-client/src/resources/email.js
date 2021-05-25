@@ -11,16 +11,19 @@ class EmailResource extends AbstractResource {
   async deploymentSearch(params = {}) {
     const {
       deploymentDesignations,
+      deploymentTypeId,
       numResults,
       statuses,
     } = await validateAsync(Joi.object({
       deploymentDesignations: Joi.array().items(Joi.string()).default([]),
+      deploymentTypeId: Joi.number().min(1),
       numResults: Joi.number().min(1).default(50),
       statuses: Joi.array().items(Joi.string()).default([]),
     }).required(), params);
     const endpoint = '/omail/deployment/search/*';
     const body = {
       ...(deploymentDesignations.length && { DeploymentDesignations: deploymentDesignations }),
+      ...(deploymentTypeId && { Type: deploymentTypeId }),
       NumResults: numResults,
       ...(statuses.length && { Statuses: statuses }),
     };
