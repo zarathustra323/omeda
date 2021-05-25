@@ -4,6 +4,7 @@ const formatDateDirectives = require('@parameter1/graphql-directive-format-date/
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
+const deployment = require('./deployment');
 
 module.exports = gql`
 
@@ -41,5 +42,6 @@ type Webform {
 ${codesAndTypes}
 ${customer}
 ${demographic}
+${deployment}
 
 `;

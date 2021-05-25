@@ -34,6 +34,19 @@ enum DemographicValueTypeEnum {
   STANDARD
 }
 
+enum DeploymentStatusEnum {
+  ACCEPTED
+  APPROVED
+  CANCELLED
+  NEW
+  NOT_ACCEPTED
+  SCHEDULED
+  SENDING
+  SENT
+  SUBMITTED
+  WAITING_REVIEW
+}
+
 
 enum EmailAddressContactTypeEnum {
   PRIMARY
