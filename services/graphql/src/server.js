@@ -22,7 +22,7 @@ const server = new ApolloServer({
   debug: !isProduction,
   playground: isProduction ? false : { endpoint: path },
   formatError: (err) => {
-    const code = get(err, 'extensions.exception.statusCode');
+    const code = get(err, 'extensions.exception.status');
     if (code) set(err, 'extensions.code', STATUS_CODES[code].replace(/\s/g, '_').toUpperCase());
     return err;
   },
