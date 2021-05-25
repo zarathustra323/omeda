@@ -10,7 +10,7 @@ type DeploymentListItem {
   id: String! @apiValue(path: "TrackId")
   createdBy: String! @apiValue
   createdDate: Date! @apiValue
-  deploymentDesignation: DeploymentDesignationEnum! @apiValue
+  deploymentDesignation: DeploymentDesignation! @codeOrType(instance: "DeploymentDesignation")
   deploymentName: String! @apiValue
   deploymentTypeId: Int! @apiValue
   deploymentTypeDescription: String! @apiValue
@@ -18,7 +18,7 @@ type DeploymentListItem {
   owner: String! @apiValue
   scheduledDate: Date @apiValue
   sentDate: Date @apiValue
-  status: DeploymentStatusEnum! @apiValue
+  status: DeploymentStatus! @codeOrType(instance: "DeploymentStatus")
   trackId: String! @apiValue
 }
 

@@ -131,6 +131,18 @@ type DemographicValueType {
   description: String! @apiValue
 }
 
+type DeploymentDesignation {
+  id: DeploymentDesignationEnum! @apiValue(path: "Value")
+  value: String! @apiValue
+  description: String! @apiValue
+}
+
+type DeploymentStatus {
+  id: DeploymentStatusEnum! @apiValue(path: "Value")
+  value: String! @apiValue
+  description: String! @apiValue
+}
+
 type EmailAddressContactType {
   id: EmailAddressContactTypeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
