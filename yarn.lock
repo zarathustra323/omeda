@@ -1018,14 +1018,6 @@
   dependencies:
     "@octokit/openapi-types" "^6.0.0"
 
-"@parameter1/graphql-directive-format-date@^2.2.9":
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-format-date/-/graphql-directive-format-date-2.2.9.tgz#37305077a509749396c61b1329659dc396b46ca2"
-  integrity sha512-WMmNxl0d6tMGGFSAHAg+MrX84AQKx98MRBiZDcJ/gYd5oq4vggOo+CiAofdqqIWTBsyDl3wwPMuM7GtgDtkrqA==
-  dependencies:
-    "@parameter1/utils" "^1.1.19"
-    dayjs "^1.10.4"
-
 "@parameter1/graphql-type-date@^1.0.18":
   version "1.0.18"
   resolved "https://registry.yarnpkg.com/@parameter1/graphql-type-date/-/graphql-type-date-1.0.18.tgz#2d092a1ccebb2dc9ce7f69e6447d27251c62d7c7"
