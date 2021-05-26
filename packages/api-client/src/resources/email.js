@@ -7,8 +7,11 @@ class EmailResource extends AbstractResource {
   /**
    * This service retrieves a list of most recent deployments for a
    * given brand based on search parameters.
+   *
+   * @link https://main.omeda.com/knowledge-base/email-deployment-search/
+   * @returns {Promise<DeploymentSearchResponse>} The matched deployment list items.
    */
-  async deploymentSearch(params = {}) {
+  async searchDeployments(params = {}) {
     const {
       deploymentDateStart,
       deploymentDateEnd,

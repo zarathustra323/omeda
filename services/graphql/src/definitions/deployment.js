@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
 
 extend type Query {
-  emailDeploymentSearch(input: EmailDeploymentSearchQueryInput = {}): [DeploymentListItem!]!
+  searchEmailDeployments(input: SearchEmailDeploymentsQueryInput = {}): [DeploymentListItem!]!
 }
 
 type DeploymentListItem {
@@ -22,7 +22,7 @@ type DeploymentListItem {
   trackId: String! @apiValue
 }
 
-input EmailDeploymentSearchQueryInput {
+input SearchEmailDeploymentsQueryInput {
   "Deployments have been sent after this date."
   deploymentDateStart: Date
   "Deployments have been sent prior to this date."
