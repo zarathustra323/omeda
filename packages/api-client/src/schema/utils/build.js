@@ -1,4 +1,4 @@
-const dayjs = require('../../dayjs');
+const convertDate = require('../../utils/convert-date');
 
 module.exports = ({ schema, obj, builder } = {}) => {
   const data = {};
@@ -21,8 +21,8 @@ module.exports = ({ schema, obj, builder } = {}) => {
 
     // dates
     if (['datetime', 'date'].includes(type)) {
-      const date = value ? dayjs.tz(value, 'America/Chicago') : null;
-      data[name] = date && date.isValid() ? date.toDate() : null;
+      const date = convertDate(value);
+      data[name] = date ? date.toDate() : null;
       return;
     }
     // strings
