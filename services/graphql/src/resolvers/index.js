@@ -5,7 +5,7 @@ const merge = require('lodash.merge');
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
-const deployment = require('./deployment');
+const email = require('./email');
 
 const { GraphQLJSONObject } = GraphQLJSON;
 
@@ -44,4 +44,4 @@ module.exports = merge({
       return repos.brand.findById();
     },
   },
-}, codesAndTypes, customer, demographic, deployment);
+}, codesAndTypes, customer, demographic, email);

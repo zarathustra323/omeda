@@ -6,6 +6,19 @@ module.exports = {
     /**
      *
      */
+    async searchEmailClicks(_, { input }, { apiClient }) {
+      const response = await apiClient.resource('email').searchClicks({
+        startDate: input.startDate,
+        endDate: input.endDate,
+        deploymentName: input.deploymentName,
+        trackId: input.trackId,
+      });
+      return response.data;
+    },
+
+    /**
+     *
+     */
     async searchEmailDeployments(_, { input }, { apiClient }) {
       const response = await apiClient.resource('email').searchDeployments({
         deploymentDateStart: input.deploymentDateStart,

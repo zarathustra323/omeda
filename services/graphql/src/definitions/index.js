@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
-const deployment = require('./deployment');
+const email = require('./email');
 
 module.exports = gql`
 
@@ -40,6 +40,6 @@ type Webform {
 ${codesAndTypes}
 ${customer}
 ${demographic}
-${deployment}
+${email}
 
 `;
