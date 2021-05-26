@@ -1,5 +1,8 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note `Links` was renamed to `links` due to the actual response body.
+ */
 module.exports = load('click-split-elements', `
 <table>
   <tbody>
@@ -22,7 +25,7 @@ module.exports = load('click-split-elements', `
       <td>Email subject line for this split</td>
     </tr>
     <tr>
-      <td>Links</td>
+      <td>links</td>
       <td>required</td>
       <td>string</td>
       <td>JSON element containing one or more Link elements (see below)</td>

@@ -5,7 +5,7 @@ const schema = require('../../schema/click/link-elements');
 const ClickEntity = require('./click');
 
 const builder = ({ name, value }) => {
-  if (name === 'Clicks') {
+  if (name === 'clicks') {
     return asArray(value).map((obj) => new ClickEntity(obj));
   }
   return null;

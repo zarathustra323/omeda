@@ -5,7 +5,7 @@ const schema = require('../../schema/click/split-elements');
 const LinkClickEntity = require('./link');
 
 const builder = ({ name, value }) => {
-  if (name === 'Links') {
+  if (name === 'links') {
     return asArray(value).map((obj) => new LinkClickEntity(obj));
   }
   return null;

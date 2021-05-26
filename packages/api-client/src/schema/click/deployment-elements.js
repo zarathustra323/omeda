@@ -1,4 +1,5 @@
 const load = require('../utils/from-four-col');
+
 /**
  * @note `Splits` was renamed to `splits` due to the actual response body.
  */

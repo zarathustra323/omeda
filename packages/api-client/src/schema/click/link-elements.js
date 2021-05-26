@@ -1,5 +1,8 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note `Clicks` was renamed to `clicks` due to the actual response body.
+ */
 module.exports = load('click-link-elements', `
 <table>
   <tbody>
@@ -22,7 +25,7 @@ module.exports = load('click-link-elements', `
       <td>The URL of the link that was clicked</td>
     </tr>
     <tr>
-      <td>Clicks</td>
+      <td>clicks</td>
       <td>required</td>
       <td>string</td>
       <td>JSON element containing one or more Click elements (see below)</td>
