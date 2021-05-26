@@ -12,6 +12,10 @@ class EmailResource extends AbstractResource {
    *
    * @link https://main.omeda.com/knowledge-base/email-clicks/
    * @param {object} params
+   * @param {string} [params.deploymentName]
+   * @param {Date} [params.endDate]
+   * @param {Date} [params.startDate]
+   * @param {string} [params.trackId]
    * @returns {Promise<EmailClickSearchResponse>}
    */
   async searchClicks(params = {}) {
@@ -46,6 +50,15 @@ class EmailResource extends AbstractResource {
    *
    * @link https://main.omeda.com/knowledge-base/email-deployment-search/
    * @param {object} params
+   * @param {Date} [params.deploymentDateStart]
+   * @param {Date} [params.deploymentDateEnd]
+   * @param {string[]} [params.deploymentDesignations]
+   * @param {string} [params.deploymentName]
+   * @param {number} [params.deploymentTypeId]
+   * @param {string} [params.enteredByOrAssignedTo]
+   * @param {number} [params.numResults=50]
+   * @param {string[]} [params.statuses]
+   * @param {string} [params.trackId]
    * @returns {Promise<EmailDeploymentSearchResponse>} The matched deployment list items.
    */
   async searchDeployments(params = {}) {
