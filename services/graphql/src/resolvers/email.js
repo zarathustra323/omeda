@@ -2,7 +2,28 @@ module.exports = {
   /**
    *
    */
+  EmailDeploymentListItem: {
+    /**
+     *
+     */
+    async deployment(item, _, { apiClient }) {
+      const { data } = await apiClient.resource('email').lookupDeploymentById({ trackId: item.TrackId });
+      return data;
+    },
+  },
+
+  /**
+   *
+   */
   Query: {
+    /**
+     *
+     */
+    async emailDeploymentById(_, { input }, { apiClient }) {
+      const { data } = await apiClient.resource('email').lookupDeploymentById({ trackId: input.trackId });
+      return data;
+    },
+
     /**
      *
      */
