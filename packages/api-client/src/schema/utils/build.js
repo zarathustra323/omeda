@@ -42,7 +42,7 @@ module.exports = ({ schema, obj, builder } = {}) => {
       return;
     }
     // floats
-    if (['decimal', 'long'].includes(type)) {
+    if (['decimal', 'long', 'double'].includes(type)) {
       data[name] = value == null ? null : Number(value);
       return;
     }
