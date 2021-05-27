@@ -66,6 +66,23 @@ module.exports = {
   /**
    *
    */
+  DeploymentStatusEnum: {
+    ACCEPTED: 'Accepted',
+    APPROVED: 'Approved',
+    CANCELLED: 'Cancelled',
+    NEW: 'New',
+    NOT_ACCEPTED: 'Not Accepted',
+    SCHEDULED: 'Scheduled',
+    SENDING: 'Sending',
+    SENT: 'Sent',
+    SUBMITTED: 'Submitted',
+    UNSCHEDULING: 'Unscheduling',
+    WAITING_REVIEW: 'Waiting Review',
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,

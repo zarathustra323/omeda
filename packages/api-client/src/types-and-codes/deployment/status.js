@@ -12,7 +12,7 @@ const map = [
   'Submitted',
   'Unscheduling',
   'Waiting Review',
-].reduce((o, k) => ({ ...o, [k.toUpperCase().replace(' ', '_')]: k }), {});
+].reduce((o, k) => ({ ...o, [k]: k.toUpperCase().replace(' ', '_') }), {});
 
 class DeploymentStatus extends StringCode {
   constructor(value) {
