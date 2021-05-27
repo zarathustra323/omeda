@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/omeda-api-cache-ioredis",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Provides Redis caching of Omeda API client responses using the `ioredis` package",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
@@ -16,7 +16,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/omeda-api-client": "^0.2.3",
+    "@parameter1/omeda-api-client": "^0.3.0",
     "ioredis": "^4.27.3"
   },
   "devDependencies": {
