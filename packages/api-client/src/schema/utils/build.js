@@ -33,6 +33,10 @@ module.exports = ({ schema, obj, builder } = {}) => {
     }
     // booleans
     if (['boolean', 'short (boolean)'].includes(type)) {
+      if (value === 'false') {
+        data[name] = false;
+        return;
+      }
       data[name] = value == null ? null : Boolean(value);
       return;
     }
