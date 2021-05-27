@@ -2,6 +2,9 @@ const load = require('../utils/from-four-col');
 
 /**
  * @note changed `FinalApproverUserId` datatype from `date` to `string`
+ * @note changed `TrackLinks` datatype from `string` to `boolean`
+ * @note changed `TrackOpens` datatype from `string` to `boolean`
+ * @note changed `IsFiltered` datatype from `string` to `boolean`
  */
 module.exports = load('email-deployment-elements', `
 <table>
@@ -99,7 +102,7 @@ module.exports = load('email-deployment-elements', `
     <tr>
       <td>TrackLinks</td>
       <td>required</td>
-      <td>string</td>
+      <td>boolean</td>
       <td>true / false</td>
     </tr>
     <tr>
@@ -129,7 +132,7 @@ module.exports = load('email-deployment-elements', `
     <tr>
       <td>TrackOpens</td>
       <td>required</td>
-      <td>string</td>
+      <td>boolean</td>
       <td>true/false</td>
     </tr>
     <tr>
@@ -177,7 +180,7 @@ module.exports = load('email-deployment-elements', `
     <tr>
       <td>IsFiltered</td>
       <td>required</td>
-      <td>string</td>
+      <td>boolean</td>
       <td>true/false</td>
     </tr>
     <tr>

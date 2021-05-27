@@ -1,5 +1,9 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note changed `Tracked` datatype from `integer` to `boolean`
+ * @note changed `WebTracking` datatype from `integer` to `boolean`
+ */
 module.exports = load('email-deployment-link-tracking-elements', `
 <table>
   <tbody>
@@ -54,13 +58,13 @@ module.exports = load('email-deployment-link-tracking-elements', `
     <tr>
       <td>Tracked</td>
       <td>required</td>
-      <td>integer</td>
+      <td>boolean</td>
       <td>0 = not tracked, 1 = tracked</td>
     </tr>
     <tr>
       <td>WebTracking</td>
       <td>required</td>
-      <td>integer</td>
+      <td>boolean</td>
       <td>0 = web tracking off, 1 = web tracking on</td>
     </tr>
     <tr>
