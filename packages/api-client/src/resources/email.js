@@ -2,10 +2,31 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const AbstractResource = require('./abstract');
 const EmailClickSearchResponse = require('../response/email/click-search');
+const EmailDeploymentResponse = require('../response/email/deployment');
 const EmailDeploymentSearchResponse = require('../response/email/deployment-search');
 const formatDate = require('../utils/format-date');
 
 class EmailResource extends AbstractResource {
+  /**
+   * The Deployment Lookup API provides the ability to retrieve deployment
+   * information such as link tracking, delivery statistics, deployment status, history, etc.
+   *
+   * @link https://main.omeda.com/knowledge-base/email-deployment-lookup/
+   * @param {object} params
+   * @param {string} params.trackId
+   * @returns {Promise<EmailDeploymentResponse>}
+   */
+  async lookupDeploymentById(params = {}) {
+    const {
+      trackId,
+    } = await validateAsync(Joi.object({
+      trackId: Joi.string().trim().required(),
+    }).required(), params);
+    const endpoint = `/omail/deployment/lookup/${trackId}/*`;
+    const response = await this.client.get({ endpoint });
+    return new EmailDeploymentResponse({ response, resource: this });
+  }
+
   /**
    * This service retrieves Omail data related to clicks on links
    * in emails using various parameters.
