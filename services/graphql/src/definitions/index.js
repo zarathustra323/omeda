@@ -11,7 +11,7 @@ directive @brandData on FIELD_DEFINITION
 directive @codeOrType(instance: String!, path: String) on FIELD_DEFINITION
 directive @apiValue(path: String, as: ApiValueDirectiveAsEnum) on FIELD_DEFINITION
 
-scalar Date
+scalar DateTime
 scalar JSON
 scalar JSONObject
 

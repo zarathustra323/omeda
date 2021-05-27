@@ -10,7 +10,7 @@ extend type Query {
 type EmailDeploymentClicks {
   id: String! @apiValue(path: "TrackId")
   deploymentName: String! @apiValue
-  sentDate: Date! @apiValue
+  sentDate: DateTime! @apiValue
   trackId: String! @apiValue
   splits: [EmailDeploymentClickSplit!]! @apiValue(path: "splits", as: ARRAY)
 }
@@ -29,7 +29,7 @@ type EmailDeploymentClickLink {
 
 type EmailDeploymentClickInfo {
   numberOfClicks: Int! @apiValue
-  clickDate: Date! @apiValue
+  clickDate: DateTime! @apiValue
   firstName: String @apiValue
   lastName: String @apiValue
   customerId: String @apiValue
@@ -43,15 +43,16 @@ type EmailDeploymentClickInfo {
 type EmailDeploymentListItem {
   id: String! @apiValue(path: "TrackId")
   createdBy: String! @apiValue
-  createdDate: Date! @apiValue
+  createdDate: DateTime! @apiValue
   deploymentDesignation: DeploymentDesignation @codeOrType(instance: "DeploymentDesignation")
   deploymentName: String! @apiValue
   deploymentTypeId: Int! @apiValue
   deploymentTypeDescription: String! @apiValue
+  deployment: EmailDeployment!
   finalApprover: String @apiValue
   owner: String! @apiValue
-  scheduledDate: Date @apiValue
-  sentDate: Date @apiValue
+  scheduledDate: DateTime @apiValue
+  sentDate: DateTime @apiValue
   status: DeploymentStatus! @codeOrType(instance: "DeploymentStatus")
   trackId: String! @apiValue
 }
@@ -66,16 +67,19 @@ input SearchEmailClicksQueryInput {
   "Text match for deployment trackId. Required if \`deploymentName\` is not present."
   trackId: String
   "Deployments have been clicked after this date. Required if \`endDate\` is present."
-  startDate: Date
+  startDate: DateTime
   "Deployments have been clicked prior to this date. Required if \`startDate\` is present"
-  endDate: Date
+  endDate: DateTime
 }
 
+"""
+Dates are only precise to the _minute_ (seconds and milliseconds will be ignored/truncated).
+"""
 input SearchEmailDeploymentsQueryInput {
   "Deployments have been sent after this date."
-  deploymentDateStart: Date
+  deploymentDateStart: DateTime
   "Deployments have been sent prior to this date."
-  deploymentDateEnd: Date
+  deploymentDateEnd: DateTime
   "An array of Deployment Designations."
   deploymentDesignations: [DeploymentDesignationEnum!] = []
   "Text match for deployment name."

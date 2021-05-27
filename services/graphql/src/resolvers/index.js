@@ -1,6 +1,6 @@
 const GraphQLJSON = require('graphql-type-json');
-const GraphQLDate = require('@parameter1/graphql-type-date');
 const merge = require('lodash.merge');
+const GraphQLDateTime = require('../types/date-time');
 
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
@@ -10,7 +10,7 @@ const email = require('./email');
 const { GraphQLJSONObject } = GraphQLJSON;
 
 module.exports = merge({
-  Date: GraphQLDate,
+  DateTime: GraphQLDateTime,
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,
 

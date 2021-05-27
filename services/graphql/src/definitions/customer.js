@@ -26,8 +26,8 @@ type Customer {
   title: String @apiValue
   gender: String @apiValue
   promoCode: String @apiValue
-  signUpDate: Date @apiValue
-  changedDate: Date @apiValue
+  signUpDate: DateTime @apiValue
+  changedDate: DateTime @apiValue
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
@@ -48,17 +48,17 @@ type CustomerDemographic {
   value: DemographicValue
   valueId: Int @apiValue
   valueText: String @apiValue
-  valueDate: Date @apiValue
+  valueDate: DateTime @apiValue
   writeInDesc: String @apiValue
   alternateId: String @apiValue
-  changedDate: Date @apiValue
+  changedDate: DateTime @apiValue
 }
 
 type CustomerEmailAddress {
   id: Int! @apiValue
   contactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType", path: "EmailContactType")
   emailAddress: String! @apiValue
-  changedDate: Date! @apiValue
+  changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
   hashedEmailAddress: String @apiValue
 }
@@ -73,7 +73,7 @@ type CustomerPhoneNumber {
   contactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType", path: "PhoneContactType")
   phoneNumber: String! @apiValue
   extension: String @apiValue
-  changedDate: Date! @apiValue
+  changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 
@@ -90,7 +90,7 @@ type CustomerPostalAddress {
   postalCode: String @apiValue
   countryCode: String @apiValue
   country: String @apiValue
-  changedDate: Date! @apiValue
+  changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
 }
 

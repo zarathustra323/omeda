@@ -3,7 +3,7 @@ const { validateAsync } = require('@parameter1/joi/utils');
 const AbstractResource = require('./abstract');
 const EmailClickSearchResponse = require('../response/email/click-search');
 const EmailDeploymentSearchResponse = require('../response/email/deployment-search');
-const dayjs = require('../dayjs');
+const formatDate = require('../utils/format-date');
 
 class EmailResource extends AbstractResource {
   /**
@@ -13,8 +13,8 @@ class EmailResource extends AbstractResource {
    * @link https://main.omeda.com/knowledge-base/email-clicks/
    * @param {object} params
    * @param {string} [params.deploymentName]
-   * @param {Date} [params.endDate]
-   * @param {Date} [params.startDate]
+   * @param {Date} [params.endDate] Will be converted to America/Chicago timezone.
+   * @param {Date} [params.startDate] Will be converted to America/Chicago timezone.
    * @param {string} [params.trackId]
    * @returns {Promise<EmailClickSearchResponse>}
    */
@@ -31,9 +31,6 @@ class EmailResource extends AbstractResource {
       trackId: Joi.string().trim(),
     }).required(), params);
     const endpoint = '/omail/click/search/*';
-
-    const formatDate = (value) => dayjs(value).format('YYYY-MM-DD HH:mm');
-
     const body = {
       ...(startDate && { StartDate: formatDate(startDate) }),
       ...(endDate && { EndDate: formatDate(endDate) }),
@@ -50,8 +47,8 @@ class EmailResource extends AbstractResource {
    *
    * @link https://main.omeda.com/knowledge-base/email-deployment-search/
    * @param {object} params
-   * @param {Date} [params.deploymentDateStart]
-   * @param {Date} [params.deploymentDateEnd]
+   * @param {Date} [params.deploymentDateStart] Will be converted to America/Chicago timezone.
+   * @param {Date} [params.deploymentDateEnd] Will be converted to America/Chicago timezone.
    * @param {string[]} [params.deploymentDesignations]
    * @param {string} [params.deploymentName]
    * @param {number} [params.deploymentTypeId]
@@ -79,14 +76,14 @@ class EmailResource extends AbstractResource {
       deploymentName: Joi.string().trim(),
       deploymentTypeId: Joi.number().min(1),
       enteredByOrAssignedTo: Joi.string().trim(),
-      numResults: Joi.number().min(1).default(50),
+      numResults: Joi.number().min(1).max(1000).default(50),
       statuses: Joi.array().items(Joi.string()).default([]),
       trackId: Joi.string().trim(),
     }).required(), params);
     const endpoint = '/omail/deployment/search/*';
     const body = {
-      ...(deploymentDateStart && { DeploymentDateStart: deploymentDateStart.toISOString() }),
-      ...(deploymentDateEnd && { DeploymentDateEnd: deploymentDateEnd.toISOString() }),
+      ...(deploymentDateStart && { DeploymentDateStart: formatDate(deploymentDateStart) }),
+      ...(deploymentDateEnd && { DeploymentDateEnd: formatDate(deploymentDateEnd) }),
       ...(deploymentDesignations.length && { DeploymentDesignations: deploymentDesignations }),
       ...(deploymentName && { DeploymentName: deploymentName }),
       ...(deploymentTypeId && { Type: deploymentTypeId }),
