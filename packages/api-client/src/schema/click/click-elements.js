@@ -1,5 +1,8 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note changed `ClickDate` datatype from `string` to `date`
+ */
 module.exports = load('click-click-elements', `
 <table border="#c0c0c0" cellspacing="0" cellpadding="5">
   <tbody>
@@ -18,7 +21,7 @@ module.exports = load('click-click-elements', `
     <tr>
       <td>ClickDate</td>
       <td>required</td>
-      <td>string</td>
+      <td>date</td>
       <td>Date and time which the customer clicked the link</td>
     </tr>
     <tr>
