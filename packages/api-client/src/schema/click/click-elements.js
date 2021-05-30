@@ -2,6 +2,7 @@ const load = require('../utils/from-four-col');
 
 /**
  * @note changed `ClickDate` datatype from `string` to `date`
+ * @note changed `CustomerId` datatype from `string` to `integer`
  */
 module.exports = load('click-click-elements', `
 <table border="#c0c0c0" cellspacing="0" cellpadding="5">
@@ -39,7 +40,7 @@ module.exports = load('click-click-elements', `
     <tr>
       <td>CustomerId</td>
       <td>required</td>
-      <td>string</td>
+      <td>Integer</td>
       <td>Internal customer id (for use on certain databases)</td>
     </tr>
     <tr>
