@@ -30,6 +30,23 @@ class CustomerPostalAddressesResponse extends ApiResourceResponse {
     const withCompany = data.find(({ Company }) => Company);
     return withCompany || data[0];
   }
+
+  /**
+   * Finds the company name for this response.
+   *
+   * Will first attempt to load the company from the primary address.
+   * Otherwise, will find the first address with a company name and return it.
+   *
+   * @returns {string|null}
+   */
+  getCompanyName() {
+    const primary = this.getPrimary();
+    if (!primary) return null;
+    const { Company } = primary;
+    if (Company) return Company;
+    const address = this.data.find((addr) => addr.Company);
+    return address ? address.Company : null;
+  }
 }
 
 module.exports = CustomerPostalAddressesResponse;
