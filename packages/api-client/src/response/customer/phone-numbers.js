@@ -13,7 +13,7 @@ class CustomerPhoneNumbersResponse extends ApiResourceResponse {
   }
 
   /**
-   * Loads the primary phone number for the this response.
+   * Loads the primary phone number for this response.
    * Will use the first business phone found (code 200),
    * otherwise will fall back to the first number on the record.
    *
