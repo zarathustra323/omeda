@@ -2,6 +2,7 @@ const load = require('../utils/from-four-col');
 
 /**
  * @note `Splits` was renamed to `splits` due to the actual response body.
+ * @note changed `SentDate` datatype from `string` to `date`
  */
 module.exports = load('click-deployment-elements', `
 <table>
@@ -27,7 +28,7 @@ module.exports = load('click-deployment-elements', `
     <tr>
       <td>SentDate</td>
       <td>required</td>
-      <td>string</td>
+      <td>date</td>
       <td>Date that the deployment was sent</td>
     </tr>
     <tr>
