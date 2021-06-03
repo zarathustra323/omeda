@@ -1,6 +1,6 @@
 const { asArray } = require('@parameter1/utils');
 const build = require('../../schema/utils/build');
-const schema = require('../../schema/deployment/elements.js');
+const schema = require('../../schema/deployment/elements');
 
 const EmailDeploymentModificationHistoryEntity = require('./modification-history');
 const EmailDeploymentSplitEntity = require('./split');
