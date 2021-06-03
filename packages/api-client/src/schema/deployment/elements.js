@@ -33,13 +33,13 @@ module.exports = load('email-deployment-elements', `
     <tr>
       <td>CalculateSpamScore</td>
       <td>required</td>
-      <td>booleam</td>
+      <td>boolean</td>
       <td></td>
     </tr>
     <tr>
       <td>IsWebTrackingOn</td>
       <td>required</td>
-      <td>booleam</td>
+      <td>boolean</td>
       <td></td>
     </tr>
     <tr>
