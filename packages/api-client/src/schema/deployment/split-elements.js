@@ -1,5 +1,11 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note changed `TextSpamScore` field name to `SpamScoreText`
+ * @note changed `HtmlSpamScore` field name to `SpamScoreHtml`
+ * @note changed `Subject` field name to `EmailSubject`
+ * @note changed `RecipientList` field name to `RecipientSourceId`; changed from string to integer
+ */
 module.exports = load('email-deployment-split-elements', `
 <table>
   <tbody>
@@ -16,14 +22,14 @@ module.exports = load('email-deployment-split-elements', `
       <td>The ‘From’ email address, specified when the deployment content was created.</td>
     </tr>
     <tr>
-      <td>TextSpamScore</td>
+      <td>SpamScoreText</td>
       <td>required</td>
       <td>double</td>
       <td>The SpamAssassin spam score calculated for the deployment text content. Example: ‘1.2’. Value will be 0.0 if
         no text content is present.</td>
     </tr>
     <tr>
-      <td>Subject</td>
+      <td>EmailSubject</td>
       <td>required</td>
       <td>string</td>
       <td>The subject of the email, specified when the deployment content was created.</td>
@@ -35,9 +41,9 @@ module.exports = load('email-deployment-split-elements', `
       <td>The ‘From’ name, specified when the deployment content was created.</td>
     </tr>
     <tr>
-      <td>RecipientList</td>
+      <td>RecipientSourceId</td>
       <td>conditional</td>
-      <td>string</td>
+      <td>integer</td>
       <td>The name of the recipient file used when the deployment was created.</td>
     </tr>
     <tr>
@@ -54,7 +60,7 @@ module.exports = load('email-deployment-split-elements', `
         ‘Default’.</td>
     </tr>
     <tr>
-      <td>HtmlSpamScore</td>
+      <td>SpamScoreHtml</td>
       <td>required</td>
       <td>double</td>
       <td>The SpamAssassin spam score calculated for the deployment Html content. Example: ‘1.2’. Value will be 0.0 if
