@@ -20,5 +20,9 @@ module.exports = (type, html) => {
     });
     if (Object.keys(line).length) data.push(line);
   });
-  return data;
+  return data.sort((a, b) => {
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+  });
 };
