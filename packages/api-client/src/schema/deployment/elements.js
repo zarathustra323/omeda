@@ -5,6 +5,9 @@ const load = require('../utils/from-four-col');
  * @note changed `TrackLinks` datatype from `string` to `boolean`
  * @note changed `TrackOpens` datatype from `string` to `boolean`
  * @note changed `IsFiltered` datatype from `string` to `boolean`
+ * @note added missing `TotalUnsubscribe`
+ * @note added missing `CalculateSpamScore`
+ * @note added missing `IsWebTrackingOn`
  */
 module.exports = load('email-deployment-elements', `
 <table>
@@ -20,6 +23,24 @@ module.exports = load('email-deployment-elements', `
       <td>required</td>
       <td>integer</td>
       <td>Number of emails that have been successfully sent to email inboxes.</td>
+    </tr>
+    <tr>
+      <td>TotalUnsubscribe</td>
+      <td>required</td>
+      <td>integer</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>CalculateSpamScore</td>
+      <td>required</td>
+      <td>booleam</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>IsWebTrackingOn</td>
+      <td>required</td>
+      <td>booleam</td>
+      <td></td>
     </tr>
     <tr>
       <td>SentDate</td>
