@@ -14,7 +14,7 @@ class CustomerEmailsResponse extends ApiResourceResponse {
 
   /**
    * Loads the primary email address for the email response.
-   * Will use the first primary (business) email address found (code 300),
+   * Will use the first primary email address found (StatusCode=1),
    * otherwise will fall back to the first address on the record.
    *
    * If no email addresses are set, this will return `null`.
@@ -24,7 +24,7 @@ class CustomerEmailsResponse extends ApiResourceResponse {
   getPrimary() {
     const { data } = this;
     if (!data.length) return null;
-    const primary = data.find(({ EmailContactType }) => EmailContactType === 300);
+    const primary = data.find(({ StatusCode }) => StatusCode === 1);
     return primary || data[0];
   }
 }

@@ -14,7 +14,7 @@ class CustomerPhoneNumbersResponse extends ApiResourceResponse {
 
   /**
    * Loads the primary phone number for this response.
-   * Will use the first business phone found (code 200),
+   * Will use the first primary phone found (StatusCode=1),
    * otherwise will fall back to the first number on the record.
    *
    * If no phone numbers are set, this will return `null`.
@@ -24,7 +24,7 @@ class CustomerPhoneNumbersResponse extends ApiResourceResponse {
   getPrimary() {
     const { data } = this;
     if (!data.length) return null;
-    const primary = data.find(({ PhoneContactType }) => PhoneContactType === 200);
+    const primary = data.find(({ StatusCode }) => StatusCode === 1);
     return primary || data[0];
   }
 }
