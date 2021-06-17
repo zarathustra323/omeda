@@ -23,7 +23,7 @@ module.exports = {
      *
      */
     async externalIds({ Id }, _, { loaders }) {
-      const response = await loaders.externalIds.load(Id);
+      const response = await loaders.customerExternalIds.load(Id);
       return response ? response.data : [];
     },
 
@@ -42,7 +42,15 @@ module.exports = {
       const response = await loaders.customerPostalAddresses.load(Id);
       return response ? response.data : [];
     },
+
+    /**
+     *
+     */
+    async primaryEmailAddress({ Id }, _, { loaders }) {
+      const response = await loaders.customerEmails.load(Id);
+      return response ? response.getPrimary() : [];
     },
+
   },
 
   /**

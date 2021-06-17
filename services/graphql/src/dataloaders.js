@@ -15,7 +15,7 @@ module.exports = ({ apiClient } = {}) => {
     return customerIds.map((customerId) => map.get(customerId));
   };
   return {
-    customerDemograhpcis: new DataLoader(createCustomerRelLoader({ method: 'lookupDemographics' })),
+    customerDemographics: new DataLoader(createCustomerRelLoader({ method: 'lookupDemographics' })),
     customerEmails: new DataLoader(createCustomerRelLoader({ method: 'lookupEmails' })),
     customerExternalIds: new DataLoader(createCustomerRelLoader({ method: 'lookupExternalIds' })),
     customerPhoneNumbers: new DataLoader(createCustomerRelLoader({ method: 'lookupPhoneNumbers' })),
