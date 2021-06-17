@@ -5,6 +5,7 @@ const { isFunction: isFn } = require('@parameter1/utils');
 const { createRepos } = require('@parameter1/omeda-mongodb');
 const mongodb = require('../mongodb');
 const newrelic = require('../newrelic');
+const createLoaders = require('../dataloaders');
 
 class OmedaGraphQLPlugin {
   /**
@@ -45,6 +46,7 @@ class OmedaGraphQLPlugin {
 
     const apiClient = new OmedaApiClient({ appId, brand, inputId });
     context.apiClient = apiClient;
+    context.loaders = createLoaders({ apiClient });
 
     const repos = createRepos({ brandKey: brand, client: mongodb });
     context.repos = repos;
