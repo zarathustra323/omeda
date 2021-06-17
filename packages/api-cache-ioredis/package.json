@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@parameter1/omeda-api-client": "^0.3.9",
-    "ioredis": "^4.27.3"
+    "ioredis": "^4.27.6"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
