@@ -1,3 +1,4 @@
+const mongodb = require('@parameter1/mongodb');
 const buildIndexes = require('./build-indexes');
 const createClient = require('./create-client');
 const createRepos = require('./repo');
@@ -8,4 +9,5 @@ module.exports = {
   createClient,
   createRepos,
   indexes,
+  mongodb,
 };
