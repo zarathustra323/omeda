@@ -38,6 +38,10 @@ type Customer {
   externalIds: [CustomerExternalId!]!
   phoneNumbers: [CustomerPhoneNumber!]!
   postalAddresses: [CustomerPostalAddress!]!
+
+  primaryEmailAddress: CustomerEmailAddress
+  primaryPhoneNumber: CustomerPhoneNumber
+  primaryPostalAddress: CustomerPostalAddress
 }
 
 type CustomerDemographic {
@@ -71,7 +75,7 @@ type CustomerExternalId {
 }
 
 type CustomerPhoneNumber {
-  id: String! @apiValue
+  id: Int! @apiValue
   contactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType", path: "PhoneContactType")
   phoneNumber: String! @apiValue
   extension: String @apiValue

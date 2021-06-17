@@ -48,9 +48,24 @@ module.exports = {
      */
     async primaryEmailAddress({ Id }, _, { loaders }) {
       const response = await loaders.customerEmails.load(Id);
-      return response ? response.getPrimary() : [];
+      return response ? response.getPrimary() : null;
     },
 
+    /**
+     *
+     */
+    async primaryPhoneNumber({ Id }, _, { loaders }) {
+      const response = await loaders.customerPhoneNumbers.load(Id);
+      return response ? response.getPrimary() : null;
+    },
+
+    /**
+     *
+     */
+    async primaryPostalAddress({ Id }, _, { loaders }) {
+      const response = await loaders.customerPostalAddresses.load(Id);
+      return response ? response.getPrimary() : null;
+    },
   },
 
   /**
