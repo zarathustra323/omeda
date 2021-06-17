@@ -34,9 +34,16 @@ class CustomerResource extends AbstractResource {
       ? `customer/email/${emailAddress}/productid/${productId}/*`
       : `customer/email/${emailAddress}/*`;
 
-    const response = await this.client.get({ endpoint });
-    const customerIds = response.getAsArray('Customers').map((customer) => customer.Id);
-    return new ApiSetResponse({ data: customerIds, response });
+    try {
+      const response = await this.client.get({ endpoint });
+      const customerIds = response.getAsArray('Customers').map((customer) => customer.Id);
+      return new ApiSetResponse({ data: customerIds, response });
+    } catch (e) {
+      if (e.status !== 300) throw e;
+      // multiple choices. don't treat as error
+      const customerIds = e.getAsArray('Customers').map((customer) => customer.Id);
+      return new ApiSetResponse({ data: customerIds, response: e });
+    }
   }
 
   /**
