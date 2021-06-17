@@ -31,14 +31,31 @@ class BrandRepo extends OmedaRepo {
   }
 
   /**
+   * Determines if data has been saved for this brand.
+   *
+   * @returns {Promise<boolen>}
+   */
+  async hasData() {
+    const { brandKey: brand } = this;
+    const query = { _id: brand };
+    const options = { projection: { _id: 1 } };
+    const data = await this.findOne({ query, options });
+    return Boolean(data);
+  }
+
+  /**
+   * Determines if the brand data exists and is considered "fresh."
+   * Data is fresh when it's still within it's TTL period.
    *
    * @param {object} params
    * @param {string} params.brand
-   * @param {number} [params.ttl=60*60*24]
+   * @param {number} [params.ttl=60*60*1] The TTL, in seconds. Default one hour
+   *
+   * @returns {Promise<boolen>}
    */
-  async hasData(params = {}) {
+  async hasFreshData(params = {}) {
     const { ttl } = await validateAsync(Joi.object({
-      ttl: Joi.number().integer().min(60).default(60 * 60 * 24),
+      ttl: Joi.number().integer().min(60).default(60 * 60 * 1),
     }).required(), params);
     const { brandKey: brand } = this;
     const date = new Date(Date.now() - (ttl * 1000));
