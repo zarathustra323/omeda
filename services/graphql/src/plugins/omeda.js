@@ -4,6 +4,7 @@ const OmedaApiClient = require('@parameter1/omeda-api-client');
 const { isFunction: isFn } = require('@parameter1/utils');
 const { createRepos } = require('@parameter1/omeda-mongodb');
 const mongodb = require('../mongodb');
+const newrelic = require('../newrelic');
 
 class OmedaGraphQLPlugin {
   /**
@@ -41,8 +42,29 @@ class OmedaGraphQLPlugin {
     if (!brand) throw new UserInputError('You must provide an Omeda brand via the `x-omeda-brand` header.');
 
     context.brand = brand;
-    context.apiClient = new OmedaApiClient({ appId, brand, inputId });
-    context.repos = createRepos({ brandKey: brand, client: mongodb });
+
+    const apiClient = new OmedaApiClient({ appId, brand, inputId });
+    context.apiClient = apiClient;
+
+    const repos = createRepos({ brandKey: brand, client: mongodb });
+    context.repos = repos;
+
+    // keep brand data in-sync.
+    const hasBrandData = await repos.brand.hasData();
+    if (hasBrandData) {
+      // check if the brand data is fresh. if not, refresh, but do no await.
+      const isBrandDataFresh = await repos.brand.hasFreshData();
+      if (!isBrandDataFresh) {
+        (async () => {
+          const response = await apiClient.resource('brand').comprehensiveLookup();
+          await repos.brand.upsert({ data: response.data });
+        })().catch(newrelic.noticeError.bind(newrelic));
+      }
+    } else {
+      // save the brand data for the first time.
+      const response = await apiClient.resource('brand').comprehensiveLookup();
+      await repos.brand.upsert({ data: response.data });
+    }
 
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);

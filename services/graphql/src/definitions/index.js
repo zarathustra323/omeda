@@ -7,7 +7,6 @@ const email = require('./email');
 
 module.exports = gql`
 
-directive @brandData on FIELD_DEFINITION
 directive @codeOrType(instance: String!, path: String) on FIELD_DEFINITION
 directive @apiValue(path: String, as: ApiValueDirectiveAsEnum) on FIELD_DEFINITION
 
@@ -23,7 +22,7 @@ enum ApiValueDirectiveAsEnum {
 type Query {
   "A generic ping/pong test query."
   ping: String!
-  brandComprehensiveLookup: JSONObject! @brandData
+  brandComprehensiveLookup: JSONObject!
 }
 
 type Mutation {
