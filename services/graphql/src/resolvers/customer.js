@@ -6,6 +6,14 @@ module.exports = {
     /**
      *
      */
+    async companyName({ Id }, _, { loaders }) {
+      const response = await loaders.customerPostalAddresses.load(Id);
+      return response ? response.getCompanyName() : null;
+    },
+
+    /**
+     *
+     */
     async demographics({ Id }, _, { loaders }) {
       const response = await loaders.customerDemographics.load(Id);
       return response ? response.data : [];

@@ -42,6 +42,8 @@ type Customer {
   primaryEmailAddress: CustomerEmailAddress
   primaryPhoneNumber: CustomerPhoneNumber
   primaryPostalAddress: CustomerPostalAddress
+
+  companyName: String
 }
 
 type CustomerDemographic {
