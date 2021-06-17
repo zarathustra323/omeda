@@ -6,56 +6,42 @@ module.exports = {
     /**
      *
      */
-    async demographics({ Id }, _, { apiClient }) {
-      const response = await apiClient.resource('customer').lookupDemographics({
-        customerId: Id,
-        errorOnNotFound: false,
-      });
-      return response.data;
+    async demographics({ Id }, _, { loaders }) {
+      const response = await loaders.customerDemographics.load(Id);
+      return response ? response.data : [];
     },
 
     /**
      *
      */
-    async emailAddresses({ Id }, _, { apiClient }) {
-      const response = await apiClient.resource('customer').lookupEmails({
-        customerId: Id,
-        errorOnNotFound: false,
-      });
-      return response.data;
+    async emailAddresses({ Id }, _, { loaders }) {
+      const response = await loaders.customerEmails.load(Id);
+      return response ? response.data : [];
     },
 
     /**
      *
      */
-    async externalIds({ Id }, _, { apiClient }) {
-      const response = await apiClient.resource('customer').lookupExternalIds({
-        customerId: Id,
-        errorOnNotFound: false,
-      });
-      return response.data;
+    async externalIds({ Id }, _, { loaders }) {
+      const response = await loaders.externalIds.load(Id);
+      return response ? response.data : [];
     },
 
     /**
      *
      */
-    async phoneNumbers({ Id }, _, { apiClient }) {
-      const response = await apiClient.resource('customer').lookupPhoneNumbers({
-        customerId: Id,
-        errorOnNotFound: false,
-      });
-      return response.data;
+    async phoneNumbers({ Id }, _, { loaders }) {
+      const response = await loaders.customerPhoneNumbers.load(Id);
+      return response ? response.data : [];
     },
 
     /**
      *
      */
-    async postalAddresses({ Id }, _, { apiClient }) {
-      const response = await apiClient.resource('customer').lookupPostalAddresses({
-        customerId: Id,
-        errorOnNotFound: false,
-      });
-      return response.data;
+    async postalAddresses({ Id }, _, { loaders }) {
+      const response = await loaders.customerPostalAddresses.load(Id);
+      return response ? response.data : [];
+    },
     },
   },
 
