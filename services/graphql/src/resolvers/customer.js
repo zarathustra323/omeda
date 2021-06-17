@@ -83,8 +83,8 @@ module.exports = {
     /**
      *
      */
-    async demographic({ DemographicId }, _, { repos }) {
-      const r = await repos.brandDemographic.findById({ id: DemographicId });
+    async demographic({ DemographicId }, _, { loaders }) {
+      const r = await loaders.brandDemographics.load(DemographicId);
       return r ? r.data : null;
     },
 

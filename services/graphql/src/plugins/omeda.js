@@ -46,10 +46,9 @@ class OmedaGraphQLPlugin {
 
     const apiClient = new OmedaApiClient({ appId, brand, inputId });
     context.apiClient = apiClient;
-    context.loaders = createLoaders({ apiClient });
-
     const repos = createRepos({ brandKey: brand, client: mongodb });
     context.repos = repos;
+    context.loaders = createLoaders({ apiClient, repos });
 
     // keep brand data in-sync.
     const hasBrandData = await repos.brand.hasData();
