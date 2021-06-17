@@ -16,12 +16,6 @@ class BrandDemographicRepo extends OmedaRepo {
     });
   }
 
-  async findById({ id, options } = {}) {
-    const query = { 'data.Id': id, brand: this.brandKey };
-    const doc = await this.findOne({ query, options });
-    return doc ? doc.data : null;
-  }
-
   async findValueById({ demographicId, valueId } = {}) {
     const pipeline = [];
     pipeline.push({ $match: { 'data.Id': demographicId, brand: this.brandKey } });

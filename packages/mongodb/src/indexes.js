@@ -11,4 +11,7 @@ module.exports = {
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
   ],
+  brands: [
+    [{ brand: 1 }, { unique: true }],
+  ],
 };

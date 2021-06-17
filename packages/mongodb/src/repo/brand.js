@@ -26,20 +26,14 @@ class BrandRepo extends OmedaRepo {
     this.productRepo = productRepo;
   }
 
-  async findById({ options } = {}) {
-    return super.findById({ id: this.brandKey, options });
-  }
-
   /**
    * Determines if data has been saved for this brand.
    *
    * @returns {Promise<boolen>}
    */
   async hasData() {
-    const { brandKey: brand } = this;
-    const query = { _id: brand };
     const options = { projection: { _id: 1 } };
-    const data = await this.findOne({ query, options });
+    const data = await this.findById({ options });
     return Boolean(data);
   }
 
@@ -57,9 +51,8 @@ class BrandRepo extends OmedaRepo {
     const { ttl } = await validateAsync(Joi.object({
       ttl: Joi.number().integer().min(60).default(60 * 60 * 1),
     }).required(), params);
-    const { brandKey: brand } = this;
     const date = new Date(Date.now() - (ttl * 1000));
-    const query = { _id: brand, updatedAt: { $gte: date } };
+    const query = { updatedAt: { $gte: date } };
     const options = { projection: { _id: 1 } };
     const data = await this.findOne({ query, options });
     return Boolean(data);
@@ -78,7 +71,7 @@ class BrandRepo extends OmedaRepo {
 
     const { brandKey: brand } = this;
     const now = new Date();
-    const query = { _id: brand };
+    const query = { brand };
     const toUpsert = ['Id', 'Description', 'BrandAbbrev', 'CustomerCount', 'ContactTypes'].reduce((o, key) => ({ ...o, [key]: data[key] }), {});
     const update = {
       $setOnInsert: { ...query, createdAt: now },

@@ -20,6 +20,42 @@ class OmedaRepo extends Repo {
     });
     this.brandKey = brandKey;
   }
+
+  async findById({ id, options } = {}) {
+    return this.findOne({
+      query: { 'data.Id': id },
+      options,
+    });
+  }
+
+  async findOne({ query, options }) {
+    return super.findOne({
+      query: { ...query, brand: this.brandKey },
+      options,
+    });
+  }
+
+  async find({ query, options } = {}) {
+    return super.find({
+      query: { ...query, brand: this.brandKey },
+      options,
+    });
+  }
+
+  async distinct({ key, query, options } = {}) {
+    return super.distinct({
+      key,
+      query: { ...query, brand: this.brandKey },
+      options,
+    });
+  }
+
+  async countDocuments({ query, options } = {}) {
+    return super.countDocuments({
+      query: { ...query, brand: this.brandKey },
+      options,
+    });
+  }
 }
 
 module.exports = OmedaRepo;
