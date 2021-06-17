@@ -1,7 +1,7 @@
 const CustomerPostalAddressEntity = require('../../entities/customer/postal-address');
-const ApiResourceResponse = require('../resource');
+const CustomerRelManyResponse = require('./rel-many');
 
-class CustomerPostalAddressesResponse extends ApiResourceResponse {
+class CustomerPostalAddressesResponse extends CustomerRelManyResponse {
   /**
    *
    * @param {object} params

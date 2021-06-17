@@ -1,7 +1,7 @@
 const CustomerBehaviorEntity = require('../../entities/customer/behavior');
-const ApiResourceResponse = require('../resource');
+const CustomerRelManyResponse = require('./rel-many');
 
-class CustomerBehaviorsResponse extends ApiResourceResponse {
+class CustomerBehaviorsResponse extends CustomerRelManyResponse {
   /**
    *
    * @param {object} params
