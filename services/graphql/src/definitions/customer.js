@@ -7,6 +7,8 @@ extend type Query {
   customerById(input: CustomerByIdQueryInput!): Customer!
   "Finds a single customer by encrypted customer ID."
   customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer!
+  "Finds all customers by the provided email address."
+  customersByEmailAddress(input: CustomersByEmailAddressQueryInput!): [Customer!]!
 }
 
 extend type Mutation {
@@ -112,6 +114,13 @@ input CustomerByIdQueryInput {
 input CustomerByEncryptedIdQueryInput {
   "The encrypted customer ID to lookup."
   id: String!
+}
+
+input CustomersByEmailAddressQueryInput {
+  "The email address to lookup."
+  emailAddress: String!
+  "An (optional) product ID to filter the response by."
+  productId: Int
 }
 
 input RapidCustomerIdentificationMutationInput {

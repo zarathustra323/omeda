@@ -168,5 +168,25 @@ module.exports = {
       });
       return response.data;
     },
+
+    /**
+     *
+     */
+    async customersByEmailAddress(_, { input }, { apiClient }) {
+      const { emailAddress, productId } = input;
+      const { data } = await apiClient.resource('customer').lookupByEmailAddress({
+        emailAddress,
+        productId,
+      });
+      if (!data.size) return [];
+      const customerIds = [...data];
+      return Promise.all(customerIds.map(async (customerId) => {
+        const response = await apiClient.resource('customer').lookupById({
+          customerId,
+          reQueryOnInactive: true,
+        });
+        return response.data;
+      }));
+    },
   },
 };
