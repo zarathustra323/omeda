@@ -177,7 +177,7 @@ class OmedaApiClient {
     if (errorOnNotFound === false && response.status === 404) {
       return new ApiClientResponse({ json: {}, fetchResponse: response, time });
     }
-    throw new ApiResponseError({ json, fetchResponse: response });
+    throw new ApiResponseError({ json, fetchResponse: response, time });
   }
 
   /**
