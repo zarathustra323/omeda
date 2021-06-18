@@ -29,6 +29,8 @@ module.exports = ({ apiClient, repos } = {}) => {
 
   return {
     brandDemographics: new DataLoader(createRepoLoader({ name: 'brandDemographic' })),
+    brandDeploymentTypes: new DataLoader(createRepoLoader({ name: 'brandDeploymentType' })),
+    brandProducts: new DataLoader(createRepoLoader({ name: 'brandProduct' })),
 
     customerDemographics: new DataLoader(createCustomerRelLoader({ method: 'lookupDemographics' })),
     customerEmails: new DataLoader(createCustomerRelLoader({ method: 'lookupEmails' })),
