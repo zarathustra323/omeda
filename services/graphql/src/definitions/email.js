@@ -80,6 +80,9 @@ type EmailDeployment {
   reloadOnqQueryBeforeFinalDeployment: Boolean @apiValue
   "8 characters billing category if assigned to deployment"
   billingCategoryCode: String @apiValue
+
+  "The deployment type object."
+  deploymentType: DeploymentType!
 }
 
 type EmailDeploymentSplit {

@@ -5,6 +5,7 @@ const GraphQLDateTime = require('../types/date-time');
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
+const deploymentType = require('./deployment-type');
 const email = require('./email');
 const product = require('./product');
 
@@ -45,4 +46,4 @@ module.exports = merge({
       return repos.brand.findById();
     },
   },
-}, codesAndTypes, customer, demographic, email, product);
+}, codesAndTypes, customer, demographic, deploymentType, email, product);

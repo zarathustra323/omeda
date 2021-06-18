@@ -1,4 +1,20 @@
+const { get } = require('@parameter1/utils');
+
 module.exports = {
+  /**
+   *
+   */
+  EmailDeployment: {
+    /**
+     *
+     */
+    async deploymentType({ DeploymentTypeId }, _, { loaders }) {
+      if (!DeploymentTypeId) return null;
+      const doc = await loaders.brandDeploymentTypes.load(DeploymentTypeId);
+      return get(doc, 'data');
+    },
+  },
+
   /**
    *
    */
