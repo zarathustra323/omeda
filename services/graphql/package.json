@@ -18,6 +18,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/graphql-mongodb-pagination": "^2.2.10",
     "@parameter1/mongodb": "^1.4.14",
     "@parameter1/omeda-api-cache-ioredis": "^0.3.9",
     "@parameter1/omeda-api-client": "^0.3.9",

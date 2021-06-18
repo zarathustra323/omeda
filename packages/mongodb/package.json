@@ -16,6 +16,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/graphql-mongodb-pagination": "^2.2.10",
     "@parameter1/joi": "^1.2.6",
     "@parameter1/mongodb": "^1.4.14"
   },
