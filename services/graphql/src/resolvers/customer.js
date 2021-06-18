@@ -1,3 +1,5 @@
+const { getAsArray } = require('@parameter1/utils');
+
 module.exports = {
   /**
    *
@@ -91,12 +93,10 @@ module.exports = {
     /**
      *
      */
-    value({ DemographicId, ValueId }, _, { repos }) {
-      if (!DemographicId || !ValueId) return null;
-      return repos.brandDemographic.findValueById({
-        demographicId: DemographicId,
-        valueId: ValueId,
-      });
+    async value({ DemographicId, ValueId }, _, { loaders }) {
+      const r = await loaders.brandDemographics.load(DemographicId);
+      const values = getAsArray(r, 'data.DemographicValues');
+      return values.find((value) => value.Id === ValueId);
     },
   },
 
