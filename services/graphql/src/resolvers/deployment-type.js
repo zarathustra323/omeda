@@ -1,6 +1,25 @@
 const createError = require('http-errors');
+const paginatedResponse = require('../utils/paginated-reponse');
 
 module.exports = {
+  /**
+   *
+   */
+  DeploymentType: {
+    /**
+     *
+     */
+    products({ Id }, { input }, { repos }) {
+      const { pagination, sort } = input;
+      const query = { 'data.DeploymentTypeId': Id };
+      return paginatedResponse(repos.brandProduct.paginate({
+        query,
+        sort,
+        ...pagination,
+      }));
+    },
+  },
+
   /**
    *
    */

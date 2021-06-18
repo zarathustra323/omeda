@@ -1,5 +1,6 @@
 const GraphQLJSON = require('graphql-type-json');
 const merge = require('lodash.merge');
+const pagination = require('@parameter1/graphql-mongodb-pagination/resolvers');
 const GraphQLDateTime = require('../types/date-time');
 
 const codesAndTypes = require('./codes-and-types');
@@ -11,7 +12,7 @@ const product = require('./product');
 
 const { GraphQLJSONObject } = GraphQLJSON;
 
-module.exports = merge({
+module.exports = merge(pagination, {
   DateTime: GraphQLDateTime,
   JSON: GraphQLJSON,
   JSONObject: GraphQLJSONObject,

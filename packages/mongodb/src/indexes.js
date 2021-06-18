@@ -10,6 +10,10 @@ module.exports = {
   'brand-products': [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+    { 'data.DeploymentTypeId': 1, brand: 1 },
+
+    { 'data.Id': 1, _id: 1 },
+    { 'data.Description': 1, _id: 1 },
   ],
   brands: [
     [{ brand: 1 }, { unique: true }],

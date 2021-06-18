@@ -1,4 +1,5 @@
 const { gql } = require('apollo-server-express');
+const pagination = require('@parameter1/graphql-mongodb-pagination/definitions');
 
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
@@ -15,6 +16,8 @@ directive @apiValue(path: String, as: ApiValueDirectiveAsEnum) on FIELD_DEFINITI
 scalar DateTime
 scalar JSON
 scalar JSONObject
+
+${pagination}
 
 enum ApiValueDirectiveAsEnum {
   ARRAY

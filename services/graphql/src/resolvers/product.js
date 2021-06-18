@@ -19,6 +19,14 @@ module.exports = {
   /**
    *
    */
+  ProductSortFieldEnum: {
+    ID: 'data.Id',
+    DESCRIPTION: 'data.Description',
+  },
+
+  /**
+   *
+   */
   Query: {
     /**
      *

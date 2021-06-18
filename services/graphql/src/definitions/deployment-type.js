@@ -13,6 +13,8 @@ type DeploymentType {
   description: String @apiValue
   alternateId: String @apiValue
   statusCode: Int! @apiValue
+
+  products(input: DeploymentTypeProductsInput = {}): ProductConnection!
 }
 
 input DeploymentTypeByIdQueryInput {
@@ -20,6 +22,13 @@ input DeploymentTypeByIdQueryInput {
   id: Int!
   "Whether to run the query in strict mode (default). If set, and not found, will throw an error."
   strict: Boolean = true
+}
+
+input DeploymentTypeProductsInput {
+  "Sets sorting criteria for the query."
+  sort: ProductSortInput
+  "Sets pagination (limit/after) criteria for the query."
+  pagination: PaginationInput = {}
 }
 
 `;
