@@ -6,6 +6,7 @@ const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
 const email = require('./email');
+const product = require('./product');
 
 const { GraphQLJSONObject } = GraphQLJSON;
 
@@ -44,4 +45,4 @@ module.exports = merge({
       return repos.brand.findById();
     },
   },
-}, codesAndTypes, customer, demographic, email);
+}, codesAndTypes, customer, demographic, email, product);
