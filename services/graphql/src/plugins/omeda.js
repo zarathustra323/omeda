@@ -51,20 +51,17 @@ class OmedaGraphQLPlugin {
     context.loaders = createLoaders({ apiClient, repos });
 
     // keep brand data in-sync.
-    const hasBrandData = await repos.brand.hasData();
-    if (hasBrandData) {
-      // check if the brand data is fresh. if not, refresh, but do no await.
-      const isBrandDataFresh = await repos.brand.hasFreshData();
-      if (!isBrandDataFresh) {
-        (async () => {
-          const response = await apiClient.resource('brand').comprehensiveLookup();
-          await repos.brand.upsert({ data: response.data });
-        })().catch(newrelic.noticeError.bind(newrelic));
-      }
-    } else {
+    const brandData = await repos.brand.status();
+    if (!brandData.exists) {
       // save the brand data for the first time.
       const response = await apiClient.resource('brand').comprehensiveLookup();
       await repos.brand.upsert({ data: response.data });
+    } else if (!brandData.isFresh) {
+      // refresh the brand data, but do not await
+      (async () => {
+        const response = await apiClient.resource('brand').comprehensiveLookup();
+        await repos.brand.upsert({ data: response.data });
+      })().catch(newrelic.noticeError.bind(newrelic));
     }
 
     if (isFn(this.setContext)) {
