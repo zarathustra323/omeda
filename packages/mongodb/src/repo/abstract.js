@@ -1,4 +1,6 @@
 const { Repo } = require('@parameter1/mongodb/repo');
+const { find } = require('@parameter1/graphql-mongodb-pagination');
+const { get } = require('@parameter1/utils');
 
 class OmedaRepo extends Repo {
   /**
@@ -10,6 +12,7 @@ class OmedaRepo extends Repo {
     collectionName,
     client,
     dbName,
+    collatableFields = [],
   } = {}) {
     if (!brandKey) throw new Error('A brand key is required.');
     super({
@@ -18,7 +21,10 @@ class OmedaRepo extends Repo {
       dbName,
       client,
     });
-    this.brandKey = brandKey;
+    this.brandKey = brandKey.toLowerCase();
+    this.collatableFields = Array.isArray(collatableFields)
+      ? collatableFields.reduce((o, field) => ({ ...o, [field]: true }), {})
+      : {};
   }
 
   async findById({ id, options } = {}) {
@@ -54,6 +60,34 @@ class OmedaRepo extends Repo {
     return super.countDocuments({
       query: { ...query, brand: this.brandKey },
       options,
+    });
+  }
+
+  /**
+   * @param {object} params
+   */
+  async paginate({
+    query,
+    limit,
+    skip,
+    after,
+    sort,
+    projection,
+    excludeProjection,
+    additionalData,
+  } = {}) {
+    const collection = await this.collection();
+    const sortField = get(sort, 'field');
+    return find(collection, {
+      query: { ...query, brand: this.brandKey },
+      limit,
+      skip,
+      after,
+      sort,
+      projection,
+      excludeProjection,
+      collate: this.collatableFields[sortField],
+      additionalData,
     });
   }
 }
