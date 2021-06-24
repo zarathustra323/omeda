@@ -35,7 +35,7 @@ class CustomerResource extends AbstractResource {
       : `customer/email/${emailAddress}/*`;
 
     try {
-      const response = await this.client.get({ endpoint });
+      const response = await this.client.get({ endpoint, errorOnNotFound: false });
       const customerIds = response.getAsArray('Customers').map((customer) => customer.Id);
       return new ApiSetResponse({ data: customerIds, response });
     } catch (e) {
