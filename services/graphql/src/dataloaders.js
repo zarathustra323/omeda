@@ -37,5 +37,6 @@ module.exports = ({ apiClient, repos } = {}) => {
     customerExternalIds: new DataLoader(createCustomerRelLoader({ method: 'lookupExternalIds' })),
     customerPhoneNumbers: new DataLoader(createCustomerRelLoader({ method: 'lookupPhoneNumbers' })),
     customerPostalAddresses: new DataLoader(createCustomerRelLoader({ method: 'lookupPostalAddresses' })),
+    customerSubscriptions: new DataLoader(createCustomerRelLoader({ method: 'lookupSubscriptions' })),
   };
 };

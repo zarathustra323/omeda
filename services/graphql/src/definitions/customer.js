@@ -38,6 +38,7 @@ type Customer {
   externalIds: [CustomerExternalId!]!
   phoneNumbers: [CustomerPhoneNumber!]!
   postalAddresses: [CustomerPostalAddress!]!
+  subscriptions: [CustomerSubscription!]!
 
   primaryEmailAddress: CustomerEmailAddress
   primaryPhoneNumber: CustomerPhoneNumber
@@ -100,6 +101,13 @@ type CustomerPostalAddress {
   country: String @apiValue
   changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
+}
+
+type CustomerSubscription {
+  id: Int! @apiValue
+  product: Product!
+  changedDate: DateTime! @apiValue
+  receive: Boolean! @apiValue
 }
 
 type RapidCustomerIdentification {

@@ -76,6 +76,14 @@ module.exports = {
       const response = await loaders.customerPostalAddresses.load(Id);
       return response ? response.getPrimary() : null;
     },
+
+    /**
+     *
+     */
+    async subscriptions({ Id }, _, { loaders }) {
+      const response = await loaders.customerSubscriptions.load(Id);
+      return response ? response.data : [];
+    },
   },
 
   /**
@@ -97,6 +105,19 @@ module.exports = {
       const r = await loaders.brandDemographics.load(DemographicId);
       const values = getAsArray(r, 'data.DemographicValues');
       return values.find((value) => value.Id === ValueId);
+    },
+  },
+
+  /**
+   *
+   */
+  CustomerSubscription: {
+    /**
+     *
+     */
+    async product({ ProductId }, _, { loaders }) {
+      const r = await loaders.brandProducts.load(ProductId);
+      return r ? r.data : null;
     },
   },
 
