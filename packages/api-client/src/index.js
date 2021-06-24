@@ -13,6 +13,7 @@ class OmedaApiClient {
    * @param {object} params
    * @param {string} params.appId The Omeda API app ID. Required.
    * @param {string} params.brand The brand abbreviation. Required.
+   * @param {string} [params.clientAbbrev] The client abbreviation. Required for certain API calls.
    * @param {string} [params.inputId] The Omeda API input ID. Required when doing write calls.
    * @param {string} [params.useStaging=false] Whether to use the staging API.
    * @param {OmedaApiCacheInterface} [params.cache] A response cache implementation.
@@ -20,6 +21,7 @@ class OmedaApiClient {
   constructor({
     appId,
     brand,
+    clientAbbrev,
     inputId,
     useStaging = false,
     cache,
@@ -28,6 +30,7 @@ class OmedaApiClient {
     if (!brand) throw new Error('The Omeda brand abbreviation is required.');
     this.appId = appId;
     this.brand = brand;
+    this.clientAbbrev = clientAbbrev;
     this.inputId = inputId;
     this.useStaging = useStaging;
 
@@ -89,21 +92,42 @@ class OmedaApiClient {
   }
 
   /**
+   * Generates a client API URL for the provided endpoint.
+   *
+   * @param {string} endpoint
+   * @returns {string}
+   */
+  clientUrl(endpoint) {
+    const { clientAbbrev } = this;
+    if (!clientAbbrev) throw new Error('Unable to perform operation: no client abbreviation was set on the API client.');
+    return `${this.url}/webservices/rest/client/${clientAbbrev}/${cleanPath(endpoint)}`;
+  }
+
+  /**
    * Performs a GET request against the brand API.
    *
    * @param {object} params
    * @param {string} params.endpoint The brand API endpoint
    * @param {boolean} [params.errorOnNotFound=true] Whether to error when a 404 is encountered
+   * @param {boolean} [params.useClientUrl=false] Whether to use the client API URL.
    * @returns {Promise<ApiClientResponse>}
    */
   async get({
     endpoint,
     errorOnNotFound = true,
+    useClientUrl = false,
     cache = true,
     ttl,
   } = {}) {
     const shouldCache = Boolean(cache && this.cache);
-    if (!shouldCache) return this.request({ method: 'GET', endpoint, errorOnNotFound });
+    if (!shouldCache) {
+      return this.request({
+        method: 'GET',
+        endpoint,
+        errorOnNotFound,
+        useClientUrl,
+      });
+    }
 
     const start = process.hrtime();
     const cacheKey = this.buildCacheKey({ endpoint, ttl });
@@ -114,7 +138,12 @@ class OmedaApiClient {
       return new ApiClientResponse({ json: parsed, fromCache: true, time });
     }
 
-    const response = await this.request({ method: 'GET', endpoint, errorOnNotFound });
+    const response = await this.request({
+      method: 'GET',
+      endpoint,
+      errorOnNotFound,
+      useClientUrl,
+    });
     await this.cache.set(cacheKey, response.json, ttl);
     return response;
   }
@@ -126,14 +155,21 @@ class OmedaApiClient {
    * @param {string} params.endpoint The brand API endpoint
    * @param {object} params.body The body/payload to send with the request.
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
+   * @param {boolean} [params.useClientUrl=false] Whether to use the client API URL.
    * @returns {Promise<ApiClientResponse>}
    */
-  async post({ endpoint, body, inputId } = {}) {
+  async post({
+    endpoint,
+    body,
+    inputId,
+    useClientUrl = false,
+  } = {}) {
     return this.request({
       method: 'POST',
       endpoint,
       body,
       inputId,
+      useClientUrl,
     });
   }
 
@@ -146,6 +182,7 @@ class OmedaApiClient {
    * @param {object} [params.body] The request body object
    * @param {string} [params.inputId] An input ID to use. Overrides the default.
    * @param {boolean} [params.errorOnNotFound=true] Whether to error when a 404 is encountered
+   * @param {boolean} [params.useClientUrl=false] Whether to use the client API URL.
    * @returns {Promise<ApiClientResponse>}
    */
   async request({
@@ -154,10 +191,11 @@ class OmedaApiClient {
     body,
     inputId,
     errorOnNotFound = true,
+    useClientUrl = false,
   } = {}) {
     const start = process.hrtime();
     if (!endpoint) throw new Error('An API endpoint is required.');
-    const url = this.brandUrl(endpoint);
+    const url = useClientUrl ? this.clientUrl(endpoint) : this.brandUrl(endpoint);
 
     const iid = inputId || this.inputId;
     const response = await fetch(url, {
