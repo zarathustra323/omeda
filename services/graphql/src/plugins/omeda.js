@@ -39,12 +39,18 @@ class OmedaGraphQLPlugin {
     const appId = headers.get('x-omeda-appid');
     const inputId = headers.get('x-omeda-inputid');
     const brand = headers.get('x-omeda-brand');
+    const clientAbbrev = headers.get('x-omeda-client');
     if (!appId) throw new UserInputError('You must provide an Omeda application ID via the `x-omeda-appid` header.');
     if (!brand) throw new UserInputError('You must provide an Omeda brand via the `x-omeda-brand` header.');
 
     context.brand = brand;
 
-    const apiClient = new OmedaApiClient({ appId, brand, inputId });
+    const apiClient = new OmedaApiClient({
+      appId,
+      brand,
+      clientAbbrev,
+      inputId,
+    });
     context.apiClient = apiClient;
     const repos = createRepos({ brandKey: brand, client: mongodb });
     context.repos = repos;
