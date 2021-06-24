@@ -12,9 +12,8 @@ class CustomerRelManyResponse extends ApiResourceResponse {
   constructor({ data, response } = {}) {
     super({ data, response });
     const matches = customerIdPattern.exec(response.json.Customer);
-    if (!matches && !matches[1]) throw new Error('Unable to extract a customer ID from the customer rel response.');
-    const customerId = parseInt(matches[1], 10);
-    this.customerId = customerId;
+    this.hasData = Boolean(matches && matches[1]);
+    this.customerId = this.hasData ? parseInt(matches[1], 10) : null;
   }
 }
 
