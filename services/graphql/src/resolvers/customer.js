@@ -143,8 +143,9 @@ module.exports = {
     /**
      *
      */
-    async rapidCustomerIdentification(_, { input }, { apiClient }) {
+    async rapidCustomerIdentification(_, { input }, { apiClient, repos }) {
       const {
+        email,
         firstName,
         lastName,
         title,
@@ -154,11 +155,26 @@ module.exports = {
         postalCode,
       } = input;
 
+      const Products = [{ OmedaProductId: input.productId }];
+
+      const deploymentTypeIds = [...new Set(input.deploymentTypeIds)];
+      const newsletterProductIds = await (async () => {
+        if (!deploymentTypeIds.length) return [];
+        return repos.brandProduct.distinct({
+          key: 'data.Id',
+          query: {
+            'data.DeploymentTypeId': { $in: deploymentTypeIds },
+            'data.ProductType': 2, // only newsletters can be subscribed to in this manner
+          },
+        });
+      })();
+      Products.push(...newsletterProductIds.map((id) => ({ OmedaProductId: id })));
+
       const hasAddress = companyName || regionCode || countryCode || postalCode;
       const body = {
         RunProcessor: 1,
-        Products: [{ OmedaProductId: input.productId }],
-        Emails: [{ EmailAddress: input.email }],
+        Products,
+        Emails: [{ EmailAddress: email }],
         ...(firstName && { FirstName: firstName }),
         ...(lastName && { LastName: lastName }),
         ...(title && { Title: title }),
@@ -173,10 +189,20 @@ module.exports = {
           ],
         }),
       };
-      const response = await apiClient.resource('customer').storeCustomerAndOrder({
-        body,
-        inputId: input.inputId,
-      });
+      const [response] = await Promise.all([
+        apiClient.resource('customer').storeCustomerAndOrder({
+          body,
+          inputId: input.inputId,
+        }),
+        (async () => {
+          if (!deploymentTypeIds.length) return null;
+          return apiClient.resource('email').optInEmailAddress({
+            emailAddress: email,
+            deploymentTypeIds,
+            deleteOptOut: true,
+          });
+        })(),
+      ]);
       return response.data;
     },
   },
