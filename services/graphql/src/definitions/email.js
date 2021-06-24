@@ -8,22 +8,6 @@ extend type Query {
   searchEmailDeployments(input: SearchEmailDeploymentsQueryInput = {}): [EmailDeploymentListItem!]!
 }
 
-extend type Mutation {
-  "Opt-in an email address to one or more deployment types. Can optionally also subscribe any related customers to any corresponding email products."
-  emailAddressOptIn(input: EmailAddressOptInMutationInput!): EmailAddressOptIn!
-}
-
-type EmailAddressOptIn {
-  "The email address that was opted-in."
-  emailAddress: String!
-  "All deployment types that were opted-in to."
-  deploymentTypes: [DeploymentType!]!
-  "All products that were subscribed to. Only applicable if \`subscribeToProducts\` was set to true and eligible products were found."
-  products: [Product!]!
-  "All customers with new product subscriptions.  Only applicable if \`subscribeToProducts\` was set to true and eligible products were found."
-  customers: [Customer!]!
-}
-
 type EmailDeployment {
   id: String! @apiValue(path: "TrackId")
   "Number of emails that have been successfully sent to email inboxes."
@@ -213,19 +197,6 @@ type EmailDeploymentListItem {
   sentDate: DateTime @apiValue
   status: DeploymentStatus! @codeOrType(instance: "DeploymentStatus")
   trackId: String! @apiValue
-}
-
-input EmailAddressOptInMutationInput {
-  "The email address to opt-in."
-  emailAddress: String!
-  "The deployment type IDs to set the opt-in for."
-  deploymentTypeIds: [Int!]!
-  "Whether to also subscribe any related customer records to the deployment types' related product(s). This only applies when customer records are found for the provided email address and the deployment types have associated products."
-  subscribeToProducts: Boolean!
-  "An optional opt-in source value."
-  source: String
-  "An optional input ID to use with this request. Otherwise will fallback to the input ID provided by the request headers."
-  inputId: String
 }
 
 input EmailDeploymentByIdQueryInput {
