@@ -28,6 +28,66 @@ class EmailResource extends AbstractResource {
   }
 
   /**
+   * The OptIn Queue API allows our client to OptIn their subscribers or customers to
+   * their email deployments at the deployment type level.
+   *
+   * @link https://www.omeda.com/knowledge-base/email-optin-queue/
+   * @param {object} params
+   * @param {object[]} params.optIns
+   * @param {string} params.optIns.emailAddress
+   * @param {number[]} params.optIns.deploymentTypeIds
+   * @param {boolean} params.optIns.deleteOptOut
+   * @param {string} [params.optIns.source]
+   * @returns {Promise<object>}
+   */
+  async optIn(params = {}) {
+    const { optIns } = await validateAsync(Joi.object({
+      optIns: Joi.array().items(
+        Joi.object({
+          emailAddress: Joi.string().trim().email().required(),
+          deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
+          deleteOptOut: Joi.boolean().default(false),
+          source: Joi.string().trim(),
+        }),
+      ).required(),
+    }).required(), params);
+    const endpoint = '/optinfilterqueue/*';
+    const body = {
+      DeploymentTypeOptIn: optIns.map((optIn) => {
+        const { source, deleteOptOut } = optIn;
+        return {
+          EmailAddress: optIn.emailAddress,
+          DeploymentTypeId: [...new Set(optIn.deploymentTypeIds)],
+          DeleteOptOut: deleteOptOut ? 1 : 0,
+          ...(source && { Source: source }),
+        };
+      }),
+    };
+    const response = await this.client.post({ endpoint, body, useClientUrl: true });
+    return response;
+  }
+
+  /**
+   * Opts-in a single email address to the provided deployment type IDs.
+   *
+   * @param {object} params
+   * @param {string} params.emailAddress
+   * @param {number[]} params.deploymentTypeIds
+   * @param {boolean} params.deleteOptOut
+   * @param {string} [params.source]
+   * @returns {Promise<object>}
+   */
+  async optInEmailAddress(params = {}) {
+    const optIn = await validateAsync(Joi.object({
+      emailAddress: Joi.string().trim().email().required(),
+      deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
+      deleteOptOut: Joi.boolean().default(false),
+      source: Joi.string().trim(),
+    }).required(), params);
+    return this.optIn({ optIns: [optIn] });
+  }
+
+  /**
    * This service retrieves Omail data related to clicks on links
    * in emails using various parameters.
    *
