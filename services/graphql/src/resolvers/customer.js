@@ -153,6 +153,7 @@ module.exports = {
         regionCode,
         countryCode,
         postalCode,
+        demographics,
       } = input;
 
       const Products = [{ OmedaProductId: input.productId }];
@@ -187,6 +188,12 @@ module.exports = {
               ...(postalCode && { PostalCode: postalCode }),
             },
           ],
+        }),
+        ...(demographics.length && {
+          CustomerDemographics: demographics.map((demo) => ({
+            OmedaDemographicId: demo.id,
+            OmedaDemographicValue: demo.values,
+          })),
         }),
       };
       const [response] = await Promise.all([

@@ -158,8 +158,17 @@ input RapidCustomerIdentificationMutationInput {
   postalCode: String
   "Deployment types to assign to the customer."
   deploymentTypeIds: [Int!] = []
+  "Demographics to assign to the customer."
+  demographics: [RapidCustomerIdentificationDemographicInput!] = []
   "An optional input ID to use when identifying."
   inputId: Int
+}
+
+input RapidCustomerIdentificationDemographicInput {
+  "The demographic ID to assign."
+  id: Int!
+  "The values to set."
+  values: [String!]!
 }
 
 `;
