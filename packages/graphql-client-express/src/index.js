@@ -6,6 +6,7 @@ const createClient = require('@parameter1/omeda-graphql-client');
  * @param {object} params
  * @param {string} params.uri The GraphQL URI to connect to.
  * @param {string} params.brandKey The Omeda brand key/identifier.
+ * @param {string} [params.clientKey] The Omeda client key/identifier.
  * @param {string} params.appId The Omeda API App ID.
  * @param {string} [params.inputId] An optional (default) Omeda API Input ID.
  * @param {object} [params.config={}] Additional config options to set to the client.
@@ -16,6 +17,7 @@ const createClient = require('@parameter1/omeda-graphql-client');
 module.exports = ({
   uri,
   brandKey,
+  clientKey,
   appId,
   inputId,
   config = {},
@@ -25,6 +27,7 @@ module.exports = ({
   const client = createClient({
     uri,
     brandKey,
+    clientKey,
     appId,
     inputId,
     config,

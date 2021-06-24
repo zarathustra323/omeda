@@ -19,6 +19,7 @@ const defaultConfig = {
  * @param {object} params
  * @param {string} params.uri The GraphQL URI to connect to.
  * @param {string} params.brandKey The Omeda brand key/identifier.
+ * @param {string} [params.clientKey] The Omeda client key/identifier.
  * @param {string} params.appId The Omeda API App ID.
  * @param {string} [params.inputId] An optional (default) Omeda API Input ID.
  * @param {object} [params.config={}] Additional config options to set to the client.
@@ -28,6 +29,7 @@ const defaultConfig = {
 module.exports = ({
   uri,
   brandKey,
+  clientKey,
   appId,
   inputId,
   config = {},
@@ -40,6 +42,7 @@ module.exports = ({
     'x-omeda-brand': brandKey,
     'x-omeda-appid': appId,
     ...(inputId && { 'x-omeda-inputid': inputId }),
+    ...(clientKey && { 'x-omeda-client': clientKey }),
   };
 
   const client = new ApolloClient({
