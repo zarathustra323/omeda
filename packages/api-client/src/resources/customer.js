@@ -22,12 +22,14 @@ class CustomerResource extends AbstractResource {
    * @param {object} params
    * @param {string} params.emailAddress The customer's email address.
    * @param {number} [params.productId] An optional product ID.
+   * @param {number} [params.errorOnNotFound=false]  Whether to error when not found.
    * @returns {Promise<ApiSetResponse>} A Set of the found customer IDs.
    */
   async lookupByEmailAddress(params = {}) {
-    const { emailAddress, productId } = await validateAsync(Joi.object({
+    const { emailAddress, productId, errorOnNotFound } = await validateAsync(Joi.object({
       emailAddress: this.schema.emailAddress.required(),
       productId: this.schema.productId,
+      errorOnNotFound: Joi.boolean().default(false),
     }).required(), params);
 
     const endpoint = productId
@@ -35,7 +37,7 @@ class CustomerResource extends AbstractResource {
       : `customer/email/${emailAddress}/*`;
 
     try {
-      const response = await this.client.get({ endpoint, errorOnNotFound: false });
+      const response = await this.client.get({ endpoint, errorOnNotFound });
       const customerIds = response.getAsArray('Customers').map((customer) => customer.Id);
       return new ApiSetResponse({ data: customerIds, response });
     } catch (e) {
@@ -53,14 +55,16 @@ class CustomerResource extends AbstractResource {
    * @link https://main.omeda.com/knowledge-base/customer-lookup-by-encryptedcustomerid/
    * @param {object} params
    * @param {number} params.encryptedId
+   * @param {number} [params.errorOnNotFound=true]  Whether to error when not found.
    * @returns {Promise<BasicCustomerResponse>} The basic Customer properties
    */
   async lookupByEncryptedId(params = {}) {
-    const { encryptedId } = await validateAsync(Joi.object({
+    const { encryptedId, errorOnNotFound } = await validateAsync(Joi.object({
       encryptedId: this.schema.encryptedCustomerId.required(),
+      errorOnNotFound: Joi.boolean().default(true),
     }).required(), params);
     const endpoint = `/customer/${encryptedId}/encrypted/*`;
-    const response = await this.client.get({ endpoint });
+    const response = await this.client.get({ endpoint, errorOnNotFound });
     return new BasicCustomerResponse({ response, resource: this });
   }
 
@@ -71,23 +75,26 @@ class CustomerResource extends AbstractResource {
    * @link https://main.omeda.com/knowledge-base/customer-lookup-by-customer-id/
    * @param {object} params
    * @param {number} params.customerId
+   * @param {number} [params.reQueryOnInactive=true]
+   * @param {number} [params.errorOnNotFound=true]  Whether to error when not found.
    * @returns {Promise<BasicCustomerResponse>} The basic Customer properties
    */
   async lookupById(params = {}) {
-    const { customerId, reQueryOnInactive } = await validateAsync(Joi.object({
+    const { customerId, reQueryOnInactive, errorOnNotFound } = await validateAsync(Joi.object({
       customerId: this.schema.customerId.required(),
       reQueryOnInactive: Joi.boolean().default(true),
+      errorOnNotFound: Joi.boolean().default(true),
     }).required(), params);
     const endpoint = `/customer/${customerId}/*`;
     try {
-      const response = await this.client.get({ endpoint });
+      const response = await this.client.get({ endpoint, errorOnNotFound });
       return new BasicCustomerResponse({ response, resource: this });
     } catch (e) {
       // on inactive, re-query.
       if (reQueryOnInactive) {
         const inactive = /^customer id \d+ is valid but not active.+please use (\d+)/i.exec(e.message);
         if (inactive && inactive[1]) {
-          return this.lookupById({ customerId: parseInt(inactive[1], 10) });
+          return this.lookupById({ customerId: parseInt(inactive[1], 10), errorOnNotFound });
         }
       }
       throw e;
