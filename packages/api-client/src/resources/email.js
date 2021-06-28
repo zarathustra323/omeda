@@ -4,6 +4,7 @@ const AbstractResource = require('./abstract');
 const EmailClickSearchResponse = require('../response/email/click-search');
 const EmailDeploymentResponse = require('../response/email/deployment');
 const EmailDeploymentSearchResponse = require('../response/email/deployment-search');
+const EmailOptInStatusResponse = require('../response/email/opt-in-status');
 const formatDate = require('../utils/format-date');
 
 class EmailResource extends AbstractResource {
@@ -85,6 +86,25 @@ class EmailResource extends AbstractResource {
       source: Joi.string().trim(),
     }).required(), params);
     return this.optIn({ optIns: [optIn] });
+  }
+
+  /**
+   * This service returns Opt In/Out information stored for a given email address.
+   *
+   * @link https://www.omeda.com/knowledge-base/email-opt-in-out-lookup/
+   * @param {object} params
+   * @param {string} params.emailAddress
+   * @param {boolean} [params.errorOnNotFound=false]
+   * @returns {Promise<EmailOptInStatusResponse>}
+   */
+  async lookupOptInStatusByEmail(params = {}) {
+    const { emailAddress, errorOnNotFound } = await validateAsync(Joi.object({
+      emailAddress: Joi.string().trim().email().required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/filter/email/${emailAddress}/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new EmailOptInStatusResponse({ emailAddress, response, resource: this });
   }
 
   /**
