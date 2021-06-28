@@ -1,4 +1,4 @@
-const { getAsArray } = require('@parameter1/utils');
+const { get, getAsArray } = require('@parameter1/utils');
 
 module.exports = {
   /**
@@ -105,6 +105,32 @@ module.exports = {
       const r = await loaders.brandDemographics.load(DemographicId);
       const values = getAsArray(r, 'data.DemographicValues');
       return values.find((value) => value.Id === ValueId);
+    },
+  },
+
+  /**
+   *
+   */
+  CustomerEmailAddress: {
+    /**
+     *
+     */
+    async optInStatus({ EmailAddress }, _, { loaders }) {
+      const r = await loaders.emailAddressOptInStatus.load(EmailAddress);
+      return r ? r.data : [];
+    },
+  },
+
+  /**
+   *
+   */
+  CustomerEmailAddressOptInStatus: {
+    /**
+     *
+     */
+    async deploymentType({ DeploymentTypeId }, _, { loaders }) {
+      const doc = await loaders.brandDeploymentTypes.load(DeploymentTypeId);
+      return get(doc, 'data');
     },
   },
 

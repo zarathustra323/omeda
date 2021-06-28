@@ -70,6 +70,17 @@ type CustomerEmailAddress {
   changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
   hashedEmailAddress: String @apiValue
+  optInStatus: [CustomerEmailAddressOptInStatus!]!
+}
+
+type CustomerEmailAddressOptInStatus {
+  brand: String! @apiValue
+  deploymentTypeId: Int! @apiValue
+  deploymentType: DeploymentType!
+  status: String! @apiValue
+  source: String @apiValue
+  createdDate: DateTime @apiValue
+  changedDate: DateTime @apiValue
 }
 
 type CustomerExternalId {
