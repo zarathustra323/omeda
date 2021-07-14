@@ -212,6 +212,15 @@ class OmedaApiClient {
     const time = OmedaApiClient.calculateTime(start);
     if (response.ok) return new ApiClientResponse({ json, fetchResponse: response, time });
 
+    if (response.status === 404) {
+      const notFoundError = new ApiResponseError({ json, fetchResponse: response, time });
+      if (/valid but not active/.test(notFoundError.message)) {
+        // when an inactive response is found, force throw (regardless of `errorOnNotFound` setting)
+        // so that the error can be handled directly by the calling method
+        throw notFoundError;
+      }
+    }
+
     if (errorOnNotFound === false && response.status === 404) {
       return new ApiClientResponse({ json: {}, fetchResponse: response, time });
     }
