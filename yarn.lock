@@ -91,10 +91,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@godaddy/terminus@^4.8.0":
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/@godaddy/terminus/-/terminus-4.8.0.tgz#7f1258abd731adcf5f08d8ff1aa0216a02d65062"
-  integrity sha512-C3u+LTmlhtqsk1Sjw9UDTAXfVngby62dJL71LyhpRcwX3FDeLb0yd1Rmxh1OjH5HouOr0IIuU4dhiJMT6NNXog==
+"@godaddy/terminus@^4.9.0":
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/@godaddy/terminus/-/terminus-4.9.0.tgz#c7de0b45ede05116854d1461832dd05df169f689"
+  integrity sha512-j1E22ZK5jW+DVb2vIEOx9I6epWT/geJyWzuxsUThyPcds5UxjCBeKcDTtNVkoWLRASM49o9OKRrCKKybX7z9bw==
   dependencies:
     stoppable "^1.1.0"
 
@@ -1018,51 +1018,51 @@
   dependencies:
     "@octokit/openapi-types" "^6.0.0"
 
-"@parameter1/graphql-mongodb-pagination@^2.2.10":
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/@parameter1/graphql-mongodb-pagination/-/graphql-mongodb-pagination-2.2.10.tgz#4ecd087b0606386b09a3ddde3d96f3fbedba55a3"
-  integrity sha512-XkpFE8F9jMwyl4iJnQyd4vQkDsG3ew8CiC2t1+7Pme34K5BVegyEi8PNlKaBx5/I1nf9yUSMULFXdHRsy15wlQ==
+"@parameter1/graphql-mongodb-pagination@^2.2.12":
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-mongodb-pagination/-/graphql-mongodb-pagination-2.2.12.tgz#4db7c3c03f011b4b98ca3fff927e42ac0f1dcbdb"
+  integrity sha512-cZdtJy1T70K+gsPVxuIzZZGhKG8xGKfsifbTn+v/9Zx7FEd9hrg9UKHwR1js6XnUEYjPmNX9HmvCRo2bfdtUTw==
   dependencies:
-    "@parameter1/utils" "^1.1.19"
+    "@parameter1/utils" "^1.1.21"
     base64-url "^2.3.3"
     lodash.merge "^4.6.2"
-    mongodb-extended-json "^1.11.0"
+    mongodb-extended-json "^1.11.1"
 
-"@parameter1/gulp@^1.1.17":
-  version "1.1.17"
-  resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.1.17.tgz#8280a4e38c51f1aa9b2b77684444f1cb5caa71ca"
-  integrity sha512-QcW0zsWAJojSyJvKaVArGJ1Wdtd0/o8qZMOr18gLytNSj9L0vhwx7kZ+1+mfG/eoUGDrynSmRxIlqEV78wVVNg==
+"@parameter1/gulp@^1.1.19":
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.1.19.tgz#b19c1087b7cbc6bd4e771636eee9fad6660a9c5a"
+  integrity sha512-vsVv05AxeHfuSm5KyIiwFIwhBjqreuci/Uc24myM8x7XaUPahQflca7BzKqC5XsrLlHx/GTUP7h7mnEh94fbAw==
   dependencies:
     gulp "^4.0.2"
 
-"@parameter1/joi@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@parameter1/joi/-/joi-1.2.6.tgz#57febfd2533bbaa1d532d4cb6d75c3a0756ed919"
-  integrity sha512-+ZTWY4aE006dbYatHQHqdzI2S/AZ4SYtgG1rE6wel+vrkeDkxrQjfX8iwZsS/fostjLOrWkhuyev/8PT9WhN7g==
+"@parameter1/joi@^1.2.8":
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@parameter1/joi/-/joi-1.2.8.tgz#96759f051bef410cc2d831ed8f1215752376597a"
+  integrity sha512-es6y8kReTKFGRXtOJ1PNfjWR9bIhrqWVPCQyyetIsAVM2EAm8QbIUq2AGHmXCuo7Aqg6HU0Ai5TZbeFKPANxdg==
   dependencies:
     joi "^17.4.0"
 
-"@parameter1/mongodb@^1.4.14":
-  version "1.4.14"
-  resolved "https://registry.yarnpkg.com/@parameter1/mongodb/-/mongodb-1.4.14.tgz#20ae80ee8c07182529e0ca774bd99448a3b35f8c"
-  integrity sha512-mQ0cSF9SjsWMFgfKjzzvRYEynjH536rhxu372nakg8naFndCnPDzDa5/jtFfNNvkxkTwCL2M5nXA1dKiyM8y5Q==
+"@parameter1/mongodb@^1.4.16":
+  version "1.4.16"
+  resolved "https://registry.yarnpkg.com/@parameter1/mongodb/-/mongodb-1.4.16.tgz#7564ab825436a719ea6b1af8707a9ead3d90b880"
+  integrity sha512-wcneHhT8ZYA77+FSQR2mHLg9mPwsT3CTBuwdvu8v1pMKQNGP+Yo41MxGftowBbBtLQR8sYOd11+vi4AQlSVdnQ==
   dependencies:
-    "@parameter1/utils" "^1.1.19"
+    "@parameter1/utils" "^1.1.21"
     async "^3.2.0"
-    mongodb "^3.6.8"
+    mongodb "^3.6.10"
 
-"@parameter1/terminus@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@parameter1/terminus/-/terminus-1.7.0.tgz#7300a5d618172530a3b02a35f61ef3d7b7c86da7"
-  integrity sha512-XyP4LBapxMCd4RopzayAQQNI9mYL8z9uF/93WGqZAfy2cfDUsAVueiRUGzsxJ/g9HJTN8HwmR8BCls0vZVCfUw==
+"@parameter1/terminus@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@parameter1/terminus/-/terminus-1.8.1.tgz#e7a3c04796f2b9c8d43fca51a9d5704b938c7d41"
+  integrity sha512-/nZPQwqOFMb6XV1stUT1CTVWke3SeRZCusEGSc9XVNCfSjEGA5xQ2foxXwDfyPHvSDwQ2DoOxSSygi9B7qzQ2g==
   dependencies:
-    "@godaddy/terminus" "^4.8.0"
-    envalid "^7.1.0"
+    "@godaddy/terminus" "^4.9.0"
+    envalid "^7.1.1"
 
-"@parameter1/utils@^1.1.19":
-  version "1.1.19"
-  resolved "https://registry.yarnpkg.com/@parameter1/utils/-/utils-1.1.19.tgz#9d86b3e092b2c11f19ade9f782dc23809698f389"
-  integrity sha512-fXo/eNz9U22vNjkfq49UA10hNKfLEDW9xYEm995srJ9n4nJXyzOmT8IjOkpmGHy96LAKq2//Tof+/KB74a0Elw==
+"@parameter1/utils@^1.1.21":
+  version "1.1.21"
+  resolved "https://registry.yarnpkg.com/@parameter1/utils/-/utils-1.1.21.tgz#2a34b1aca14226b5d7bb4f62b76b3aa3dee90c90"
+  integrity sha512-yq41MDGigfYa4rdzBwKSACFut0eBrRUQsFppdNK3exKGNtetdfRWOf8EzkKswP5f78mzr18u6rlErDjmR5HOzQ==
   dependencies:
     object-path "^0.11.5"
 
@@ -3148,6 +3148,11 @@ envalid@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/envalid/-/envalid-7.1.0.tgz#fccc499abb257e3992d73b02d014c867a85e2a69"
   integrity sha512-C5rtCxfj+ozW5q79fBYKcBEf0KSNklKwZudjCzXy9ANT8Pz1MKxPBn6unZnYXXy6e+cqVgnEURQeXmdueG9/kA==
+
+envalid@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/envalid/-/envalid-7.1.1.tgz#6429c5e3ef6987e4ea44893dd354b6cc1646de75"
+  integrity sha512-2MIPjXAWcAVsO2jTVbgMFRc66lQCy2bQDP+zPT3NucrbWMD3pij5iGZMwQiv3zdveyVfl0qAGpI1JRQGfkmu1w==
 
 envinfo@^7.7.4:
   version "7.7.4"
@@ -5692,10 +5697,10 @@ moment@^2.10.6:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
-mongodb-extended-json@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/mongodb-extended-json/-/mongodb-extended-json-1.11.0.tgz#20204c5f36843e4d94164b212cf0e8310d170f5d"
-  integrity sha512-+PLUMH7amvTYumCUR6alR474KmqtlmYeceJjsC+zcfdXls9IotfTp2WIuD6X5tO9dLDVCDqboqjgvXj/JjGj6g==
+mongodb-extended-json@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/mongodb-extended-json/-/mongodb-extended-json-1.11.1.tgz#e31d3958982f90caede82cb4fea930ece4805a32"
+  integrity sha512-thPOw/IJk3OEteloi/FZqCwrPpTLYg22ab6XpDrL20IfA7+9XRbiDDYWjnMp4gCQRA/JhA5D9xabiqRflX3aiw==
   dependencies:
     JSONStream "^1.1.1"
     async "^3.1.0"
@@ -5706,10 +5711,10 @@ mongodb-extended-json@^1.11.0:
     moment "^2.10.6"
     raf "^3.1.0"
 
-mongodb@^3.6.8:
-  version "3.6.8"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.8.tgz#3e2632af81915b3ff99b7681121ca0895e8ed407"
-  integrity sha512-sDjJvI73WjON1vapcbyBD3Ao9/VN3TKYY8/QX9EPbs22KaCSrQ5rXo5ZZd44tWJ3wl3FlnrFZ+KyUtNH6+1ZPQ==
+mongodb@^3.6.10:
+  version "3.6.10"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.10.tgz#f10e990113c86b195c8af0599b9b3a90748b6ee4"
+  integrity sha512-fvIBQBF7KwCJnDZUnFFy4WqEFP8ibdXeFANnylW19+vOwdjOAvqIzPdsNCEMT6VKTHnYu4K64AWRih0mkFms6Q==
   dependencies:
     bl "^2.2.1"
     bson "^1.1.4"
