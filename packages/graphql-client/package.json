@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/omeda-graphql-client",
-  "version": "0.5.0",
+  "version": "0.5.4",
   "description": "A server-side Apollo GraphQL client factory for accessing the Omeda GraphQL service",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
