@@ -55,17 +55,30 @@ class CustomerResource extends AbstractResource {
    * @link https://main.omeda.com/knowledge-base/customer-lookup-by-encryptedcustomerid/
    * @param {object} params
    * @param {number} params.encryptedId
+   * @param {number} [params.reQueryOnInactive=true]
    * @param {number} [params.errorOnNotFound=true]  Whether to error when not found.
    * @returns {Promise<BasicCustomerResponse>} The basic Customer properties
    */
   async lookupByEncryptedId(params = {}) {
-    const { encryptedId, errorOnNotFound } = await validateAsync(Joi.object({
+    const { encryptedId, reQueryOnInactive, errorOnNotFound } = await validateAsync(Joi.object({
       encryptedId: this.schema.encryptedCustomerId.required(),
+      reQueryOnInactive: Joi.boolean().default(true),
       errorOnNotFound: Joi.boolean().default(true),
     }).required(), params);
     const endpoint = `/customer/${encryptedId}/encrypted/*`;
-    const response = await this.client.get({ endpoint, errorOnNotFound });
-    return new BasicCustomerResponse({ response, resource: this });
+    try {
+      const response = await this.client.get({ endpoint, errorOnNotFound });
+      return new BasicCustomerResponse({ response, resource: this });
+    } catch (e) {
+      // on inactive, re-query.
+      if (reQueryOnInactive) {
+        const inactive = /^customer id [a-z0-9]{15} is valid but not active.+please use ([a-z0-9]{15})/i.exec(e.message);
+        if (inactive && inactive[1]) {
+          return this.lookupByEncryptedId({ encryptedId: inactive[1], errorOnNotFound });
+        }
+      }
+      throw e;
+    }
   }
 
   /**
