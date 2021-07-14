@@ -22,7 +22,7 @@
     "@parameter1/utils": "^1.1.21"
   },
   "devDependencies": {
-    "eslint": "^7.28.0",
+    "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4"
   },
