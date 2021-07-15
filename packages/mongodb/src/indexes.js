@@ -1,4 +1,8 @@
 module.exports = {
+  'api-requests': [
+    { brand: 1 },
+    [{ date: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 30 }],
+  ],
   'brand-demographics': [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],

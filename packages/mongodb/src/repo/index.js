@@ -1,4 +1,5 @@
 const Joi = require('@parameter1/joi');
+const ApiRequestRepo = require('./api-request');
 const BrandRepo = require('./brand');
 const BrandDemographicRepo = require('./brand-demographic');
 const BrandDeploymentTypeRepo = require('./brand-deployment-type');
@@ -12,6 +13,7 @@ module.exports = (params = {}) => {
   }).validate(params);
   const { brandKey, client, dbName } = value;
   if (error) throw new Error(error.details[0].message);
+  const apiRequest = new ApiRequestRepo({ brandKey, client, dbName });
   const brandDemographic = new BrandDemographicRepo({ brandKey, client, dbName });
   const brandDeploymentType = new BrandDeploymentTypeRepo({ brandKey, client, dbName });
   const brandProduct = new BrandProductRepo({ brandKey, client, dbName });
@@ -24,6 +26,7 @@ module.exports = (params = {}) => {
     deploymentTypeRepo: brandDeploymentType,
   });
   return {
+    apiRequest,
     brand,
     brandDemographic,
     brandDeploymentType,

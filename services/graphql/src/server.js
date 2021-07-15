@@ -15,6 +15,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 
 const path = '/';
 const server = new ApolloServer({
+  context: ({ req }) => ({ req }),
   schema,
   tracing: false,
   cacheControl: false,

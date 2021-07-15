@@ -56,6 +56,8 @@ class OmedaGraphQLPlugin {
     context.repos = repos;
     context.loaders = createLoaders({ apiClient, repos });
 
+    this.logRequest({ context, request });
+
     // keep brand data in-sync.
     const brandData = await repos.brand.status();
     if (!brandData.exists) {
@@ -75,6 +77,33 @@ class OmedaGraphQLPlugin {
       // eslint-disable-next-line no-param-reassign
       requestContext.context = { ...contextFromServer, ...context };
     }
+  }
+
+  logRequest({ request, context }) {
+    const {
+      apiClient,
+      brand,
+      repos,
+      req,
+    } = context;
+
+    const doc = {
+      env: process.env.NODE_ENV,
+      date: new Date(),
+      brand,
+      appId: apiClient.appId,
+      clientAbbrev: apiClient.clientAbbrev,
+      inputId: apiClient.inputId,
+      ip: req.ip,
+      ua: req.get('user-agent'),
+      headers: req.headers,
+      request: {
+        query: request.query,
+        operationName: request.operationName,
+        variables: request.variables,
+      },
+    };
+    repos.apiRequest.insertOne({ doc }).catch(newrelic.noticeError.bind(newrelic));
   }
 
   /**
