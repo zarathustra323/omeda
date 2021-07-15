@@ -3,6 +3,8 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
 
 extend type Query {
+  "Finds all customers that have changed for the provided date range."
+  changedCustomers(input: ChangedCustomersQueryInput!): [ChangedCustomer!]!
   "Finds a single customer by customer ID."
   customerById(input: CustomerByIdQueryInput!): Customer!
   "Finds a single customer by encrypted customer ID."
@@ -14,6 +16,15 @@ extend type Query {
 extend type Mutation {
   "Rapidly identifies (upserts) user data into an Omeda customer."
   rapidCustomerIdentification(input: RapidCustomerIdentificationMutationInput!): RapidCustomerIdentification!
+}
+
+type ChangedCustomer {
+  id: Int! @apiValue
+  dateChanged: DateTime! @apiValue
+  createdDate: DateTime! @apiValue
+  customerStatusCode: CustomerChangeStatusCode! @codeOrType(instance: "CustomerChangeStatusCode", path: "CustomerStatusId")
+
+  customer: Customer!
 }
 
 type Customer {
@@ -127,6 +138,13 @@ type RapidCustomerIdentification {
   customer: Customer!
   orderId: Int! @apiValue
   transactionId: Int! @apiValue
+}
+
+input ChangedCustomersQueryInput {
+  "The start date for returning changed customers."
+  startDate: DateTime!
+  "The end date for returning changed customers."
+  endDate: DateTime!
 }
 
 input CustomerByIdQueryInput {

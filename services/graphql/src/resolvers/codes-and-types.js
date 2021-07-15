@@ -10,6 +10,14 @@ module.exports = {
   /**
    *
    */
+  CustomerChangeStatusCodeEnum: {
+    ACTIVE: 1,
+    INACTIVE: 0,
+  },
+
+  /**
+   *
+   */
   CustomerMergeCodeEnum: {
     MERGEABLE: 1,
     NON_MERGABLE: 0,

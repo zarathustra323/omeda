@@ -4,6 +4,21 @@ module.exports = {
   /**
    *
    */
+  ChangedCustomer: {
+    /**
+     *
+     */
+    async customer({ Id }, _, { apiClient }) {
+      const response = await apiClient.resource('customer').lookupById({
+        customerId: Id,
+      });
+      return response.data;
+    },
+  },
+
+  /**
+   *
+   */
   Customer: {
     /**
      *
@@ -244,6 +259,18 @@ module.exports = {
    *
    */
   Query: {
+    /**
+     *
+     */
+    async changedCustomers(_, { input }, { apiClient }) {
+      const { startDate, endDate } = input;
+      const response = await apiClient.resource('customer').changeLookup({
+        startDate,
+        endDate,
+      });
+      return response.data;
+    },
+
     /**
      *
      */

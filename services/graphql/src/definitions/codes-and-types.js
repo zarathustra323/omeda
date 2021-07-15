@@ -7,6 +7,11 @@ enum ContactTypeStatusCodeEnum {
   PRIMARY
 }
 
+enum CustomerChangeStatusCodeEnum {
+  ACTIVE
+  INACTIVE
+}
+
 enum CustomerStatusCodeEnum {
   ACTIVE
   DELETED_INACTIVE
@@ -103,6 +108,12 @@ enum WebformViewCodeEnum {
 
 type ContactTypeStatusCode {
   id: ContactTypeStatusCodeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type CustomerChangeStatusCode {
+  id: CustomerChangeStatusCodeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
   description: String! @apiValue
 }
