@@ -1,9 +1,11 @@
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const { getAsObject } = require('@parameter1/utils');
+const dayjs = require('../dayjs');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerBehaviorsResponse = require('../response/customer/behaviors');
+const CustomerChangeLookupResponse = require('../response/customer/change-lookup');
 const CustomerDemographicsResponse = require('../response/customer/demographics');
 const CustomerEmailsResponse = require('../response/customer/emails');
 const CustomerExternalIdsResponse = require('../response/customer/external-ids');
@@ -13,6 +15,30 @@ const CustomerSubscriptionsResponse = require('../response/customer/subscription
 const AbstractResource = require('./abstract');
 
 class CustomerResource extends AbstractResource {
+  /**
+   * This service returns a list of Customer Ids for Customers that were
+   * changed within a given date range. The date range cannot exceed 90 days.
+   *
+   * @link https://www.omeda.com/knowledge-base/customer-change-lookup/
+   * @param {object} params
+   * @param {Date} params.startDate
+   * @param {Date} params.endDate
+   * @returns {Promise<CustomerChangeLookupResponse>}
+   */
+  async changeLookup(params = {}) {
+    const { startDate, endDate } = await validateAsync(Joi.object({
+      startDate: Joi.date().required(),
+      endDate: Joi.date().required().default(() => new Date()),
+    }).required(), params);
+    const now = new Date(Date.now() - 60 * 1000); // clock drift
+    const format = 'MMDDYYYY_HHmm';
+    const start = dayjs.tz(startDate, 'America/Chicago').format(format);
+    const end = dayjs.tz(endDate > now ? now : endDate, 'America/Chicago').format(format);
+    const endpoint = `customer/change/startdate/${start}/enddate/${end}/*`;
+    const response = await this.client.get({ endpoint });
+    return new CustomerChangeLookupResponse({ response });
+  }
+
   /**
    * This API provides the ability look up customers using Email Address and an optional Product Id.
    * The response will include a list of customer records including the Customer Id(s)
