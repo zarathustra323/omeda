@@ -1,6 +1,6 @@
 {
   "name": "@parameter1/omeda-mongodb",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "Provides repositories for reading and writing Omeda API data from and to MongoDB",
   "main": "src/index.js",
   "author": "Jacob Bare <jacob@parameter1.com>",
