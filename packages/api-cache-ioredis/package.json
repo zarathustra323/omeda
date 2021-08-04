@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@parameter1/omeda-api-client": "^0.6.0",
-    "ioredis": "^4.27.6"
+    "ioredis": "^4.27.7"
   },
   "devDependencies": {
-    "eslint": "^7.30.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4"
   },
