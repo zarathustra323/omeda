@@ -44,7 +44,7 @@ type Customer {
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
-  demographics: [CustomerDemographic!]!
+  demographics(input: CustomerDemographicsInput = {}): [CustomerDemographic!]!
   emailAddresses: [CustomerEmailAddress!]!
   externalIds: [CustomerExternalId!]!
   phoneNumbers: [CustomerPhoneNumber!]!
@@ -164,6 +164,11 @@ input CustomersByEmailAddressQueryInput {
   emailAddress: String!
   "An (optional) product ID to filter the response by."
   productId: Int
+}
+
+input CustomerDemographicsInput {
+  "Filters the customer demograpgics by one or more demograpgic IDs. An empty value will return all customer demographics."
+  demographicIds: [Int!] = []
 }
 
 input RapidCustomerIdentificationMutationInput {

@@ -31,9 +31,12 @@ module.exports = {
     /**
      *
      */
-    async demographics({ Id }, _, { loaders }) {
+    async demographics({ Id }, { input }, { loaders }) {
+      const { demographicIds } = input;
       const response = await loaders.customerDemographics.load(Id);
-      return response ? response.data : [];
+      const data = response ? response.data : [];
+      if (!demographicIds.length) return data;
+      return data.filter((demo) => demographicIds.includes(demo.DemographicId));
     },
 
     /**
