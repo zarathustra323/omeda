@@ -167,8 +167,10 @@ input CustomersByEmailAddressQueryInput {
 }
 
 input CustomerDemographicsInput {
-  "Filters the customer demograpgics by one or more demograpgic IDs. An empty value will return all customer demographics."
+  "Filters the customer demographics by one or more demographic IDs. An empty value will return all customer demographics."
   demographicIds: [Int!] = []
+  "Filters the customer demographics by one or more demographic types. An empty value will return all customer demographics."
+  demographicTypes: [DemographicTypeEnum!] = []
 }
 
 input RapidCustomerIdentificationMutationInput {
