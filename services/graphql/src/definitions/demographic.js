@@ -2,6 +2,11 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 
+extend type Query {
+  "Looks up a demographic by ID."
+  demographicById(input: DemographicByIdQueryInput!): Demographic
+}
+
 type Demographic {
   id: Int! @apiValue
   type: DemographicType! @codeOrType(instance: "DemographicType", path: "DemographicType")
@@ -19,6 +24,11 @@ type DemographicValue {
   alternateId: String @apiValue
   sequence: Int @apiValue
   webform: Webform
+}
+
+input DemographicByIdQueryInput {
+  "The demographic ID to lookup."
+  id: Int!
 }
 
 `;
