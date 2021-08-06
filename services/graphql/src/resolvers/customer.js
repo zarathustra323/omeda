@@ -35,7 +35,7 @@ module.exports = {
       const { demographicIds, demographicTypes } = input;
       const response = await loaders.customerDemographics.load(Id);
       const data = response ? response.data : [];
-      return data.filter((demo) => {
+      const filtered = data.filter((demo) => {
         if (demographicIds.length && !demographicIds.includes(demo.DemographicId)) {
           return false;
         }
@@ -44,6 +44,15 @@ module.exports = {
         }
         return true;
       });
+
+      // ensure the demographics still exist within Omeda
+      const ids = filtered.map(({ DemographicId }) => DemographicId);
+      const found = await loaders.brandDemographics.loadMany(ids);
+      const foundMap = found.filter((v) => v).reduce((set, doc) => {
+        set.add(doc.data.Id);
+        return set;
+      }, new Set());
+      return filtered.filter(({ DemographicId }) => foundMap.has(DemographicId));
     },
 
     /**
