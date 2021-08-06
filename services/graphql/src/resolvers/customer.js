@@ -301,10 +301,11 @@ module.exports = {
      *
      */
     async customerById(_, { input }, { apiClient }) {
-      const { id, reQueryOnInactive } = input;
+      const { id, reQueryOnInactive, errorOnNotFound } = input;
       const response = await apiClient.resource('customer').lookupById({
         customerId: id,
         reQueryOnInactive,
+        errorOnNotFound,
       });
       return response.data;
     },
@@ -313,9 +314,10 @@ module.exports = {
      *
      */
     async customerByEncyptedId(_, { input }, { apiClient }) {
-      const { id } = input;
+      const { id, errorOnNotFound } = input;
       const response = await apiClient.resource('customer').lookupByEncryptedId({
         encryptedId: id,
+        errorOnNotFound,
       });
       return response.data;
     },

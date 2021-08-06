@@ -6,9 +6,9 @@ extend type Query {
   "Finds all customers that have changed for the provided date range."
   changedCustomers(input: ChangedCustomersQueryInput!): [ChangedCustomer!]!
   "Finds a single customer by customer ID."
-  customerById(input: CustomerByIdQueryInput!): Customer!
+  customerById(input: CustomerByIdQueryInput!): Customer
   "Finds a single customer by encrypted customer ID."
-  customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer!
+  customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer
   "Finds all customers by the provided email address."
   customersByEmailAddress(input: CustomersByEmailAddressQueryInput!): [Customer!]!
 }
@@ -152,11 +152,15 @@ input CustomerByIdQueryInput {
   id: Int!
   "Whether to fetch the newly activated customer if the provided ID is inactive."
   reQueryOnInactive: Boolean = true
+  "Whether to error when the customer is not found."
+  errorOnNotFound: Boolean = true
 }
 
 input CustomerByEncryptedIdQueryInput {
   "The encrypted customer ID to lookup."
   id: String!
+  "Whether to error when the customer is not found."
+  errorOnNotFound: Boolean = true
 }
 
 input CustomersByEmailAddressQueryInput {
