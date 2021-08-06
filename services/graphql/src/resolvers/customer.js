@@ -307,7 +307,7 @@ module.exports = {
         reQueryOnInactive,
         errorOnNotFound,
       });
-      return response.data;
+      return response.data.Id ? response.data : null;
     },
 
     /**
@@ -319,7 +319,7 @@ module.exports = {
         encryptedId: id,
         errorOnNotFound,
       });
-      return response.data;
+      return response.data.Id ? response.data : null;
     },
 
     /**
