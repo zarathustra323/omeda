@@ -211,6 +211,8 @@ module.exports = {
         lastName,
         title,
         companyName,
+        streetAddress,
+        city,
         regionCode,
         countryCode,
         postalCode,
@@ -232,7 +234,8 @@ module.exports = {
       })();
       Products.push(...newsletterProductIds.map((id) => ({ OmedaProductId: id })));
 
-      const hasAddress = companyName || regionCode || countryCode || postalCode;
+      const hasAddress = companyName || regionCode || countryCode || postalCode
+        || streetAddress || city;
       const body = {
         RunProcessor: 1,
         Products,
@@ -245,6 +248,8 @@ module.exports = {
           Addresses: [
             {
               ...(companyName && { Company: companyName }),
+              ...(streetAddress && { Street: streetAddress }),
+              ...(city && { City: city }),
               ...(regionCode && { RegionCode: regionCode }),
               ...(countryCode && { CountryCode: countryCode }),
               ...(postalCode && { PostalCode: postalCode }),

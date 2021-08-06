@@ -186,6 +186,10 @@ input RapidCustomerIdentificationMutationInput {
   title: String
   "The customer's company name."
   companyName: String
+  "The customer's street address."
+  streetAddress: String
+  "The customer's city."
+  city: String
   "3-character country code"
   countryCode: String
   "For country_code=’USA’ or ‘CAN’, this must be the 2-character US state or Canadian code used by the postal service. Omeda also has region codes for other countries of the world"
