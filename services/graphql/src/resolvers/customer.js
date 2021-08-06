@@ -206,6 +206,7 @@ module.exports = {
     async rapidCustomerIdentification(_, { input }, { apiClient, repos }) {
       const {
         email,
+        phoneNumber,
         firstName,
         lastName,
         title,
@@ -236,6 +237,7 @@ module.exports = {
         RunProcessor: 1,
         Products,
         Emails: [{ EmailAddress: email }],
+        ...(phoneNumber && { Phones: [{ Number: phoneNumber }] }),
         ...(firstName && { FirstName: firstName }),
         ...(lastName && { LastName: lastName }),
         ...(title && { Title: title }),

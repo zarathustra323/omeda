@@ -192,6 +192,8 @@ input RapidCustomerIdentificationMutationInput {
   regionCode: String
   "ZIP code or postal code."
   postalCode: String
+  "The customer's primary phone number."
+  phoneNumber: String
   "Deployment types to assign to the customer."
   deploymentTypeIds: [Int!] = []
   "Demographics to assign to the customer."
