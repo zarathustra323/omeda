@@ -207,6 +207,8 @@ module.exports = {
       const {
         email,
         phoneNumber,
+        mobileNumber,
+        faxNumber,
         firstName,
         lastName,
         title,
@@ -236,11 +238,17 @@ module.exports = {
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city;
+
+      const phones = [];
+      if (phoneNumber) phones.push({ Number: phoneNumber, PhoneContactType: 200 });
+      if (mobileNumber) phones.push({ Number: mobileNumber, PhoneContactType: 230 });
+      if (faxNumber) phones.push({ Number: faxNumber, PhoneContactType: 240 });
+
       const body = {
         RunProcessor: 1,
         Products,
         Emails: [{ EmailAddress: email }],
-        ...(phoneNumber && { Phones: [{ Number: phoneNumber }] }),
+        ...(phones.length && { Phones: phones }),
         ...(firstName && { FirstName: firstName }),
         ...(lastName && { LastName: lastName }),
         ...(title && { Title: title }),
