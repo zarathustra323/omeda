@@ -53,6 +53,8 @@ type Customer {
 
   primaryEmailAddress: CustomerEmailAddress
   primaryPhoneNumber: CustomerPhoneNumber
+  primaryFaxNumber: CustomerPhoneNumber
+  primaryMobileNumber: CustomerPhoneNumber
   primaryPostalAddress: CustomerPostalAddress
 
   companyName: String

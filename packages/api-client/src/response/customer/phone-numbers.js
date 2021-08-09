@@ -27,6 +27,40 @@ class CustomerPhoneNumbersResponse extends CustomerRelManyResponse {
     const primary = data.find(({ StatusCode }) => StatusCode === 1);
     return primary || data[0];
   }
+
+  /**
+   * Loads the first, active fax number for this response.
+   *
+   * @returns {CustomerPhoneEntity|null} The phone entity or null.
+   */
+  getPrimaryFax() {
+    return this.getPrimaryForType(240);
+  }
+
+  /**
+   * Loads the primary number for this response, based on a contact type ID.
+   * Will use the first active phone found (StatusCode=1) with the provided type,
+   * otherwise will return null.
+   *
+   * @param {number} typeId The phone contact type ID, e.g. 240 for fax, 230 for mobile, etc
+   * @returns {CustomerPhoneEntity|null} The phone entity or null.
+   */
+  getPrimaryForType(typeId) {
+    const { data } = this;
+    if (!data.length) return null;
+    const fax = data
+      .find(({ StatusCode, PhoneContactType }) => StatusCode === 1 && PhoneContactType === typeId);
+    return fax || null;
+  }
+
+  /**
+   * Loads the first, active mobile number for this response.
+   *
+   * @returns {CustomerPhoneEntity|null} The phone entity or null.
+   */
+  getPrimaryMobile() {
+    return this.getPrimaryForType(230);
+  }
 }
 
 module.exports = CustomerPhoneNumbersResponse;

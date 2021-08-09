@@ -98,6 +98,22 @@ module.exports = {
     /**
      *
      */
+    async primaryFaxNumber({ Id }, _, { loaders }) {
+      const response = await loaders.customerPhoneNumbers.load(Id);
+      return response ? response.getPrimaryFax() : null;
+    },
+
+    /**
+     *
+     */
+    async primaryMobileNumber({ Id }, _, { loaders }) {
+      const response = await loaders.customerPhoneNumbers.load(Id);
+      return response ? response.getPrimaryMobile() : null;
+    },
+
+    /**
+     *
+     */
     async primaryPhoneNumber({ Id }, _, { loaders }) {
       const response = await loaders.customerPhoneNumbers.load(Id);
       return response ? response.getPrimary() : null;
