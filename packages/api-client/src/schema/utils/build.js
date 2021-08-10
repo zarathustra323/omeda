@@ -9,7 +9,12 @@ module.exports = ({ schema, obj, builder } = {}) => {
     // if null, the schema builder will continue to handle the value, otherwise will
     // use the value provided by the hook function
     if (builder && typeof builder === 'function') {
-      const built = builder({ name, type, value });
+      const built = builder({
+        name,
+        type,
+        value,
+        parent: obj,
+      });
       if (built != null) {
         data[name] = built;
         return;
