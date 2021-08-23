@@ -208,7 +208,7 @@ class OmedaApiClient {
       },
       ...(body && { body: JSON.stringify(body) }),
     });
-    const json = await response.json();
+    const json = await OmedaApiClient.parseJSONResponse(response);
     const time = OmedaApiClient.calculateTime(start);
     if (response.ok) return new ApiClientResponse({ json, fetchResponse: response, time });
 
@@ -254,6 +254,25 @@ class OmedaApiClient {
   static calculateTime(start) {
     const [secs, ns] = process.hrtime(start);
     return (secs * 1000) + (ns / 1000000);
+  }
+
+  /**
+   * Attempts to parse the JSON response body. If a parse error is encountered,
+   * the original body is appended to the error.
+   *
+   * @param {FetchResponse} response
+   * @returns {object}
+   */
+  static async parseJSONResponse(response) {
+    const body = await response.text();
+    try {
+      return JSON.parse(body);
+    } catch (e) {
+      const err = new Error(`Unable to parse JSON response body: ${e.message}`);
+      err.body = body;
+      err.originalError = e;
+      throw err;
+    }
   }
 }
 
