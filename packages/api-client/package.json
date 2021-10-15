@@ -16,16 +16,16 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/joi": "^1.2.9",
-    "@parameter1/utils": "^1.1.22",
+    "@parameter1/joi": "^1.2.10",
+    "@parameter1/utils": "^1.1.24",
     "cheerio": "^1.0.0-rc.10",
-    "dayjs": "^1.10.6",
-    "node-fetch": "^2.6.1"
+    "dayjs": "^1.10.7",
+    "node-fetch": "^2.6.5"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.24.0"
+    "eslint-plugin-import": "^2.25.2"
   },
   "publishConfig": {
     "access": "public"
