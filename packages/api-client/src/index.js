@@ -1,11 +1,43 @@
 const { cleanPath } = require('@parameter1/utils');
 const fetch = require('node-fetch');
-const ApiClientResponse = require('./response/client');
-const ApiResponseError = require('./response/error');
+const { ApiClientJSONResponse, ApiClientTextResponse } = require('./response/client');
+const { ApiResponseJSONError, ApiResponseTextError } = require('./response/error');
 const BrandResource = require('./resources/brand');
 const CustomerResource = require('./resources/customer');
 const EmailResource = require('./resources/email');
 const pkg = require('../package.json');
+
+const buildApiError = ({
+  contentType,
+  responseBody,
+  fetchResponse,
+  time,
+} = {}) => {
+  switch (contentType) {
+    case 'json':
+      return new ApiResponseJSONError({ json: responseBody, fetchResponse, time });
+    case 'text':
+      return new ApiResponseTextError({ text: responseBody, fetchResponse, time });
+    default:
+      throw new Error(`Unsupported response content type encountered: ${contentType}`);
+  }
+};
+
+const buildApiResponse = ({
+  contentType,
+  responseBody,
+  fetchResponse,
+  time,
+} = {}) => {
+  switch (contentType) {
+    case 'json':
+      return new ApiClientJSONResponse({ json: responseBody || {}, fetchResponse, time });
+    case 'text':
+      return new ApiClientTextResponse({ text: responseBody || '', fetchResponse, time });
+    default:
+      throw new Error(`Unsupported response content type encountered: ${contentType}`);
+  }
+};
 
 class OmedaApiClient {
   /**
@@ -135,7 +167,12 @@ class OmedaApiClient {
 
     if (parsed) {
       const time = OmedaApiClient.calculateTime(start);
-      return new ApiClientResponse({ json: parsed, fromCache: true, time });
+      return buildApiResponse({
+        contentType: parsed.contentType,
+        responseBody: parsed.body,
+        fromCache: true,
+        time,
+      });
     }
 
     const response = await this.request({
@@ -144,7 +181,7 @@ class OmedaApiClient {
       errorOnNotFound,
       useClientUrl,
     });
-    await this.cache.set(cacheKey, response.json, ttl);
+    await this.cache.set(cacheKey, response.getBody(), ttl, response.contentType);
     return response;
   }
 
@@ -208,12 +245,24 @@ class OmedaApiClient {
       },
       ...(body && { body: JSON.stringify(body) }),
     });
-    const json = await OmedaApiClient.parseJSONResponse(response);
+    const { responseBody, contentType } = await OmedaApiClient.parseResponseBody(response);
     const time = OmedaApiClient.calculateTime(start);
-    if (response.ok) return new ApiClientResponse({ json, fetchResponse: response, time });
+    if (response.ok) {
+      return buildApiResponse({
+        contentType,
+        responseBody,
+        fetchResponse: response,
+        time,
+      });
+    }
 
     if (response.status === 404) {
-      const notFoundError = new ApiResponseError({ json, fetchResponse: response, time });
+      const notFoundError = buildApiError({
+        contentType,
+        responseBody,
+        fetchResponse: response,
+        time,
+      });
       if (/valid but not active/.test(notFoundError.message)) {
         // when an inactive response is found, force throw (regardless of `errorOnNotFound` setting)
         // so that the error can be handled directly by the calling method
@@ -222,9 +271,14 @@ class OmedaApiClient {
     }
 
     if (errorOnNotFound === false && response.status === 404) {
-      return new ApiClientResponse({ json: {}, fetchResponse: response, time });
+      return buildApiResponse({ contentType, fetchResponse: response, time });
     }
-    throw new ApiResponseError({ json, fetchResponse: response, time });
+    throw buildApiError({
+      contentType,
+      responseBody,
+      fetchResponse: response,
+      time,
+    });
   }
 
   /**
@@ -257,14 +311,31 @@ class OmedaApiClient {
   }
 
   /**
-   * Attempts to parse the JSON response body. If a parse error is encountered,
-   * the original body is appended to the error.
+   * Attempts to parse the response body into either JSON or text.
    *
    * @param {FetchResponse} response
    * @returns {object}
    */
-  static async parseJSONResponse(response) {
+  static async parseResponseBody(response) {
     const body = await response.text();
+    const type = response.headers.get('content-type');
+    if (/^application\/json/i.test(type)) {
+      return { contentType: 'json', responseBody: OmedaApiClient.parseJSON(body) };
+    }
+    if (/^text\//i.test(type)) {
+      return { contentType: 'text', responseBody: body };
+    }
+    throw new Error(`Unsupported API response content type encountered: ${type}`);
+  }
+
+  /**
+   * Parses a JSON string. If a parse error is encountered,
+   * the original body is appended to the error.
+   *
+   * @param {string} body
+   * @returns {object}
+   */
+  static parseJSON(body) {
     try {
       return JSON.parse(body);
     } catch (e) {

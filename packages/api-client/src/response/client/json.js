@@ -1,20 +1,28 @@
 const { get, getAsArray, getAsObject } = require('@parameter1/utils');
+const ApiClientAbstractResponse = require('./-abstract');
 
-class ApiResponseError extends Error {
+class ApiClientJSONResponse extends ApiClientAbstractResponse {
   /**
    *
    * @param {object} params
-   * @param {object} params.json The parsed response JSON body
-   * @param {object} params.fetchResponse The Fetch response
+   * @param {object} params.json The parsed response JSON body.
+   * @param {object} params.fetchResponse The Fetch response.
    * @param {number} params.time The time (in MS) it took to retrieve the response.
+   * @param {boolean} [params.fromCache=false] Whether the JSON was retrieved from cache.
    */
-  constructor({ json, fetchResponse, time } = {}) {
-    const message = get(json, 'Errors.0.Error', fetchResponse.statusText);
-    super(message);
-    this.status = fetchResponse.status || 500;
+  constructor({
+    json,
+    fetchResponse,
+    time,
+    fromCache = false,
+  } = {}) {
+    super({
+      contentType: 'json',
+      fetchResponse,
+      time,
+      fromCache,
+    });
     this.json = json;
-    this.fetchResponse = fetchResponse;
-    this.time = time;
   }
 
   /**
@@ -48,4 +56,4 @@ class ApiResponseError extends Error {
   }
 }
 
-module.exports = ApiResponseError;
+module.exports = ApiClientJSONResponse;
