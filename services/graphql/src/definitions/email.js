@@ -4,8 +4,15 @@ module.exports = gql`
 
 extend type Query {
   emailDeploymentById(input: EmailDeploymentByIdQueryInput!): EmailDeployment
+  "Returns the deployment text or HTML content for the provided track ID and split number. If the track ID, split or content is not found, the query will return null."
+  emailDeploymentContentById(input: QueryEmailDeploymentContentByIdInput!): String
   searchEmailClicks(input: SearchEmailClicksQueryInput!): EmailDeploymentClicks
   searchEmailDeployments(input: SearchEmailDeploymentsQueryInput = {}): [EmailDeploymentListItem!]!
+}
+
+enum EmailDeploymentContentTypeEnum {
+  HTML
+  TEXT
 }
 
 type EmailDeployment {
@@ -241,6 +248,15 @@ input SearchEmailDeploymentsQueryInput {
   statuses: [DeploymentStatusSearchEnum!] = []
   "Text match for deployment trackId."
   trackId: String
+}
+
+input QueryEmailDeploymentContentByIdInput {
+  "The email deployment track ID to retrieve content for."
+  trackId: String!
+  "The split number to lookup."
+  splitNumber: Int!
+  "The content type to retrieve."
+  contentType: EmailDeploymentContentTypeEnum!
 }
 
 `;

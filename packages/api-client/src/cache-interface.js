@@ -15,6 +15,7 @@ class OmedaApiCacheInterface {
    * Implement this in the extending cache class.
    *
    * @param {string} cacheKey The cache key to set.
+   * @returns {object} An object containing the contentType and the body
    */
   async get(cacheKey) {
     throw new Error('The `get` method must be implemented in your cache class.');
@@ -24,10 +25,12 @@ class OmedaApiCacheInterface {
    * Implement this in the extending cache class.
    *
    * @param {string} cacheKey The cache key to use.
-   * @param {object} parsed The raw, parsed JSON data from the API response.
+   * @param {string|object} body The API response body
+   *                             (if JSON, should already be parsed to an object)
    * @param {number} [ttl] The TTL for this request, in seconds.
+   * @param {string} [contentType=json] The response content type.
    */
-  async set(cacheKey, parsed, ttl) {
+  async set(cacheKey, body, ttl, contentType = 'json') {
     throw new Error('The `set` method must be implemented in your cache class.');
   }
 

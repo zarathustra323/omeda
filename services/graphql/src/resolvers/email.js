@@ -18,6 +18,14 @@ module.exports = {
   /**
    *
    */
+  EmailDeploymentContentTypeEnum: {
+    HTML: 'html',
+    TEXT: 'text',
+  },
+
+  /**
+   *
+   */
   EmailDeploymentListItem: {
     /**
      *
@@ -38,6 +46,18 @@ module.exports = {
     async emailDeploymentById(_, { input }, { apiClient }) {
       const { data } = await apiClient.resource('email').lookupDeploymentById({ trackId: input.trackId });
       return data;
+    },
+
+    /**
+     *
+     */
+    async emailDeploymentContentById(_, { input }, { apiClient }) {
+      const response = await apiClient.resource('email').lookupEmailDeploymentContent({
+        trackId: input.trackId,
+        splitNumber: input.splitNumber,
+        contentType: input.contentType,
+      });
+      return response.getBody() || null;
     },
 
     /**
