@@ -21,9 +21,6 @@ module.exports = ({ schema, obj, builder } = {}) => {
       }
     }
 
-    // links (skip)
-    if (type === 'link') return;
-
     // dates
     if (['datetime', 'date'].includes(type)) {
       const date = convertDate(value);
@@ -31,7 +28,7 @@ module.exports = ({ schema, obj, builder } = {}) => {
       return;
     }
     // strings
-    if (type === 'string') {
+    if (type === 'string' || type === 'link') {
       const trimmed = value ? `${value}`.trim() : null;
       data[name] = trimmed || null;
       return;
