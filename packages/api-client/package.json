@@ -16,8 +16,8 @@
     "test": "yarn lint"
   },
   "dependencies": {
-    "@parameter1/joi": "^1.2.9",
-    "@parameter1/utils": "^1.1.22",
+    "@parameter1/joi": "^1.2.10",
+    "@parameter1/utils": "^1.1.24",
     "cheerio": "^1.0.0-rc.10",
     "dayjs": "^1.10.7",
     "node-fetch": "^2.6.5"
