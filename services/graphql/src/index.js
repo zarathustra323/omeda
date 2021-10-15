@@ -1,8 +1,7 @@
 require('./newrelic');
 const bootService = require('@parameter1/terminus/boot-service');
 const { log } = require('@parameter1/terminus/utils');
-const { buildIndexes } = require('@parameter1/omeda-mongodb');
-const { filterUri } = require('@parameter1/mongodb/utils');
+const { buildIndexes, filterUri } = require('@parameter1/omeda-mongodb');
 const newrelic = require('./newrelic');
 const mongodb = require('./mongodb');
 const server = require('./server');
