@@ -28,7 +28,7 @@
     "apollo-server-express": "^2.25.2",
     "dataloader": "^2.0.0",
     "dayjs": "^1.10.7",
-    "envalid": "^7.1.1",
+    "envalid": "^7.2.1",
     "express": "^4.17.1",
     "graphql": "^15.6.1",
     "graphql-type-json": "^0.3.2",
