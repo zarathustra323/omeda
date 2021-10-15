@@ -29,6 +29,33 @@ class EmailResource extends AbstractResource {
   }
 
   /**
+   * Looks up either the HTML or text content for the provided Track ID and split number.
+   *
+   * @param {object} params
+   * @param {string} params.trackId
+   * @param {number} params.splitNumber
+   * @param {string} params.contentType One of either `html` or `text`
+   * @param {boolean} [params.errorOnNotFound=false]
+   * @returns {Promise<ApiClientTextResponse>}
+   */
+  async lookupEmailDeploymentContent(params = {}) {
+    const {
+      trackId,
+      splitNumber,
+      contentType,
+      errorOnNotFound,
+    } = await validateAsync(Joi.object({
+      trackId: Joi.string().trim().required(),
+      splitNumber: Joi.number().min(1).required(),
+      contentType: Joi.string().trim().lowercase().valid('html', 'text')
+        .required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/omail/deployment/content/lookup/${contentType}/${trackId}/${splitNumber}/*`;
+    return this.client.get({ endpoint, errorOnNotFound });
+  }
+
+  /**
    * This service returns Opt In/Out information stored for a given email address.
    *
    * @link https://www.omeda.com/knowledge-base/email-opt-in-out-lookup/
