@@ -29,6 +29,25 @@ class EmailResource extends AbstractResource {
   }
 
   /**
+   * This service returns Opt In/Out information stored for a given email address.
+   *
+   * @link https://www.omeda.com/knowledge-base/email-opt-in-out-lookup/
+   * @param {object} params
+   * @param {string} params.emailAddress
+   * @param {boolean} [params.errorOnNotFound=false]
+   * @returns {Promise<EmailOptInStatusResponse>}
+   */
+  async lookupOptInStatusByEmail(params = {}) {
+    const { emailAddress, errorOnNotFound } = await validateAsync(Joi.object({
+      emailAddress: Joi.string().trim().email().required(),
+      errorOnNotFound: Joi.boolean().default(false),
+    }).required(), params);
+    const endpoint = `/filter/email/${emailAddress}/*`;
+    const response = await this.client.get({ endpoint, errorOnNotFound });
+    return new EmailOptInStatusResponse({ emailAddress, response, resource: this });
+  }
+
+  /**
    * The OptIn Queue API allows our client to OptIn their subscribers or customers to
    * their email deployments at the deployment type level.
    *
@@ -86,25 +105,6 @@ class EmailResource extends AbstractResource {
       source: Joi.string().trim(),
     }).required(), params);
     return this.optIn({ optIns: [optIn] });
-  }
-
-  /**
-   * This service returns Opt In/Out information stored for a given email address.
-   *
-   * @link https://www.omeda.com/knowledge-base/email-opt-in-out-lookup/
-   * @param {object} params
-   * @param {string} params.emailAddress
-   * @param {boolean} [params.errorOnNotFound=false]
-   * @returns {Promise<EmailOptInStatusResponse>}
-   */
-  async lookupOptInStatusByEmail(params = {}) {
-    const { emailAddress, errorOnNotFound } = await validateAsync(Joi.object({
-      emailAddress: Joi.string().trim().email().required(),
-      errorOnNotFound: Joi.boolean().default(false),
-    }).required(), params);
-    const endpoint = `/filter/email/${emailAddress}/*`;
-    const response = await this.client.get({ endpoint, errorOnNotFound });
-    return new EmailOptInStatusResponse({ emailAddress, response, resource: this });
   }
 
   /**
