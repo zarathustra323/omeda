@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@parameter1/graphql-mongodb-pagination": "^2.2.15",
-    "@parameter1/mongodb": "^1.6.0",
     "@parameter1/omeda-api-cache-ioredis": "^0.6.8",
     "@parameter1/omeda-api-client": "^0.6.8",
     "@parameter1/omeda-mongodb": "^0.6.7",
