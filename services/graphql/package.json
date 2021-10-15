@@ -27,7 +27,7 @@
     "@parameter1/utils": "^1.1.22",
     "apollo-server-express": "^2.25.2",
     "dataloader": "^2.0.0",
-    "dayjs": "^1.10.6",
+    "dayjs": "^1.10.7",
     "envalid": "^7.1.1",
     "express": "^4.17.1",
     "graphql": "^15.5.1",
