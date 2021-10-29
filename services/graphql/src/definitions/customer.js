@@ -7,8 +7,10 @@ extend type Query {
   changedCustomers(input: ChangedCustomersQueryInput!): [ChangedCustomer!]!
   "Finds a single customer by customer ID."
   customerById(input: CustomerByIdQueryInput!): Customer
+  "Deprecated: use customerByEncryptedId instead."
+  customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer @deprecated(reason: "Use customerByEncryptedId instead.")
   "Finds a single customer by encrypted customer ID."
-  customerByEncyptedId(input: CustomerByEncryptedIdQueryInput!): Customer
+  customerByEncryptedId(input: CustomerByEncryptedIdQueryInput!): Customer
   "Finds all customers by the provided email address."
   customersByEmailAddress(input: CustomersByEmailAddressQueryInput!): [Customer!]!
 }
