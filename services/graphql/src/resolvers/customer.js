@@ -339,18 +339,6 @@ module.exports = {
     },
 
     /**
-     * @deprecated Typo, remove this when associated query is removed from schema.
-     */
-    async customerByEncyptedId(_, { input }, { apiClient }) {
-      const { id, errorOnNotFound } = input;
-      const response = await apiClient.resource('customer').lookupByEncryptedId({
-        encryptedId: id,
-        errorOnNotFound,
-      });
-      return response.data.Id ? response.data : null;
-    },
-
-    /**
      *
      */
     async customerByEncryptedId(_, { input }, { apiClient }) {
