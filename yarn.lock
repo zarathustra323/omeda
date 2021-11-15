@@ -1031,10 +1031,10 @@
     lodash.merge "^4.6.2"
     mongodb-extended-json "^1.11.1"
 
-"@parameter1/gulp@^1.1.21":
-  version "1.1.21"
-  resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.1.21.tgz#3541878aa641340dfe8f4b3d70aa6709c81c712f"
-  integrity sha512-wZeioBb9+hgjhTfwU3VCfCMarrGneJZp0cr53ne/+wXNfiLDabCTNzIqXMUNUS5D1m5sENQpsip933TQ5O7y/Q==
+"@parameter1/gulp@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.2.0.tgz#9844a82a0dea43b0bec23b464f74b88b785b9e3f"
+  integrity sha512-SwnQAUy8i1JBpGkXKPKnZIf30l6Xa10fndAGnYvwfUlYFlf9vl+AHFdf8HXhl7pTM3wj9CuzIZV0yynhbMFL7Q==
   dependencies:
     gulp "^4.0.2"
 

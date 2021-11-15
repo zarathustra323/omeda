@@ -37,7 +37,7 @@
     "newrelic": "^8.5.0"
   },
   "devDependencies": {
-    "@parameter1/gulp": "^1.1.21",
+    "@parameter1/gulp": "^1.2.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3"
