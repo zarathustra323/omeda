@@ -3168,6 +3168,13 @@ envalid@^7.2.1:
   dependencies:
     tslib "2.3.1"
 
+envalid@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/envalid/-/envalid-7.2.2.tgz#f3219f85e692002dca0f28076740227d30c817e3"
+  integrity sha512-bl/3VF5PhoF26HlDWiE0NRRHUbKT/+UDP/+0JtOFmhUwK3cUPS7JgWYGbE8ArvA61T+SyNquxscLCS6y4Wnpdw==
+  dependencies:
+    tslib "2.3.1"
+
 envinfo@^7.7.4:
   version "7.7.4"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.7.4.tgz#c6311cdd38a0e86808c1c9343f667e4267c4a320"
