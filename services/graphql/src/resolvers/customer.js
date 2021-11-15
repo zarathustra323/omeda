@@ -1,3 +1,4 @@
+const { UserInputError } = require('apollo-server-express');
 const { get, getAsArray } = require('@parameter1/utils');
 
 module.exports = {
@@ -237,6 +238,8 @@ module.exports = {
         demographics,
       } = input;
 
+      const promoCode = input.promoCode ? input.promoCode.trim() : null;
+      if (promoCode && promoCode.length > 50) throw new UserInputError('The promo code must be 50 characters or fewer.');
       const Products = [{ OmedaProductId: input.productId }];
 
       const deploymentTypeIds = [...new Set(input.deploymentTypeIds)];
@@ -286,6 +289,7 @@ module.exports = {
             OmedaDemographicValue: demo.values,
           })),
         }),
+        ...(promoCode && { PromoCode: promoCode }),
       };
       const [response] = await Promise.all([
         apiClient.resource('customer').storeCustomerAndOrder({
