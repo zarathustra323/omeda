@@ -15,6 +15,7 @@ enum ProductSortFieldEnum {
 type Product {
   id: Int! @apiValue
   type: ProductType! @codeOrType(instance: "ProductType", path: "ProductType")
+  frequencyType: ProductFrequencyType @codeOrType(instance: "ProductFrequencyType", path: "FrequencyType")
 
   description: String @apiValue
   alternateId: String @apiValue

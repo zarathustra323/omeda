@@ -123,6 +123,19 @@ module.exports = {
   /**
    *
    */
+  ProductFrequencyTypeEnum: {
+    DAILY: 'DY',
+    WEEKLY: 'WK',
+    MONTHLY: 'MO',
+    YEARLY: 'YR',
+    BI_WEEKLY: 'BIW',
+    BI_MONTHLY: 'BIM',
+    MANUAL: 'MA',
+  },
+
+  /**
+   *
+   */
   ProductTypeEnum: {
     MAGAZINE: 1,
     NEWSLETTER: 2,

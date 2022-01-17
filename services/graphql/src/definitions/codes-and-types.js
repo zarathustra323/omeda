@@ -100,6 +100,16 @@ enum PostalAddressContactTypeEnum {
   UNKNOWN
 }
 
+enum ProductFrequencyTypeEnum {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  BI_WEEKLY
+  BI_MONTHLY
+  MANUAL
+}
+
 enum ProductTypeEnum {
   MAGAZINE
   NEWSLETTER
@@ -184,6 +194,13 @@ type PostalAddressContactType {
   value: Int! @apiValue
   description: String! @apiValue
 }
+
+type ProductFrequencyType {
+  id: ProductFrequencyTypeEnum! @apiValue(path: "Value")
+  value: String! @apiValue
+  description: String! @apiValue
+}
+
 
 type ProductType {
   id: ProductTypeEnum! @apiValue(path: "Value")
