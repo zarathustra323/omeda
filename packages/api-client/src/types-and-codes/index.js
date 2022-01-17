@@ -8,6 +8,7 @@ const WebformViewCode = require('./webform-view-code');
 
 const customer = require('./customer');
 const deployment = require('./deployment');
+const product = require('./product');
 const subscriptions = require('./subscriptions');
 
 module.exports = {
@@ -20,5 +21,6 @@ module.exports = {
   WebformViewCode,
   ...customer,
   ...deployment,
+  ...product,
   ...subscriptions,
 };
