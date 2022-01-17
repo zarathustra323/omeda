@@ -123,6 +123,22 @@ module.exports = {
   /**
    *
    */
+  ProductTypeEnum: {
+    MAGAZINE: 1,
+    NEWSLETTER: 2,
+    EVENT: 3,
+    CATALOG: 4,
+    EMAIL_DEPLOYMENT: 5,
+    ASSOCIATION_MEMBERSHIP: 6,
+    WEBSITE: 7,
+    NEWSSTAND: 8,
+    ACCOUNTING: 9,
+    SALES: 10,
+  },
+
+  /**
+   *
+   */
   WebformViewCodeEnum: {
     HIDDEN: 0,
     OPTIONAL: 2,

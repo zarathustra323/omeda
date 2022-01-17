@@ -100,6 +100,19 @@ enum PostalAddressContactTypeEnum {
   UNKNOWN
 }
 
+enum ProductTypeEnum {
+  MAGAZINE
+  NEWSLETTER
+  EVENT
+  CATALOG
+  EMAIL_DEPLOYMENT
+  ASSOCIATION_MEMBERSHIP
+  WEBSITE
+  NEWSSTAND
+  ACCOUNTING
+  SALES
+}
+
 enum WebformViewCodeEnum {
   HIDDEN
   OPTIONAL
@@ -168,6 +181,12 @@ type PhoneNumberContactType {
 
 type PostalAddressContactType {
   id: PostalAddressContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type ProductType {
+  id: ProductTypeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
   description: String! @apiValue
 }
