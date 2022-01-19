@@ -90,7 +90,7 @@ type CustomerEmailAddressOptInStatus {
   brand: String! @apiValue
   deploymentTypeId: Int! @apiValue
   deploymentType: DeploymentType!
-  status: String! @apiValue
+  status: CustomerEmailAddressOptInStatusValue! @codeOrType(instance: "EmailAddressOptInStatus")
   source: String @apiValue
   createdDate: DateTime @apiValue
   changedDate: DateTime @apiValue

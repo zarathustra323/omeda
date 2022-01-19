@@ -2,6 +2,7 @@ const AddressContactType = require('./address-contact-type');
 const ContactTypeStatusCode = require('./contact-type-status-code');
 const DemographicType = require('./demographic-type');
 const DemographicValueType = require('./demographic-value-type');
+const EmailAddressOptInStatus = require('./email-address-opt-in-status');
 const EmailContactType = require('./email-contact-type');
 const PhoneContactType = require('./phone-contact-type');
 const WebformViewCode = require('./webform-view-code');
@@ -17,6 +18,7 @@ module.exports = {
   ContactTypeStatusCode,
   DemographicType,
   DemographicValueType,
+  EmailAddressOptInStatus,
   EmailContactType,
   PhoneContactType,
   WebformViewCode,

@@ -12,6 +12,11 @@ enum CustomerChangeStatusCodeEnum {
   INACTIVE
 }
 
+enum CustomerEmailAddressOptInStatusValueEnum {
+  IN
+  OUT
+}
+
 enum CustomerStatusCodeEnum {
   ACTIVE
   DELETED_INACTIVE
@@ -159,6 +164,12 @@ type ContactTypeStatusCode {
 type CustomerChangeStatusCode {
   id: CustomerChangeStatusCodeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type CustomerEmailAddressOptInStatusValue {
+  id: CustomerEmailAddressOptInStatusValueEnum! @apiValue(path: "Value")
+  value: String! @apiValue
   description: String! @apiValue
 }
 
