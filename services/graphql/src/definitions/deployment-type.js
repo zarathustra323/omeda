@@ -12,7 +12,6 @@ type DeploymentType {
   id: Int! @apiValue
   "The name of the deployment type."
   name: String! @apiValue
-  description: String @apiValue
   "The text description of the deployment type."
   longDescription: String @apiValue
   "The client's associated value to Omeda’s deployment type identifier."
