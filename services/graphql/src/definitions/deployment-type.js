@@ -8,12 +8,18 @@ extend type Query {
 }
 
 type DeploymentType {
+  "The deployment type identifier."
   id: Int! @apiValue
+  "The name of the deployment type."
   name: String! @apiValue
   description: String @apiValue
+  "The text description of the deployment type."
   longDescription: String @apiValue
+  "The client's associated value to Omeda’s deployment type identifier."
   alternateId: String @apiValue
+  "The deployment type status code."
   status: DeploymentTypeStatus! @codeOrType(instance: "DeploymentTypeStatus", path: "StatusCode")
+  "Products related to this deployment type."
   products(input: DeploymentTypeProductsInput = {}): ProductConnection!
 }
 
