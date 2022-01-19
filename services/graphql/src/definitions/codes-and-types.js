@@ -77,6 +77,11 @@ enum DeploymentStatusSearchEnum {
   WAITING_REVIEW
 }
 
+enum DeploymentTypeStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
 enum EmailAddressContactTypeEnum {
   PRIMARY
   SECONDARY
@@ -98,6 +103,45 @@ enum PostalAddressContactTypeEnum {
   BUSINESS
   HOME
   UNKNOWN
+}
+
+enum ProductFrequencyTypeEnum {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  BI_WEEKLY
+  BI_MONTHLY
+  MANUAL
+}
+
+enum ProductIssueStatusEnum {
+  PLANNED
+  OPEN
+  LOCKED
+  CLOSED
+  CURRENT_SUPPLEMENT
+  CURRENT_SUPPLEMENT_CLOSED
+  IN_PROGRESS
+  IN_PROGRESS_CLOSED
+}
+
+enum ProductMarketingClassStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum ProductTypeEnum {
+  MAGAZINE
+  NEWSLETTER
+  EVENT
+  CATALOG
+  EMAIL_DEPLOYMENT
+  ASSOCIATION_MEMBERSHIP
+  WEBSITE
+  NEWSSTAND
+  ACCOUNTING
+  SALES
 }
 
 enum WebformViewCodeEnum {
@@ -154,6 +198,12 @@ type DeploymentStatus {
   description: String! @apiValue
 }
 
+type DeploymentTypeStatus {
+  id: DeploymentTypeStatusEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
 type EmailAddressContactType {
   id: EmailAddressContactTypeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
@@ -168,6 +218,30 @@ type PhoneNumberContactType {
 
 type PostalAddressContactType {
   id: PostalAddressContactTypeEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type ProductFrequencyType {
+  id: ProductFrequencyTypeEnum! @apiValue(path: "Value")
+  value: String! @apiValue
+  description: String! @apiValue
+}
+
+type ProductIssueStatus {
+  id: ProductIssueStatusEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
+  description: String! @apiValue
+}
+
+type ProductMarketingClassStatus {
+  id: ProductMarketingClassStatusEnum! @apiValue(path: "Value")
+  value: String @apiValue
+  description: String! @apiValue
+}
+
+type ProductType {
+  id: ProductTypeEnum! @apiValue(path: "Value")
   value: Int! @apiValue
   description: String! @apiValue
 }

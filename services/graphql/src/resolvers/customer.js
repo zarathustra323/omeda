@@ -242,18 +242,40 @@ module.exports = {
       if (promoCode && promoCode.length > 50) throw new UserInputError('The promo code must be 50 characters or fewer.');
       const Products = [{ OmedaProductId: input.productId }];
 
-      const deploymentTypeIds = [...new Set(input.deploymentTypeIds)];
-      const newsletterProductIds = await (async () => {
+      const deploymentTypeIdMap = input.deploymentTypeIds.reduce((map, id) => {
+        map.set(id, { optedIn: true });
+        return map;
+      }, new Map());
+
+      const deploymentTypeOptInMap = input.deploymentTypes.reduce((map, type) => {
+        map.set(type.id, type.optedIn);
+        return map;
+      }, deploymentTypeIdMap);
+
+      const deploymentTypeIds = [...deploymentTypeOptInMap.keys()];
+
+      const productDeploymentTypeMap = await (async () => {
         if (!deploymentTypeIds.length) return [];
-        return repos.brandProduct.distinct({
-          key: 'data.Id',
+        const cursor = await repos.brandProduct.find({
           query: {
             'data.DeploymentTypeId': { $in: deploymentTypeIds },
             'data.ProductType': 2, // only newsletters can be subscribed to in this manner
           },
+          options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
         });
+        const docs = await cursor.toArray();
+        return docs.reduce((map, doc) => {
+          const { Id, DeploymentTypeId } = doc.data;
+          map.set(Id, DeploymentTypeId);
+          return map;
+        }, new Map());
       })();
-      Products.push(...newsletterProductIds.map((id) => ({ OmedaProductId: id })));
+
+      productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
+        const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
+        if (optedIn == null) return;
+        Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
+      });
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city;
@@ -297,12 +319,30 @@ module.exports = {
           inputId: input.inputId,
         }),
         (async () => {
-          if (!deploymentTypeIds.length) return null;
-          return apiClient.resource('email').optInEmailAddress({
-            emailAddress: email,
-            deploymentTypeIds,
-            deleteOptOut: true,
+          if (!deploymentTypeOptInMap.size) return null;
+          const optInIds = [];
+          const optOutIds = [];
+          deploymentTypeOptInMap.forEach((optedIn, id) => {
+            if (optedIn) {
+              optInIds.push(id);
+            } else {
+              optOutIds.push(id);
+            }
           });
+          const emailResource = apiClient.resource('email');
+          return Promise.all([
+            // opt-ins
+            optInIds.length ? emailResource.optInEmailAddress({
+              emailAddress: email,
+              deploymentTypeIds: optInIds,
+              deleteOptOut: true,
+            }) : Promise.resolve(),
+            // opt-outs
+            optOutIds.length ? emailResource.optOutEmailAddress({
+              emailAddress: email,
+              deploymentTypeIds: optOutIds,
+            }) : Promise.resolve(),
+          ]);
         })(),
       ]);
       return response.data;

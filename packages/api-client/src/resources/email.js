@@ -135,6 +135,62 @@ class EmailResource extends AbstractResource {
   }
 
   /**
+   * The OptOut Queue API allows our client to OptOut their subscribers or customers to
+   * their email deployments at the deployment type level.
+   *
+   * @link https://training.omeda.com/knowledge-base/api-email-optout-queue-service/
+   * @param {object} params
+   * @param {object[]} params.optIns
+   * @param {string} params.optIns.emailAddress
+   * @param {number[]} params.optIns.deploymentTypeIds
+   * @param {boolean} params.optIns.deleteOptOut
+   * @param {string} [params.optIns.source]
+   * @returns {Promise<object>}
+   */
+  async optOut(params = {}) {
+    const { optOuts } = await validateAsync(Joi.object({
+      optOuts: Joi.array().items(
+        Joi.object({
+          emailAddress: Joi.string().trim().email().required(),
+          deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
+          source: Joi.string().trim(),
+        }),
+      ).required(),
+    }).required(), params);
+    const endpoint = '/optoutfilterqueue/*';
+    const body = {
+      DeploymentTypeOptOut: optOuts.map((optOut) => {
+        const { source } = optOut;
+        return {
+          EmailAddress: optOut.emailAddress,
+          DeploymentTypeId: [...new Set(optOut.deploymentTypeIds)],
+          ...(source && { Source: source }),
+        };
+      }),
+    };
+    const response = await this.client.post({ endpoint, body, useClientUrl: true });
+    return response;
+  }
+
+  /**
+   * Opts-out a single email address from the provided deployment type IDs.
+   *
+   * @param {object} params
+   * @param {string} params.emailAddress
+   * @param {number[]} params.deploymentTypeIds
+   * @param {string} [params.source]
+   * @returns {Promise<object>}
+   */
+  async optOutEmailAddress(params = {}) {
+    const optOut = await validateAsync(Joi.object({
+      emailAddress: Joi.string().trim().email().required(),
+      deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
+      source: Joi.string().trim(),
+    }).required(), params);
+    return this.optOut({ optOuts: [optOut] });
+  }
+
+  /**
    * This service retrieves Omail data related to clicks on links
    * in emails using various parameters.
    *

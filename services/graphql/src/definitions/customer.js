@@ -208,14 +208,25 @@ input RapidCustomerIdentificationMutationInput {
   faxNumber: String
   "The customer's mobile number."
   mobileNumber: String
-  "Deployment types to assign to the customer."
+  "DEPRECATED: Use the \`deploymentTypes\` input instead. Deployment types to assign to the customer. Assumes an opt-in value of true."
   deploymentTypeIds: [Int!] = []
+
+  "Deployment types to assign to, or unassign from, the customer, with opt in/out status."
+  deploymentTypes: [RapidCustomerIdentificationDeploymentTypeInput] = []
+
   "Demographics to assign to the customer."
   demographics: [RapidCustomerIdentificationDemographicInput!] = []
   "An optional promo code for tracking the identification acquisition source."
   promoCode: String
   "An optional input ID to use when identifying."
   inputId: Int
+}
+
+input RapidCustomerIdentificationDeploymentTypeInput {
+  "The deployment type ID to assign"
+  id: Int!
+  "Whether the customer opted-in."
+  optedIn: Boolean!
 }
 
 input RapidCustomerIdentificationDemographicInput {

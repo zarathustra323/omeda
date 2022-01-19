@@ -91,6 +91,14 @@ module.exports = {
   /**
    *
    */
+  DeploymentTypeStatusEnum: {
+    ACTIVE: 1,
+    INACTIVE: 0,
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,
@@ -118,6 +126,57 @@ module.exports = {
     BUSINESS: 100,
     HOME: 110,
     UNKNOWN: 0,
+  },
+
+  /**
+   *
+   */
+  ProductFrequencyTypeEnum: {
+    DAILY: 'DY',
+    WEEKLY: 'WK',
+    MONTHLY: 'MO',
+    YEARLY: 'YR',
+    BI_WEEKLY: 'BIW',
+    BI_MONTHLY: 'BIM',
+    MANUAL: 'MA',
+  },
+
+  /**
+   *
+   */
+  ProductIssueStatusEnum: {
+    PLANNED: 0,
+    OPEN: 10,
+    LOCKED: 20,
+    CLOSED: 30,
+    CURRENT_SUPPLEMENT: 40,
+    CURRENT_SUPPLEMENT_CLOSED: 45,
+    IN_PROGRESS: 50,
+    IN_PROGRESS_CLOSED: 55,
+  },
+
+  /**
+   *
+   */
+  ProductMarketingClassStatusEnum: {
+    ACTIVE: 'Active',
+    INACTIVE: 'Inactive',
+  },
+
+  /**
+   *
+   */
+  ProductTypeEnum: {
+    MAGAZINE: 1,
+    NEWSLETTER: 2,
+    EVENT: 3,
+    CATALOG: 4,
+    EMAIL_DEPLOYMENT: 5,
+    ASSOCIATION_MEMBERSHIP: 6,
+    WEBSITE: 7,
+    NEWSSTAND: 8,
+    ACCOUNTING: 9,
+    SALES: 10,
   },
 
   /**

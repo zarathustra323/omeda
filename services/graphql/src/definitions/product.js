@@ -13,11 +13,24 @@ enum ProductSortFieldEnum {
 }
 
 type Product {
+  "The product identifier."
   id: Int! @apiValue
+  "The product type."
+  type: ProductType! @codeOrType(instance: "ProductType", path: "ProductType")
+  "The frequency type, e.g. DY for Daily, WK for Weekly, etc."
+  frequencyType: ProductFrequencyType @codeOrType(instance: "ProductFrequencyType", path: "FrequencyType")
+  "Name of the product."
   description: String @apiValue
+  "This is the Product ID that is used in Omeda's V10 system."
   alternateId: String @apiValue
+  "If the product is linked to a deployment type, then this ID will be returned."
   deploymentTypeId: Int @apiValue
+  "The related deployment type, if applicable."
   deploymentType: DeploymentType
+  "A list of marketing class elements. These elements will only be returned if the product type is magazine, newsletter or website."
+  marketingClasses: [ProductMarketingClass!]! @apiValue(as: ARRAY)
+  "A list of issues elements. These elements will only be returned for magazine product types."
+  issues: [ProductIssue!]! @apiValue(as: ARRAY)
 }
 
 type ProductConnection {
@@ -34,6 +47,32 @@ type ProductEdge {
   node: Product!
   "The opaque cursor value for this record edge."
   cursor: String!
+}
+
+type ProductIssue {
+  "The issue identifier."
+  id: Int! @apiValue
+  "A description for the issue."
+  description: String! @apiValue
+  "Date of the issue,"
+  issueDate: DateTime! @apiValue
+  "Omeda's legacy Issue ID."
+  alternateId: String @apiValue
+  "The issue status code."
+  status: ProductIssueStatus @codeOrType(instance: "ProductIssueStatus", path: "StatusCode")
+}
+
+type ProductMarketingClass {
+  "Marketing class identifier."
+  id: Int! @apiValue
+  "Name of the marketing class."
+  description: String! @apiValue
+  "A short name of the marketing class."
+  shortDescription: String @apiValue
+  "Marketing class identifier associated with legacy products."
+  classId: String @apiValue
+  "The marketing class active or inactive status."
+  status: ProductMarketingClassStatus @codeOrType(instance: "ProductMarketingClassStatus", path: "StatusCode")
 }
 
 input ProductByIdQueryInput {
