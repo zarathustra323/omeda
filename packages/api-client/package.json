@@ -22,11 +22,6 @@
     "dayjs": "^1.10.7",
     "node-fetch": "^2.6.6"
   },
-  "devDependencies": {
-    "eslint": "^8.2.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3"
-  },
   "publishConfig": {
     "access": "public"
   }

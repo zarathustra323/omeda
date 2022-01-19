@@ -40,6 +40,7 @@ class OmedaGraphQLPlugin {
     let inputId = headers.get('x-omeda-inputid');
     let brand = headers.get('x-omeda-brand');
     let clientAbbrev = headers.get('x-omeda-client');
+    let forceSync = headers.get('x-omeda-force-sync');
     if (!appId) throw new UserInputError('You must provide an Omeda application ID via the `x-omeda-appid` header.');
     if (!brand) throw new UserInputError('You must provide an Omeda brand via the `x-omeda-brand` header.');
 
@@ -69,10 +70,11 @@ class OmedaGraphQLPlugin {
       // save the brand data for the first time.
       const response = await apiClient.resource('brand').comprehensiveLookup();
       await repos.brand.upsert({ data: response.data });
-    } else if (!brandData.isFresh) {
+    } else if (!brandData.isFresh || forceSync) {
       // refresh the brand data, but do not await
       (async () => {
         const response = await apiClient.resource('brand').comprehensiveLookup();
+        console.log(response.data.DeploymentTypes);
         await repos.brand.upsert({ data: response.data });
       })().catch(newrelic.noticeError.bind(newrelic));
     }
