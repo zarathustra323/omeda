@@ -27,8 +27,10 @@ type Product {
   deploymentTypeId: Int @apiValue
   "The related deployment type, if applicable."
   deploymentType: DeploymentType
-  "A list of MarketingClasses elements. These elements will only be returned if the product type is magazine, newsletter or website."
+  "A list of marketing class elements. These elements will only be returned if the product type is magazine, newsletter or website."
   marketingClasses: [ProductMarketingClass!]! @apiValue(as: ARRAY)
+  "A list of issues elements. These elements will only be returned for magazine product types."
+  issues: [ProductIssue!]! @apiValue(as: ARRAY)
 }
 
 type ProductConnection {
@@ -45,6 +47,19 @@ type ProductEdge {
   node: Product!
   "The opaque cursor value for this record edge."
   cursor: String!
+}
+
+type ProductIssue {
+  "The issue identifier."
+  id: Int! @apiValue
+  "A description for the issue."
+  description: String! @apiValue
+  "Date of the issue,"
+  issueDate: DateTime! @apiValue
+  "Omeda's legacy Issue ID."
+  alternateId: String @apiValue
+  "The issue status code."
+  status: ProductIssueStatus @codeOrType(instance: "ProductIssueStatus", path: "StatusCode")
 }
 
 type ProductMarketingClass {

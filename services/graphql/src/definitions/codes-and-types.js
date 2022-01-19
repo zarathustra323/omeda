@@ -115,6 +115,17 @@ enum ProductFrequencyTypeEnum {
   MANUAL
 }
 
+enum ProductIssueStatusEnum {
+  PLANNED
+  OPEN
+  LOCKED
+  CLOSED
+  CURRENT_SUPPLEMENT
+  CURRENT_SUPPLEMENT_CLOSED
+  IN_PROGRESS
+  IN_PROGRESS_CLOSED
+}
+
 enum ProductMarketingClassStatusEnum {
   ACTIVE
   INACTIVE
@@ -214,6 +225,12 @@ type PostalAddressContactType {
 type ProductFrequencyType {
   id: ProductFrequencyTypeEnum! @apiValue(path: "Value")
   value: String! @apiValue
+  description: String! @apiValue
+}
+
+type ProductIssueStatus {
+  id: ProductIssueStatusEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
   description: String! @apiValue
 }
 

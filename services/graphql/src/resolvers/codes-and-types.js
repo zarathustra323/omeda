@@ -144,6 +144,20 @@ module.exports = {
   /**
    *
    */
+  ProductIssueStatusEnum: {
+    PLANNED: 0,
+    OPEN: 10,
+    LOCKED: 20,
+    CLOSED: 30,
+    CURRENT_SUPPLEMENT: 40,
+    CURRENT_SUPPLEMENT_CLOSED: 45,
+    IN_PROGRESS: 50,
+    IN_PROGRESS_CLOSED: 55,
+  },
+
+  /**
+   *
+   */
   ProductMarketingClassStatusEnum: {
     ACTIVE: 'Active',
     INACTIVE: 'Inactive',
