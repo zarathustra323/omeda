@@ -20,7 +20,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "graphql": "^15.7.2",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.7"
   },
   "publishConfig": {
     "access": "public"
