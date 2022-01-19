@@ -13,13 +13,19 @@ enum ProductSortFieldEnum {
 }
 
 type Product {
+  "The product identifier."
   id: Int! @apiValue
+  "The product type."
   type: ProductType! @codeOrType(instance: "ProductType", path: "ProductType")
+  "The frequency type, e.g. DY for Daily, WK for Weekly, etc."
   frequencyType: ProductFrequencyType @codeOrType(instance: "ProductFrequencyType", path: "FrequencyType")
-
+  "Name of the product."
   description: String @apiValue
+  "This is the Product ID that is used in Omeda's V10 system."
   alternateId: String @apiValue
+  "If the product is linked to a deployment type, then this ID will be returned."
   deploymentTypeId: Int @apiValue
+  "The related deployment type, if applicable."
   deploymentType: DeploymentType
 }
 
