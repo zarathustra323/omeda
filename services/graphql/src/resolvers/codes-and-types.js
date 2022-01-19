@@ -144,6 +144,14 @@ module.exports = {
   /**
    *
    */
+  ProductMarketingClassStatusEnum: {
+    ACTIVE: 'Active',
+    INACTIVE: 'Inactive',
+  },
+
+  /**
+   *
+   */
   ProductTypeEnum: {
     MAGAZINE: 1,
     NEWSLETTER: 2,

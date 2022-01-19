@@ -27,6 +27,8 @@ type Product {
   deploymentTypeId: Int @apiValue
   "The related deployment type, if applicable."
   deploymentType: DeploymentType
+  "A list of MarketingClasses elements. These elements will only be returned if the product type is magazine, newsletter or website."
+  marketingClasses: [ProductMarketingClass!]! @apiValue(as: ARRAY)
 }
 
 type ProductConnection {
@@ -43,6 +45,19 @@ type ProductEdge {
   node: Product!
   "The opaque cursor value for this record edge."
   cursor: String!
+}
+
+type ProductMarketingClass {
+  "Marketing class identifier."
+  id: Int! @apiValue
+  "Name of the marketing class."
+  description: String! @apiValue
+  "A short name of the marketing class."
+  shortDescription: String @apiValue
+  "Marketing class identifier associated with legacy products."
+  classId: String @apiValue
+  "The marketing class active or inactive status."
+  status: ProductMarketingClassStatus @codeOrType(instance: "ProductMarketingClassStatus", path: "StatusCode")
 }
 
 input ProductByIdQueryInput {

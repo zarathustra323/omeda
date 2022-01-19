@@ -115,6 +115,11 @@ enum ProductFrequencyTypeEnum {
   MANUAL
 }
 
+enum ProductMarketingClassStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
 enum ProductTypeEnum {
   MAGAZINE
   NEWSLETTER
@@ -212,6 +217,11 @@ type ProductFrequencyType {
   description: String! @apiValue
 }
 
+type ProductMarketingClassStatus {
+  id: ProductMarketingClassStatusEnum! @apiValue(path: "Value")
+  value: String @apiValue
+  description: String! @apiValue
+}
 
 type ProductType {
   id: ProductTypeEnum! @apiValue(path: "Value")
