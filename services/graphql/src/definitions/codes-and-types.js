@@ -77,6 +77,11 @@ enum DeploymentStatusSearchEnum {
   WAITING_REVIEW
 }
 
+enum DeploymentTypeStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
 enum EmailAddressContactTypeEnum {
   PRIMARY
   SECONDARY
@@ -174,6 +179,12 @@ type DeploymentDesignation {
 type DeploymentStatus {
   id: DeploymentStatusEnum! @apiValue(path: "Value")
   value: String! @apiValue
+  description: String! @apiValue
+}
+
+type DeploymentTypeStatus {
+  id: DeploymentTypeStatusEnum! @apiValue(path: "Value")
+  value: Int! @apiValue
   description: String! @apiValue
 }
 

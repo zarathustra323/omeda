@@ -91,6 +91,14 @@ module.exports = {
   /**
    *
    */
+  DeploymentTypeStatusEnum: {
+    ACTIVE: 1,
+    INACTIVE: 0,
+  },
+
+  /**
+   *
+   */
   EmailAddressContactTypeEnum: {
     PRIMARY: 300,
     SECONDARY: 310,

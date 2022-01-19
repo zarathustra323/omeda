@@ -11,9 +11,9 @@ type DeploymentType {
   id: Int! @apiValue
   name: String! @apiValue
   description: String @apiValue
+  longDescription: String @apiValue
   alternateId: String @apiValue
-  statusCode: Int! @apiValue
-
+  status: DeploymentTypeStatus! @codeOrType(instance: "DeploymentTypeStatus", path: "StatusCode")
   products(input: DeploymentTypeProductsInput = {}): ProductConnection!
 }
 
