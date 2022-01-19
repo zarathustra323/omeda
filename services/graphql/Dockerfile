@@ -1,4 +1,4 @@
-FROM node:14.16-alpine as build
+FROM node:16.13-alpine as build
 WORKDIR /app
 ENV NODE_ENV production
 ADD package.json yarn.lock /app/
@@ -8,7 +8,7 @@ RUN yarn --production --pure-lockfile
 WORKDIR /app/services/graphql
 
 
-FROM node:14.16-alpine
+FROM node:16.13-alpine
 ENV NODE_ENV production
 ENV PORT 80
 COPY --from=build /app /app
