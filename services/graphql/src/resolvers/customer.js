@@ -243,7 +243,7 @@ module.exports = {
       const Products = [{ OmedaProductId: input.productId }];
 
       const deploymentTypeIdMap = input.deploymentTypeIds.reduce((map, id) => {
-        map.set(id, { optedIn: true });
+        map.set(id, true);
         return map;
       }, new Map());
 
@@ -272,7 +272,7 @@ module.exports = {
       })();
 
       productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
-        const { optedIn } = deploymentTypeOptInMap.get(deploymentTypeId);
+        const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
         if (optedIn == null) return;
         Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
       });
