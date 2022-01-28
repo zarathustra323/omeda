@@ -272,7 +272,7 @@ module.exports = {
       })();
 
       productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
-        const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
+        const { optedIn } = deploymentTypeOptInMap.get(deploymentTypeId);
         if (optedIn == null) return;
         Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
       });
