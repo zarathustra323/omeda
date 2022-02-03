@@ -166,6 +166,13 @@ module.exports = {
     /**
      *
      */
+    emailAddress({ EmailAddress }) {
+      return EmailAddress.trim().toLowerCase();
+    },
+
+    /**
+     *
+     */
     async optInStatus({ EmailAddress }, _, { loaders }) {
       const r = await loaders.emailAddressOptInStatus.load(EmailAddress);
       return r ? r.data : [];
