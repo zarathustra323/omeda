@@ -39,8 +39,10 @@ type Customer {
   title: String @apiValue
   gender: String @apiValue
   promoCode: String @apiValue
+  originalPromoCode: String @apiValue
   signUpDate: DateTime @apiValue
   changedDate: DateTime @apiValue
+  createdDate: DateTime @apiValue(path: "OriginalCreatedDate")
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 

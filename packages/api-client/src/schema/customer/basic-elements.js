@@ -1,5 +1,10 @@
 const load = require('../utils/from-four-col');
 
+/**
+ * @note The `OriginalCreatedDate` field is not included on the Omeda
+ * website and was manually added
+ *
+ */
 module.exports = load('basic-customer-elements', `
 <table>
   <tbody>
@@ -77,6 +82,12 @@ module.exports = load('basic-customer-elements', `
       <td>“Promo Code” last used to create/update this customer.</td>
     </tr>
     <tr>
+      <td>OriginalPromoCode</td>
+      <td>No</td>
+      <td>String</td>
+      <td>“Promo Code” last used to create this customer.</td>
+    </tr>
+    <tr>
       <td>SignUpDate</td>
       <td>No</td>
       <td>DateTime</td>
@@ -88,6 +99,12 @@ module.exports = load('basic-customer-elements', `
       <td>No</td>
       <td>DateTime</td>
       <td>Date &amp; time record last changed. yyyy-MM-dd HH:mm:ss format. Example: 2010-03-08 21:23:34.</td>
+    </tr>
+    <tr>
+      <td>OriginalCreatedDate</td>
+      <td>No</td>
+      <td>DateTime</td>
+      <td></td>
     </tr>
     <tr>
       <td>StatusCode</td>
