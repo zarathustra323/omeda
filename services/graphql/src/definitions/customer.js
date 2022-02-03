@@ -79,7 +79,7 @@ type CustomerDemographic {
 type CustomerEmailAddress {
   id: Int! @apiValue
   contactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType", path: "EmailContactType")
-  emailAddress: String! @apiValue
+  emailAddress: String!
   changedDate: DateTime! @apiValue
   statusCode: ContactTypeStatusCode @codeOrType(instance: "ContactTypeStatusCode")
   hashedEmailAddress: String @apiValue
