@@ -2,7 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const OmedaRepo = require('./abstract');
 
-class BrandDemographicRepo extends OmedaRepo {
+class CustomerRepo extends OmedaRepo {
   /**
    *
    */
@@ -75,4 +75,4 @@ class BrandDemographicRepo extends OmedaRepo {
   }
 }
 
-module.exports = BrandDemographicRepo;
+module.exports = CustomerRepo;
