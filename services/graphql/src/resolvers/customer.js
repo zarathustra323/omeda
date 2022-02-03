@@ -1,5 +1,44 @@
 const { UserInputError } = require('apollo-server-express');
 const { get, getAsArray } = require('@parameter1/utils');
+const newrelic = require('../newrelic');
+
+const noticeError = newrelic.noticeError.bind(newrelic);
+
+const upsertCustomerData = async ({ id, encrypted = false, response }, { repos, loaders }) => {
+  if (!response.data || !response.data.Id) return null;
+  // store customer record in local db.
+  const { Id } = response.data;
+
+  const getDataFromLoader = async (key) => {
+    const r = await loaders[key].load(Id);
+    return r ? r.data : [];
+  };
+
+  const [
+    Addresses,
+    CustomerDemographics,
+    EmailAddresses,
+    Phones,
+    Subscriptions,
+  ] = await Promise.all([
+    getDataFromLoader('customerPostalAddresses'),
+    getDataFromLoader('customerDemographics'),
+    getDataFromLoader('customerEmails'),
+    getDataFromLoader('customerPhoneNumbers'),
+    getDataFromLoader('customerSubscriptions'),
+  ]);
+
+  const record = {
+    ...response.data,
+    Addresses,
+    CustomerDemographics,
+    EmailAddresses,
+    Phones,
+    Subscriptions,
+  };
+
+  return repos.customer.upsert({ id, encrypted, record });
+};
 
 module.exports = {
   /**
@@ -375,32 +414,39 @@ module.exports = {
     /**
      *
      */
-    async customerById(_, { input }, { apiClient }) {
+    async customerById(_, { input }, { apiClient, loaders, repos }) {
       const { id, reQueryOnInactive, errorOnNotFound } = input;
       const response = await apiClient.resource('customer').lookupById({
         customerId: id,
         reQueryOnInactive,
         errorOnNotFound,
       });
-      return response.data.Id ? response.data : null;
+      if (!response.data.Id) return null;
+      // store customer record in local db.
+      upsertCustomerData({ id, encrypted: false, response }, { repos, loaders }).catch(noticeError);
+      return response.data;
     },
 
     /**
      *
      */
-    async customerByEncryptedId(_, { input }, { apiClient }) {
+    async customerByEncryptedId(_, { input }, { apiClient, loaders, repos }) {
       const { id, errorOnNotFound } = input;
       const response = await apiClient.resource('customer').lookupByEncryptedId({
         encryptedId: id,
         errorOnNotFound,
       });
-      return response.data.Id ? response.data : null;
+
+      if (!response.data.Id) return null;
+      // store customer record in local db.
+      upsertCustomerData({ id, encrypted: true, response }, { repos, loaders }).catch(noticeError);
+      return response.data;
     },
 
     /**
      *
      */
-    async customersByEmailAddress(_, { input }, { apiClient }) {
+    async customersByEmailAddress(_, { input }, { apiClient, loaders, repos }) {
       const { emailAddress, productId } = input;
       const { data } = await apiClient.resource('customer').lookupByEmailAddress({
         emailAddress,
@@ -413,6 +459,12 @@ module.exports = {
           customerId,
           reQueryOnInactive: true,
         });
+        // store customer record in local db.
+        upsertCustomerData({
+          id: customerId,
+          encrypted: false,
+          response,
+        }, { repos, loaders }).catch(noticeError);
         return response.data;
       }));
     },
