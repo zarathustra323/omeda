@@ -4,6 +4,7 @@ const BrandRepo = require('./brand');
 const BrandDemographicRepo = require('./brand-demographic');
 const BrandDeploymentTypeRepo = require('./brand-deployment-type');
 const BrandProductRepo = require('./brand-product');
+const CustomerRepo = require('./customer');
 
 module.exports = (params = {}) => {
   const { value, error } = Joi.object({
@@ -31,5 +32,6 @@ module.exports = (params = {}) => {
     brandDemographic,
     brandDeploymentType,
     brandProduct,
+    customer: new CustomerRepo({ brandKey, client, dbName }),
   };
 };
