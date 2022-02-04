@@ -64,6 +64,7 @@ module.exports = ({ apiClient, repos } = {}) => {
     customerDemographics: new DataLoader(createCustomerRelLoader({ method: 'lookupDemographics' })),
     customerEmails: new DataLoader(createCustomerRelLoader({ method: 'lookupEmails' })),
     customerExternalIds: new DataLoader(createCustomerRelLoader({ method: 'lookupExternalIds' })),
+    customerMergeHistory: new DataLoader(createCustomerRelLoader({ method: 'lookupMergeHistory' })),
     customerPhoneNumbers: new DataLoader(createCustomerRelLoader({ method: 'lookupPhoneNumbers' })),
     customerPostalAddresses: new DataLoader(createCustomerRelLoader({ method: 'lookupPostalAddresses' })),
     customerSubscriptions: new DataLoader(createCustomerRelLoader({ method: 'lookupSubscriptions' })),

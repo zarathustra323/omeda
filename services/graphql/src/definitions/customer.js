@@ -60,6 +60,9 @@ type Customer {
   primaryPostalAddress: CustomerPostalAddress
 
   companyName: String
+
+  "Customer IDs that were merged into this customer."
+  mergeHistory: [Int!]!
 }
 
 type CustomerDemographic {

@@ -18,12 +18,14 @@ const upsertCustomerData = async ({ id, encrypted = false, response }, { repos, 
     Addresses,
     CustomerDemographics,
     EmailAddresses,
+    MergeHistory, // @todo should merged records be whiped from local?
     Phones,
     Subscriptions,
   ] = await Promise.all([
     getDataFromLoader('customerPostalAddresses'),
     getDataFromLoader('customerDemographics'),
     getDataFromLoader('customerEmails'),
+    getDataFromLoader('mergeHistory'),
     getDataFromLoader('customerPhoneNumbers'),
     getDataFromLoader('customerSubscriptions'),
   ]);
@@ -33,6 +35,7 @@ const upsertCustomerData = async ({ id, encrypted = false, response }, { repos, 
     Addresses,
     CustomerDemographics,
     EmailAddresses,
+    MergeHistory,
     Phones,
     Subscriptions,
   };
@@ -108,6 +111,14 @@ module.exports = {
      */
     async externalIds({ Id }, _, { loaders }) {
       const response = await loaders.customerExternalIds.load(Id);
+      return response ? response.data : [];
+    },
+
+    /**
+     *
+     */
+    async mergeHistory({ Id }, _, { loaders }) {
+      const response = await loaders.customerMergeHistory.load(Id);
       return response ? response.data : [];
     },
 

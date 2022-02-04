@@ -242,7 +242,9 @@ class CustomerResource extends AbstractResource {
     const endpoint = `/customer/${customerId}/mergehistory/*`;
     const response = await this.client.get({ endpoint, errorOnNotFound });
     const customerIds = response.getAsArray('CustomerMergeHistory').map((customer) => customer.Id);
-    return new ApiSetResponse({ data: customerIds, response });
+    const r = new ApiSetResponse({ data: customerIds, response });
+    r.customerId = customerId;
+    return r;
   }
 
   /**
