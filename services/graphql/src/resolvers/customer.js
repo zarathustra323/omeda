@@ -4,43 +4,44 @@ const newrelic = require('../newrelic');
 
 const noticeError = newrelic.noticeError.bind(newrelic);
 
-const upsertCustomerData = async ({ id, encrypted = false, response }, { repos, loaders }) => {
-  if (!response.data || !response.data.Id) return null;
+// const upsertCustomerData = async ({ id, encrypted = false, response }, { repos, loaders }) => {
+const upsertCustomerData = async () => {
+  // if (!response.data || !response.data.Id) return null;
   // store customer record in local db.
-  const { Id } = response.data;
+  // const { Id } = response.data;
 
-  const getDataFromLoader = async (key) => {
-    const r = await loaders[key].load(Id);
-    return r ? r.data : [];
-  };
+  // const getDataFromLoader = async (key) => {
+  //   const r = await loaders[key].load(Id);
+  //   return r ? r.data : [];
+  // };
 
-  const [
-    Addresses,
-    CustomerDemographics,
-    EmailAddresses,
-    MergeHistory, // @todo should merged records be whiped from local?
-    Phones,
-    Subscriptions,
-  ] = await Promise.all([
-    getDataFromLoader('customerPostalAddresses'),
-    getDataFromLoader('customerDemographics'),
-    getDataFromLoader('customerEmails'),
-    getDataFromLoader('mergeHistory'),
-    getDataFromLoader('customerPhoneNumbers'),
-    getDataFromLoader('customerSubscriptions'),
-  ]);
+  // const [
+  //   Addresses,
+  //   CustomerDemographics,
+  //   EmailAddresses,
+  //   MergeHistory, // @todo should merged records be whiped from local?
+  //   Phones,
+  //   Subscriptions,
+  // ] = await Promise.all([
+  //   getDataFromLoader('customerPostalAddresses'),
+  //   getDataFromLoader('customerDemographics'),
+  //   getDataFromLoader('customerEmails'),
+  //   getDataFromLoader('mergeHistory'),
+  //   getDataFromLoader('customerPhoneNumbers'),
+  //   getDataFromLoader('customerSubscriptions'),
+  // ]);
 
-  const record = {
-    ...response.data,
-    Addresses,
-    CustomerDemographics,
-    EmailAddresses,
-    MergeHistory,
-    Phones,
-    Subscriptions,
-  };
+  // const record = {
+  //   ...response.data,
+  //   Addresses,
+  //   CustomerDemographics,
+  //   EmailAddresses,
+  //   MergeHistory,
+  //   Phones,
+  //   Subscriptions,
+  // };
 
-  return repos.customer.upsert({ id, encrypted, record });
+  // return repos.customer.upsert({ id, encrypted, record });
 };
 
 module.exports = {
