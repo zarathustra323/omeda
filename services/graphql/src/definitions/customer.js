@@ -48,7 +48,7 @@ type Customer {
 
   demographics(input: CustomerDemographicsInput = {}): [CustomerDemographic!]!
   emailAddresses: [CustomerEmailAddress!]!
-  externalIds: [CustomerExternalId!]!
+  externalIds(input: CustomerExternalIdsInput = {}): [CustomerExternalId!]!
   phoneNumbers: [CustomerPhoneNumber!]!
   postalAddresses: [CustomerPostalAddress!]!
   subscriptions: [CustomerSubscription!]!
@@ -182,6 +182,11 @@ input CustomerDemographicsInput {
   demographicIds: [Int!] = []
   "Filters the customer demographics by one or more demographic types. An empty value will return all customer demographics."
   demographicTypes: [DemographicTypeEnum!] = []
+}
+
+input CustomerExternalIdsInput {
+  "External identifier namespaces to exclude from the results."
+  excludeNamespaces: [String!]! = []
 }
 
 input RapidCustomerIdentificationMutationInput {

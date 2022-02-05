@@ -110,9 +110,16 @@ module.exports = {
     /**
      *
      */
-    async externalIds({ Id }, _, { loaders }) {
+    async externalIds({ Id }, { input }, { loaders }) {
       const response = await loaders.customerExternalIds.load(Id);
-      return response ? response.data : [];
+      const excludeNamespaces = input.excludeNamespaces.reduce((set, ns) => {
+        set.add(ns);
+        return set;
+      }, new Set());
+      return response ? response.data.filter(({ Namespace }) => {
+        if (excludeNamespaces.has(Namespace)) return false;
+        return true;
+      }) : [];
     },
 
     /**
