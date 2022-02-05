@@ -191,7 +191,24 @@ module.exports = {
      */
     async subscriptions({ Id }, _, { loaders }) {
       const response = await loaders.customerSubscriptions.load(Id);
-      return response ? response.data : [];
+      const subscriptions = response ? response.data : [];
+      const productIds = subscriptions.reduce((set, { ProductId }) => {
+        set.add(ProductId);
+        return set;
+      }, new Set());
+      const verifedProductIds = await (async () => {
+        if (!productIds.size) return new Set();
+        const products = await loaders.brandProducts.loadMany([...productIds]);
+        return products.reduce((set, product) => {
+          if (!product) return set;
+          set.add(product.data.Id);
+          return set;
+        }, new Set());
+      })();
+
+      // some customer records have orphaned subscriptions that reference products
+      // that no longer exist. as such, filter these.
+      return subscriptions.filter(({ ProductId }) => verifedProductIds.has(ProductId));
     },
   },
 
