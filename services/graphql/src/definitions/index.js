@@ -13,6 +13,7 @@ module.exports = gql`
 directive @codeOrType(instance: String!, path: String) on FIELD_DEFINITION
 directive @apiValue(path: String, as: ApiValueDirectiveAsEnum) on FIELD_DEFINITION
 
+scalar BigInt
 scalar DateTime
 scalar JSON
 scalar JSONObject
