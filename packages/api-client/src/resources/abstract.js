@@ -1,4 +1,4 @@
-const Joi = require('@parameter1/joi');
+const attributes = require('../attributes');
 
 class AbstractResource {
   /**
@@ -8,14 +8,7 @@ class AbstractResource {
    */
   constructor({ client } = {}) {
     this.client = client;
-    this.schema = {
-      behaviorId: Joi.number().integer().min(1),
-      customerId: Joi.number().integer().min(1),
-      emailAddress: Joi.string().trim().email(),
-      encryptedCustomerId: Joi.string().trim().length(15),
-      inputId: Joi.string().trim(),
-      productId: Joi.number().integer().min(1),
-    };
+    this.schema = attributes;
   }
 }
 

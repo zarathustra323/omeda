@@ -66,7 +66,7 @@ class EmailResource extends AbstractResource {
    */
   async lookupOptInStatusByEmail(params = {}) {
     const { emailAddress, errorOnNotFound } = await validateAsync(Joi.object({
-      emailAddress: Joi.string().trim().email().required(),
+      emailAddress: this.schema.emailAddress.required(),
       errorOnNotFound: Joi.boolean().default(false),
     }).required(), params);
     const endpoint = `/filter/email/${emailAddress}/*`;
@@ -91,7 +91,7 @@ class EmailResource extends AbstractResource {
     const { optIns } = await validateAsync(Joi.object({
       optIns: Joi.array().items(
         Joi.object({
-          emailAddress: Joi.string().trim().email().required(),
+          emailAddress: this.schema.emailAddress.required(),
           deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
           deleteOptOut: Joi.boolean().default(false),
           source: Joi.string().trim(),
@@ -126,7 +126,7 @@ class EmailResource extends AbstractResource {
    */
   async optInEmailAddress(params = {}) {
     const optIn = await validateAsync(Joi.object({
-      emailAddress: Joi.string().trim().email().required(),
+      emailAddress: this.schema.emailAddress.required(),
       deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
       deleteOptOut: Joi.boolean().default(false),
       source: Joi.string().trim(),
@@ -151,7 +151,7 @@ class EmailResource extends AbstractResource {
     const { optOuts } = await validateAsync(Joi.object({
       optOuts: Joi.array().items(
         Joi.object({
-          emailAddress: Joi.string().trim().email().required(),
+          emailAddress: this.schema.emailAddress.required(),
           deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
           source: Joi.string().trim(),
         }),
@@ -183,7 +183,7 @@ class EmailResource extends AbstractResource {
    */
   async optOutEmailAddress(params = {}) {
     const optOut = await validateAsync(Joi.object({
-      emailAddress: Joi.string().trim().email().required(),
+      emailAddress: this.schema.emailAddress.required(),
       deploymentTypeIds: Joi.array().items(Joi.number().min(1)).required(),
       source: Joi.string().trim(),
     }).required(), params);
