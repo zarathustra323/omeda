@@ -66,7 +66,7 @@ type Customer {
 }
 
 type CustomerDemographic {
-  id: Int! @apiValue
+  id: BigInt! @apiValue
   demographic: Demographic!
   demographicId: Int! @apiValue
   demographicType: DemographicType! @codeOrType(instance: "DemographicType")
@@ -82,7 +82,7 @@ type CustomerDemographic {
 }
 
 type CustomerEmailAddress {
-  id: Int! @apiValue
+  id: BigInt! @apiValue
   contactType: EmailAddressContactType! @codeOrType(instance: "EmailContactType", path: "EmailContactType")
   emailAddress: String!
   changedDate: DateTime! @apiValue
@@ -107,7 +107,7 @@ type CustomerExternalId {
 }
 
 type CustomerPhoneNumber {
-  id: Int! @apiValue
+  id: BigInt! @apiValue
   contactType: PhoneNumberContactType! @codeOrType(instance: "PhoneContactType", path: "PhoneContactType")
   phoneNumber: String! @apiValue
   extension: String @apiValue
@@ -116,7 +116,7 @@ type CustomerPhoneNumber {
 }
 
 type CustomerPostalAddress {
-  id: Int! @apiValue
+  id: BigInt! @apiValue
   contactType: PostalAddressContactType! @codeOrType(instance: "AddressContactType", path: "AddressContactType")
   company: String @apiValue
   street: String @apiValue
@@ -133,7 +133,7 @@ type CustomerPostalAddress {
 }
 
 type CustomerSubscription {
-  id: Int! @apiValue
+  id: BigInt! @apiValue
   product: Product!
   changedDate: DateTime! @apiValue
   receive: Boolean! @apiValue
