@@ -1,5 +1,6 @@
 const CustomerEmailEntity = require('../../entities/customer/email');
 const CustomerRelManyResponse = require('./rel-many');
+const attributes = require('../../attributes');
 
 class CustomerEmailsResponse extends CustomerRelManyResponse {
   /**
@@ -8,7 +9,13 @@ class CustomerEmailsResponse extends CustomerRelManyResponse {
    * @param {ApiClientResponse} params.response The client response.
    */
   constructor({ response } = {}) {
-    const data = response.getAsArray('Emails').map((obj) => new CustomerEmailEntity(obj));
+    const data = response.getAsArray('Emails')
+      .filter(({ EmailAddress }) => {
+        // filter out invalid email addresses
+        const { error } = attributes.emailAddress.validate(EmailAddress);
+        return !error;
+      })
+      .map((obj) => new CustomerEmailEntity(obj));
     super({ data, response });
   }
 
