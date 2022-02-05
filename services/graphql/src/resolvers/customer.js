@@ -116,12 +116,10 @@ module.exports = {
         set.add(ns);
         return set;
       }, new Set());
-      return response
-        ? response.data.filter(({ Namespace }) => {
-          if (excludeNamespaces.has(Namespace)) return false;
-          return true;
-        })
-        : [];
+      return response ? response.data.filter(({ Namespace }) => {
+        if (excludeNamespaces.has(Namespace)) return false;
+        return true;
+      }) : [];
     },
 
     /**
