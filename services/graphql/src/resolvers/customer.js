@@ -313,6 +313,7 @@ module.exports = {
         title,
         companyName,
         streetAddress,
+        extraAddress,
         city,
         regionCode,
         countryCode,
@@ -360,7 +361,7 @@ module.exports = {
       });
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
-        || streetAddress || city;
+        || streetAddress || city || extraAddress;
 
       const phones = [];
       if (phoneNumber) phones.push({ Number: phoneNumber, PhoneContactType: 200 });
@@ -380,6 +381,7 @@ module.exports = {
             {
               ...(companyName && { Company: companyName }),
               ...(streetAddress && { Street: streetAddress }),
+              ...(extraAddress && { ApartmentMailStop: extraAddress }),
               ...(city && { City: city }),
               ...(regionCode && { RegionCode: regionCode }),
               ...(countryCode && { CountryCode: countryCode }),
