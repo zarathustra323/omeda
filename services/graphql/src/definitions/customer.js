@@ -204,6 +204,8 @@ input RapidCustomerIdentificationMutationInput {
   companyName: String
   "The customer's street address."
   streetAddress: String
+  "The customer's extra address info (apartment/suite/mail stop)."
+  extraAddress: String
   "The customer's city."
   city: String
   "3-character country code"
