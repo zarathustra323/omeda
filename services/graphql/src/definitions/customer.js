@@ -161,9 +161,9 @@ type RapidCustomerIdentification {
 }
 
 input ChangedCustomersQueryInput {
-  "The start date for returning changed customers."
+  "The start date for changed customers.  Note: seconds and milliseconds are ignored, and are treated as if they were passed as :00.000."
   startDate: DateTime!
-  "The end date for returning changed customers."
+  "The end date for changed customers. Note: seconds and milliseconds are ignored, and are treated as if they were passed as :99.999."
   endDate: DateTime!
 }
 
