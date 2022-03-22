@@ -1,7 +1,6 @@
 const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const { getAsObject } = require('@parameter1/utils');
-const dayjs = require('../dayjs');
 const ApiSetResponse = require('../response/set');
 const BasicCustomerResponse = require('../response/customer/basic');
 const CustomerBehaviorsResponse = require('../response/customer/behaviors');
@@ -13,6 +12,7 @@ const CustomerPhoneNumbersResponse = require('../response/customer/phone-numbers
 const CustomerPostalAddressesResponse = require('../response/customer/postal-addresses');
 const CustomerSubscriptionsResponse = require('../response/customer/subscriptions');
 const AbstractResource = require('./abstract');
+const formatDate = require('../utils/format-date');
 
 class CustomerResource extends AbstractResource {
   /**
@@ -32,8 +32,8 @@ class CustomerResource extends AbstractResource {
     }).required(), params);
     const now = new Date(Date.now() - 60 * 1000); // clock drift
     const format = 'MMDDYYYY_HHmm';
-    const start = dayjs.tz(startDate, 'America/Chicago').format(format);
-    const end = dayjs.tz(endDate > now ? now : endDate, 'America/Chicago').format(format);
+    const start = formatDate(startDate, format);
+    const end = formatDate(endDate > now ? now : endDate, format);
     const endpoint = `customer/change/startdate/${start}/enddate/${end}/*`;
     const response = await this.client.get({ endpoint });
     return new CustomerChangeLookupResponse({ response });
