@@ -12,7 +12,7 @@ class EmailResource extends AbstractResource {
    * The Deployment Lookup API provides the ability to retrieve deployment
    * information such as link tracking, delivery statistics, deployment status, history, etc.
    *
-   * @link https://main.omeda.com/knowledge-base/email-deployment-lookup/
+   * @link https://training.omeda.com/knowledge-base/api-email-deployment-lookup-resource/
    * @param {object} params
    * @param {string} params.trackId
    * @returns {Promise<EmailDeploymentResponse>}

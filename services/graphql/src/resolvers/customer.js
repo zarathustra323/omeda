@@ -393,6 +393,7 @@ module.exports = {
           CustomerDemographics: demographics.map((demo) => ({
             OmedaDemographicId: demo.id,
             OmedaDemographicValue: demo.values,
+            ...(demo.writeInValue && { WriteInDesc: demo.writeInValue }),
           })),
         }),
         ...(promoCode && { PromoCode: promoCode }),
