@@ -242,10 +242,12 @@ input RapidCustomerIdentificationDeploymentTypeInput {
 }
 
 input RapidCustomerIdentificationDemographicInput {
-  "The demographic ID to assign."
+  "The OmedaDemographic ID to set."
   id: Int!
-  "The values to set."
+  "The OmedaDemographicValue IDs to set."
   values: [String!]!
+  "“Other” text description, only applicable to demographic values with value type of “Other”."
+  writeInValue: String
 }
 
 `;
