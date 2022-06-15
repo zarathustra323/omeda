@@ -13,6 +13,7 @@ class BrandRepo extends OmedaRepo {
     demographicRepo,
     deploymentTypeRepo,
     productRepo,
+    emailDeploymentRepo,
   } = {}) {
     super({
       brandKey,
@@ -24,6 +25,7 @@ class BrandRepo extends OmedaRepo {
     this.demographicRepo = demographicRepo;
     this.deploymentTypeRepo = deploymentTypeRepo;
     this.productRepo = productRepo;
+    this.emailDeploymentRepo = emailDeploymentRepo;
   }
 
   /**
