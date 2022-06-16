@@ -9,8 +9,8 @@ class EmailDeploymentRepo extends OmedaRepo {
   constructor({ brandKey, client, dbName } = {}) {
     super({
       brandKey,
-      name: 'brand email deployment',
-      collectionName: 'brand-email-deployments',
+      name: 'email deployment',
+      collectionName: 'email-deployments',
       dbName,
       client,
     });
@@ -19,7 +19,6 @@ class EmailDeploymentRepo extends OmedaRepo {
   /**
    *
    * @param {object} params
-   * @param {string} params.brand The brand abbreviation.
    * @param {object[]} params.emailDeployments The deployment types to upsert.
    */
   async bulkUpsert(params = {}) {
@@ -40,12 +39,6 @@ class EmailDeploymentRepo extends OmedaRepo {
       };
       return { updateOne: { filter, update, upsert: true } };
     });
-
-    // Disabling delete since the API doesn't support multiple values for deployment type id
-    // delete any remaining deployment types that weren't included in this dataset
-    // operations.push({
-    //   deleteMany: { filter: { 'data.Id': { $nin: ids }, brand } },
-    // });
 
     return this.bulkWrite({ operations });
   }
