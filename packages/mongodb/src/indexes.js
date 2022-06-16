@@ -11,11 +11,6 @@ module.exports = {
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
   ],
-  'brand-email-deployments': [
-    { brand: 1 },
-    { 'data.DeploymentTypeId': 1, brand: 1 },
-    [{ 'data.TrackId': 1, brand: 1 }, { unique: true }],
-  ],
   'brand-products': [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
@@ -30,5 +25,10 @@ module.exports = {
   customers: [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
+  'email-deployments': [
+    { brand: 1 },
+    { 'data.DeploymentTypeId': 1, brand: 1 },
+    [{ 'data.TrackId': 1, brand: 1 }, { unique: true }],
   ],
 };
