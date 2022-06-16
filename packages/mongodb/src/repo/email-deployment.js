@@ -2,7 +2,7 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const OmedaRepo = require('./abstract');
 
-class BrandEmailDeploymentRepo extends OmedaRepo {
+class EmailDeploymentRepo extends OmedaRepo {
   /**
    *
    */
@@ -22,11 +22,10 @@ class BrandEmailDeploymentRepo extends OmedaRepo {
    * @param {string} params.brand The brand abbreviation.
    * @param {object[]} params.emailDeployments The deployment types to upsert.
    */
-  async upsert(params = {}) {
+  async bulkUpsert(params = {}) {
     const { emailDeployments } = await validateAsync(Joi.object({
       emailDeployments: Joi.array().items(Joi.object().required()).required(),
     }).required(), params);
-    if (!emailDeployments.length) return null;
 
     const { brandKey: brand } = this;
     const now = new Date();
@@ -52,4 +51,4 @@ class BrandEmailDeploymentRepo extends OmedaRepo {
   }
 }
 
-module.exports = BrandEmailDeploymentRepo;
+module.exports = EmailDeploymentRepo;
