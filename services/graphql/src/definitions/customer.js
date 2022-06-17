@@ -140,10 +140,10 @@ type CustomerSubscription {
 }
 
 type RapidCustomerIdentification {
-  id: Int! @apiValue(path: "CustomerId")
-  encryptedCustomerId: String! @apiValue
-  customer: Customer!
-  orderId: Int! @apiValue
+  id: Int @apiValue(path: "CustomerId")
+  encryptedCustomerId: String @apiValue
+  customer: Customer
+  orderId: Int @apiValue
   transactionId: Int! @apiValue
 }
 

@@ -288,6 +288,7 @@ module.exports = {
      *
      */
     async customer({ CustomerId }, _, { apiClient }) {
+      if (!CustomerId) return null;
       const response = await apiClient.resource('customer').lookupById({
         customerId: CustomerId,
       });
