@@ -337,10 +337,9 @@ module.exports = {
         return map;
       }, deploymentTypeIdMap);
 
+      // Append newsletter product subscriptions for each opted-in email deployment
       const deploymentTypeIds = [...deploymentTypeOptInMap.keys()];
-
-      const productDeploymentTypeMap = await (async () => {
-        if (!deploymentTypeIds.length) return [];
+      if (deploymentTypeIds.length) {
         const cursor = await repos.brandProduct.find({
           query: {
             'data.DeploymentTypeId': { $in: deploymentTypeIds },
@@ -348,20 +347,14 @@ module.exports = {
           },
           options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
         });
-        const docs = await cursor.toArray();
-        return docs.reduce((map, doc) => {
+        await cursor.forEach((doc) => {
           const { Id, DeploymentTypeId } = doc.data;
-          map.set(Id, DeploymentTypeId);
-          return map;
-        }, new Map());
-      })();
+          const optedIn = deploymentTypeOptInMap.get(DeploymentTypeId);
+          if (optedIn == null) return;
+          Products.push({ OmedaProductId: Id, Receive: Number(optedIn) });
+        });
+      }
 
-        // Append newsletter product subscriptions for each opted-in email deployment
-
-      productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
-        const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
-        if (optedIn == null) return;
-        Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
       // Append explicitly provided product subscriptions
       subscriptions.forEach(({ id, receive }) => {
         Products.push({ OmedaProductId: id, Receive: Number(receive) });
