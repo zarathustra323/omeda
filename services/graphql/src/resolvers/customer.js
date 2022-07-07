@@ -320,6 +320,7 @@ module.exports = {
         countryCode,
         postalCode,
         demographics,
+        subscriptions,
       } = input;
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
@@ -355,10 +356,15 @@ module.exports = {
         }, new Map());
       })();
 
+        // Append newsletter product subscriptions for each opted-in email deployment
+
       productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
         const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
         if (optedIn == null) return;
         Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
+      // Append explicitly provided product subscriptions
+      subscriptions.forEach(({ id, receive }) => {
+        Products.push({ OmedaProductId: id, Receive: Number(receive) });
       });
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
