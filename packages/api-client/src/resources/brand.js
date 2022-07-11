@@ -1,5 +1,6 @@
 const AbstractResource = require('./abstract');
 const BrandComprehensiveResponse = require('../response/brand/comp');
+const BrandBehaviorLookupResponse = require('../response/brand/behavior/lookup');
 
 class BrandResource extends AbstractResource {
   /**
@@ -17,6 +18,21 @@ class BrandResource extends AbstractResource {
     const endpoint = 'comp/*';
     const response = await this.client.get({ endpoint });
     return new BrandComprehensiveResponse({ response, resource: this });
+  }
+
+  /**
+   * The Behavior Lookup API provides the ability to retrieve behaviors and related data, such as
+   * categories, actions, and attributes.
+   *
+   * @link https://training.omeda.com/knowledge-base/behavior-lookup/
+   * @param {object} params
+   * @param {string} params.trackId
+   * @returns {Promise<EmailDeploymentResponse>}
+   */
+  async behaviorLookup() {
+    const endpoint = 'behavior/*';
+    const response = await this.client.get({ endpoint });
+    return new BrandBehaviorLookupResponse({ response, resource: this });
   }
 }
 

@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 const pagination = require('@parameter1/graphql-mongodb-pagination/definitions');
 
+const behavior = require('./behavior');
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
@@ -42,6 +43,7 @@ type Webform {
   sequence: Int @apiValue(path: "OmedaWebformSequence")
 }
 
+${behavior}
 ${codesAndTypes}
 ${customer}
 ${demographic}
