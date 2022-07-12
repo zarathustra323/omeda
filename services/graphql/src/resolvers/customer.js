@@ -325,7 +325,7 @@ module.exports = {
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
       if (promoCode && promoCode.length > 50) throw new UserInputError('The promo code must be 50 characters or fewer.');
-      const Products = new Map([[input.productId, true]]);
+      const productMap = new Map([[input.productId, true]]);
 
       const deploymentTypeIdMap = input.deploymentTypeIds.reduce((map, id) => {
         map.set(id, true);
@@ -351,7 +351,7 @@ module.exports = {
           const { Id, DeploymentTypeId } = doc.data;
           const optedIn = deploymentTypeOptInMap.get(DeploymentTypeId);
           if (optedIn == null) return;
-          Products.set(Id, optedIn);
+          productMap.set(Id, optedIn);
         });
       }
 
@@ -378,7 +378,7 @@ module.exports = {
       }
 
       // Append explicitly provided product subscriptions. Replace if already present
-      subscriptions.forEach(({ id, receive }) => Products.set(id, receive));
+      subscriptions.forEach(({ id, receive }) => productMap.set(id, receive));
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
@@ -390,7 +390,7 @@ module.exports = {
 
       const body = {
         RunProcessor: 1,
-        Products: [...Products].map(([OmedaProductId, Receive]) => ({
+        Products: [...productMap].map(([OmedaProductId, Receive]) => ({
           OmedaProductId,
           Receive: Number(Receive),
         })),
