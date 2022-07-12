@@ -358,8 +358,8 @@ module.exports = {
       const subscriptionMap = new Map();
       subscriptions.forEach(({ id, receive }) => {
         subscriptionMap.set(id, receive);
-        // Append explicitly provided product subscriptions. Replace if already present
-        productMap.set(id, receive);
+        // Append explicitly provided product subscriptions, if not already present.
+        if (!productMap.has(id)) productMap.set(id, receive);
       });
 
       // Set deployment opt-ins for supplied newsletter product subscriptions
