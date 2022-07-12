@@ -358,6 +358,7 @@ module.exports = {
       const subscriptionMap = new Map();
       subscriptions.forEach(({ id, receive }) => {
         subscriptionMap.set(id, receive);
+        // Append explicitly provided product subscriptions. Replace if already present
         productMap.set(id, receive);
       });
 
@@ -377,7 +378,6 @@ module.exports = {
         });
       }
 
-      // Append explicitly provided product subscriptions. Replace if already present
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
