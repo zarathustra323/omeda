@@ -320,11 +320,12 @@ module.exports = {
         countryCode,
         postalCode,
         demographics,
+        subscriptions,
       } = input;
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
       if (promoCode && promoCode.length > 50) throw new UserInputError('The promo code must be 50 characters or fewer.');
-      const Products = [{ OmedaProductId: input.productId }];
+      const productMap = new Map([[input.productId, true]]);
 
       const deploymentTypeIdMap = input.deploymentTypeIds.reduce((map, id) => {
         map.set(id, true);
@@ -336,10 +337,9 @@ module.exports = {
         return map;
       }, deploymentTypeIdMap);
 
+      // Append newsletter product subscriptions for each opted-in email deployment
       const deploymentTypeIds = [...deploymentTypeOptInMap.keys()];
-
-      const productDeploymentTypeMap = await (async () => {
-        if (!deploymentTypeIds.length) return [];
+      if (deploymentTypeIds.length) {
         const cursor = await repos.brandProduct.find({
           query: {
             'data.DeploymentTypeId': { $in: deploymentTypeIds },
@@ -347,19 +347,36 @@ module.exports = {
           },
           options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
         });
-        const docs = await cursor.toArray();
-        return docs.reduce((map, doc) => {
+        await cursor.forEach((doc) => {
           const { Id, DeploymentTypeId } = doc.data;
-          map.set(Id, DeploymentTypeId);
-          return map;
-        }, new Map());
-      })();
+          const optedIn = deploymentTypeOptInMap.get(DeploymentTypeId);
+          if (optedIn == null) return;
+          productMap.set(Id, optedIn);
+        });
+      }
 
-      productDeploymentTypeMap.forEach((deploymentTypeId, productId) => {
-        const optedIn = deploymentTypeOptInMap.get(deploymentTypeId);
-        if (optedIn == null) return;
-        Products.push({ OmedaProductId: productId, Receive: Number(optedIn) });
+      const subscriptionMap = new Map();
+      subscriptions.forEach(({ id, receive }) => {
+        subscriptionMap.set(id, receive);
+        // Append explicitly provided product subscriptions, if not already present.
+        if (!productMap.has(id)) productMap.set(id, receive);
       });
+
+      // Set deployment opt-ins for supplied newsletter product subscriptions
+      if (subscriptionMap.size) {
+        const cursor = await repos.brandProduct.find({
+          query: { 'data.Id': { $in: [...subscriptionMap.keys()] }, 'data.ProductType': 2 },
+          options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
+        });
+        await cursor.forEach((doc) => {
+          const { Id, DeploymentTypeId } = doc.data;
+          if (!subscriptionMap.has(Id)) return;
+          const receive = subscriptionMap.get(Id);
+          // Set the status, if not already present. Used when sending opt-in/out below.
+          if (deploymentTypeOptInMap.has(DeploymentTypeId)) return;
+          deploymentTypeOptInMap.set(DeploymentTypeId, receive);
+        });
+      }
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
@@ -371,7 +388,10 @@ module.exports = {
 
       const body = {
         RunProcessor: 1,
-        Products,
+        Products: [...productMap].map(([OmedaProductId, Receive]) => ({
+          OmedaProductId,
+          Receive: Number(Receive),
+        })),
         Emails: [{ EmailAddress: email }],
         ...(phones.length && { Phones: phones }),
         ...(firstName && { FirstName: firstName }),

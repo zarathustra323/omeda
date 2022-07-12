@@ -226,6 +226,9 @@ input RapidCustomerIdentificationMutationInput {
   "Deployment types to assign to, or unassign from, the customer, with opt in/out status."
   deploymentTypes: [RapidCustomerIdentificationDeploymentTypeInput] = []
 
+  "Product subscriptions to assign to the customer."
+  subscriptions: [RapidCustomerIdentificationSubscriptionInput] = []
+
   "Demographics to assign to the customer."
   demographics: [RapidCustomerIdentificationDemographicInput!] = []
   "An optional promo code for tracking the identification acquisition source."
@@ -239,6 +242,13 @@ input RapidCustomerIdentificationDeploymentTypeInput {
   id: Int!
   "Whether the customer opted-in."
   optedIn: Boolean!
+}
+
+input RapidCustomerIdentificationSubscriptionInput {
+  "The product id to subscribe to"
+  id: Int!
+  "Whether the customer should receive this subscription."
+  receive: Boolean!
 }
 
 input RapidCustomerIdentificationDemographicInput {
