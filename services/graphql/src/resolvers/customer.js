@@ -355,16 +355,16 @@ module.exports = {
         });
       }
 
-      const subscriptionMap = subscriptions.reduce((map, { id, receive }) => {
-        map.set(id, receive);
-        return map;
-      }, new Map());
-      const productIds = [...subscriptionMap.keys()];
+      const subscriptionMap = new Map();
+      subscriptions.forEach(({ id, receive }) => {
+        subscriptionMap.set(id, receive);
+        productMap.set(id, receive);
+      });
 
       // Set deployment opt-ins for supplied newsletter product subscriptions
-      if (productIds.length) {
+      if (subscriptionMap.size) {
         const cursor = await repos.brandProduct.find({
-          query: { 'data.Id': { $in: productIds }, 'data.ProductType': 2 },
+          query: { 'data.Id': { $in: [...subscriptionMap.keys()] }, 'data.ProductType': 2 },
           options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
         });
         await cursor.forEach((doc) => {
@@ -378,7 +378,6 @@ module.exports = {
       }
 
       // Append explicitly provided product subscriptions. Replace if already present
-      subscriptions.forEach(({ id, receive }) => productMap.set(id, receive));
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
