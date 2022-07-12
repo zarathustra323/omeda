@@ -355,9 +355,33 @@ module.exports = {
         });
       }
 
-      // Append explicitly provided product subscriptions
+      const productIds = subscriptions
+        .map(({ id }) => id)
+        .filter((id) => !Products.find((p) => p.OmedaProductId === id));
+
+      // Set deployment opt-ins for supplied product subscriptions
+      if (productIds.length) {
+        const cursor = await repos.brandProduct.find({
+          query: { 'data.Id': { $in: productIds }, 'data.ProductType': 2 },
+          options: { projection: { 'data.Id': 1, 'data.DeploymentTypeId': 1 } },
+        });
+        await cursor.forEach((doc) => {
+          const { Id, DeploymentTypeId } = doc.data;
+          const { receive } = subscriptions.find(({ id }) => id === Id);
+          // Set the status, if not already present. Used when sending opt-in/out below.
+          if (deploymentTypeOptInMap.has(DeploymentTypeId)) return;
+          deploymentTypeOptInMap.set(DeploymentTypeId, receive);
+        });
+      }
+
+      // Append explicitly provided product subscriptions. Replace if already present
       subscriptions.forEach(({ id, receive }) => {
-        Products.push({ OmedaProductId: id, Receive: Number(receive) });
+        const found = Products.find(({ OmedaProductId }) => OmedaProductId === id);
+        if (found) {
+          found.Receive = Number(receive);
+        } else {
+          Products.push({ OmedaProductId: id, Receive: Number(receive) });
+        }
       });
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
