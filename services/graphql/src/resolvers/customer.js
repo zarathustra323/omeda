@@ -325,7 +325,7 @@ module.exports = {
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
       if (promoCode && promoCode.length > 50) throw new UserInputError('The promo code must be 50 characters or fewer.');
-      const Products = [{ OmedaProductId: input.productId }];
+      const Products = new Map([[input.productId, true]]);
 
       const deploymentTypeIdMap = input.deploymentTypeIds.reduce((map, id) => {
         map.set(id, true);
@@ -351,15 +351,17 @@ module.exports = {
           const { Id, DeploymentTypeId } = doc.data;
           const optedIn = deploymentTypeOptInMap.get(DeploymentTypeId);
           if (optedIn == null) return;
-          Products.push({ OmedaProductId: Id, Receive: Number(optedIn) });
+          Products.set(Id, optedIn);
         });
       }
 
-      const productIds = subscriptions
-        .map(({ id }) => id)
-        .filter((id) => !Products.find((p) => p.OmedaProductId === id));
+      const subscriptionMap = subscriptions.reduce((map, { id, receive }) => {
+        map.set(id, receive);
+        return map;
+      }, new Map());
+      const productIds = [...subscriptionMap.keys()];
 
-      // Set deployment opt-ins for supplied product subscriptions
+      // Set deployment opt-ins for supplied newsletter product subscriptions
       if (productIds.length) {
         const cursor = await repos.brandProduct.find({
           query: { 'data.Id': { $in: productIds }, 'data.ProductType': 2 },
@@ -367,7 +369,8 @@ module.exports = {
         });
         await cursor.forEach((doc) => {
           const { Id, DeploymentTypeId } = doc.data;
-          const { receive } = subscriptions.find(({ id }) => id === Id);
+          if (!subscriptionMap.has(Id)) return;
+          const receive = subscriptionMap.get(Id);
           // Set the status, if not already present. Used when sending opt-in/out below.
           if (deploymentTypeOptInMap.has(DeploymentTypeId)) return;
           deploymentTypeOptInMap.set(DeploymentTypeId, receive);
@@ -375,14 +378,7 @@ module.exports = {
       }
 
       // Append explicitly provided product subscriptions. Replace if already present
-      subscriptions.forEach(({ id, receive }) => {
-        const found = Products.find(({ OmedaProductId }) => OmedaProductId === id);
-        if (found) {
-          found.Receive = Number(receive);
-        } else {
-          Products.push({ OmedaProductId: id, Receive: Number(receive) });
-        }
-      });
+      subscriptions.forEach(({ id, receive }) => Products.set(id, receive));
 
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
@@ -394,7 +390,10 @@ module.exports = {
 
       const body = {
         RunProcessor: 1,
-        Products,
+        Products: [...Products].map(([OmedaProductId, Receive]) => ({
+          OmedaProductId,
+          Receive: Number(Receive),
+        })),
         Emails: [{ EmailAddress: email }],
         ...(phones.length && { Phones: phones }),
         ...(firstName && { FirstName: firstName }),
