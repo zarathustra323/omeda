@@ -378,7 +378,6 @@ module.exports = {
         });
       }
 
-
       const hasAddress = companyName || regionCode || countryCode || postalCode
         || streetAddress || city || extraAddress;
 
