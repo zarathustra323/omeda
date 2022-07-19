@@ -2,6 +2,13 @@ module.exports = {
   /**
    *
    */
+  BehaviorStatusCodeEnum: {
+    ACTIVE: 1,
+    INACTIVE: 0,
+  },
+  /**
+   *
+   */
   Query: {
     /**
      *

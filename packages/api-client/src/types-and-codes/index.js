@@ -7,6 +7,7 @@ const EmailContactType = require('./email-contact-type');
 const PhoneContactType = require('./phone-contact-type');
 const WebformViewCode = require('./webform-view-code');
 
+const behavior = require('./behavior');
 const customer = require('./customer');
 const deployment = require('./deployment');
 const deploymentType = require('./deployment-type');
@@ -22,6 +23,7 @@ module.exports = {
   EmailContactType,
   PhoneContactType,
   WebformViewCode,
+  ...behavior,
   ...customer,
   ...deployment,
   ...deploymentType,

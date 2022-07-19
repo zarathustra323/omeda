@@ -11,6 +11,7 @@ type Behavior {
   id: Int! @apiValue
   description: String! @apiValue
   alternateId: String @apiValue
+  status: BehaviorStatusCodeEnum @apiValue(path: "StatusCode")
 }
 
 `;
