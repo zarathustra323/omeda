@@ -11,6 +11,7 @@ type Behavior {
   id: Int! @apiValue
   description: String! @apiValue
   alternateId: String @apiValue
+  product: Product # @apiValue(path: "ProductId")
   status: BehaviorStatusCodeEnum @apiValue(path: "StatusCode")
 }
 
