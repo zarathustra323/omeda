@@ -2,15 +2,15 @@ const Joi = require('@parameter1/joi');
 const { validateAsync } = require('@parameter1/joi/utils');
 const OmedaRepo = require('./abstract');
 
-class BrandBehaviorActionRepo extends OmedaRepo {
+class BrandBehaviorRepo extends OmedaRepo {
   /**
    *
    */
   constructor({ brandKey, client, dbName } = {}) {
     super({
       brandKey,
-      name: 'brand behavior action',
-      collectionName: 'brand-behavior-actions',
+      name: 'brand behavior',
+      collectionName: 'brand-behaviors',
       dbName,
       client,
     });
@@ -42,18 +42,18 @@ class BrandBehaviorActionRepo extends OmedaRepo {
   /**
    *
    * @param {object} params
-   * @param {object[]} params.actions The actions to upsert.
+   * @param {object[]} params.behaviors The behaviors to upsert.
    */
   async upsert(params = {}) {
-    const { actions } = await validateAsync(Joi.object({
-      actions: Joi.array().items(Joi.object().required()).required(),
+    const { behaviors } = await validateAsync(Joi.object({
+      behaviors: Joi.array().items(Joi.object().required()).required(),
     }).required(), params);
-    if (!actions.length) return null;
+    if (!behaviors.length) return null;
 
     const { brandKey: brand } = this;
     const now = new Date();
     const ids = [];
-    const operations = actions.map((action) => {
+    const operations = behaviors.map((action) => {
       const { Id } = action;
       ids.push(Id);
       const filter = { brand, 'data.Id': Id };
@@ -64,7 +64,7 @@ class BrandBehaviorActionRepo extends OmedaRepo {
       return { updateOne: { filter, update, upsert: true } };
     });
 
-    // delete any remaining actions that weren't included in this dataset
+    // delete any remaining behaviors that weren't included in this dataset
     operations.push({
       deleteMany: { filter: { 'data.Id': { $nin: ids }, brand } },
     });
@@ -73,4 +73,4 @@ class BrandBehaviorActionRepo extends OmedaRepo {
   }
 }
 
-module.exports = BrandBehaviorActionRepo;
+module.exports = BrandBehaviorRepo;
