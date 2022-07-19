@@ -1,6 +1,6 @@
 const load = require('../../utils/from-five-col');
 
-module.exports = load('behavior-elements', `
+module.exports = load('brand-behavior-elements', `
 <table>
   <tbody>
     <tr>

@@ -7,6 +7,11 @@ enum BehaviorStatusCodeEnum {
   INACTIVE
 }
 
+enum BehaviorActionStatusCodeEnum {
+  ACTIVE
+  INACTIVE
+}
+
 enum ContactTypeStatusCodeEnum {
   ACTIVE
   PRIMARY

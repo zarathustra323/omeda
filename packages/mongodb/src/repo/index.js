@@ -1,6 +1,7 @@
 const Joi = require('@parameter1/joi');
 const ApiRequestRepo = require('./api-request');
 const BrandRepo = require('./brand');
+const BrandBehaviorActionRepo = require('./brand-behavior-action');
 const BrandDemographicRepo = require('./brand-demographic');
 const EmailDeploymentRepo = require('./email-deployment');
 const BrandDeploymentTypeRepo = require('./brand-deployment-type');
@@ -30,6 +31,7 @@ module.exports = (params = {}) => {
   return {
     apiRequest,
     brand,
+    brandBehaviorAction: new BrandBehaviorActionRepo({ brandKey, client, dbName }),
     brandDemographic,
     brandDeploymentType,
     brandProduct,

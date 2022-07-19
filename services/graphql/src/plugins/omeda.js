@@ -78,6 +78,21 @@ class OmedaGraphQLPlugin {
       })().catch(newrelic.noticeError.bind(newrelic));
     }
 
+    // @todo cleanup
+    // keep brand behavior actions in-sync.
+    const behaviorActions = await repos.brandBehaviorAction.status();
+    if (!behaviorActions.exists) {
+      // save the data for the first time.
+      const response = await apiClient.resource('brand').behaviorActionsLookup();
+      await repos.brandBehaviorAction.upsert({ actions: response.data });
+    } else if (!behaviorActions.isFresh || forceSync) {
+      // refresh the data, but do not await
+      (async () => {
+        const response = await apiClient.resource('brand').behaviorActionsLookup();
+        await repos.brandBehaviorAction.upsert({ actions: response.data });
+      })().catch(newrelic.noticeError.bind(newrelic));
+    }
+
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);
       // eslint-disable-next-line no-param-reassign

@@ -57,6 +57,7 @@ module.exports = ({ apiClient, repos } = {}) => {
     brandDemographics: new DataLoader(createRepoLoader({ name: 'brandDemographic' })),
     brandDeploymentTypes: new DataLoader(createRepoLoader({ name: 'brandDeploymentType' })),
     brandProducts: new DataLoader(createRepoLoader({ name: 'brandProduct' })),
+    brandBehaviorActions: new DataLoader(createRepoLoader({ name: 'brandBehaviorAction' })),
 
     customerApi: new DataLoader(createCustomerApiLoader()),
     emailAddressOptInStatus: new DataLoader(createEmailOptInStatusLoader()),
