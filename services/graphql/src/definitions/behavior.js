@@ -41,4 +41,16 @@ type BehaviorAction {
   status: BehaviorActionStatusCodeEnum @apiValue(path: "StatusCode")
 }
 
+type BehaviorAttribute {
+  id: Int! @apiValue
+  description: String! @apiValue
+  type: BehaviorAttributeTypeEnum! @apiValue(path: "Type")
+  values: [BehaviorAttributeDefinedValue!]!
+}
+
+type BehaviorAttributeDefinedValue {
+  id: Int! @apiValue(path: "DefinedValueId")
+  description: String! @apiValue(path: "ValueDescription")
+}
+
 `;

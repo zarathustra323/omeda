@@ -1,3 +1,5 @@
+const { getAsArray } = require("@parameter1/utils");
+
 module.exports = {
   /**
    *
@@ -32,6 +34,12 @@ module.exports = {
   /**
    *
    */
+  BehaviorAttribute: {
+    values: (doc) => getAsArray(doc, 'data.DefinedValues'),
+  },
+  /**
+   *
+   */
   BehaviorCategory: {
     /**
      *
@@ -49,6 +57,14 @@ module.exports = {
   BehaviorActionStatusCodeEnum: {
     ACTIVE: 1,
     INACTIVE: 0,
+  },
+  /**
+   * https://training.omeda.com/knowledge-base/api-store-behavior-attribute/#articleTOC_7
+   */
+  BehaviorAttributeTypeEnum: {
+    DEFINED_VALUES: 1,
+    OPEN_TEXT: 2,
+    OPEN_TEXT_NUMBER: 3,
   },
   /**
    *
@@ -90,6 +106,15 @@ module.exports = {
     async behaviorActions(_, __, { repos }) {
       const data = await repos.brandBehaviorAction.find();
       const r = await data.toArray();
+      return r.map((doc) => ({ ...doc, ...doc.data }));
+    },
+    /**
+     *
+     */
+    async behaviorAttributes(_, __, { repos }) {
+      const data = await repos.brandBehaviorAttribute.find();
+      const r = await data.toArray();
+      console.log(r);
       return r.map((doc) => ({ ...doc, ...doc.data }));
     },
   },

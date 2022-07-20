@@ -2,6 +2,7 @@ const AbstractResource = require('./abstract');
 const BrandComprehensiveResponse = require('../response/brand/comp');
 const BrandBehaviorLookupResponse = require('../response/brand/behavior/lookup');
 const BrandBehaviorActionLookupResponse = require('../response/brand/behavior/lookup/action');
+const BrandBehaviorAttributeLookupResponse = require('../response/brand/behavior/lookup/attribute');
 const BrandBehaviorCategoryLookupResponse = require('../response/brand/behavior/lookup/category');
 
 class BrandResource extends AbstractResource {
@@ -62,6 +63,22 @@ class BrandResource extends AbstractResource {
     const endpoint = 'behavior/category/*';
     const response = await this.client.get({ endpoint });
     return new BrandBehaviorCategoryLookupResponse({ response, resource: this });
+  }
+
+  /**
+   * The Behavior Attribute Lookup API provides the ability to retrieve behavior attributes.
+   *
+   * @link https://training.omeda.com/knowledge-base/api-store-behavior-attribute/
+   * @note The behavior attribute lookup API is undocumented, and behavior is inferred
+   *
+   * @param {object} params
+   * @param {string} params.trackId
+   * @returns {Promise<BrandBehaviorAttributeLookupResponse>}
+   */
+  async behaviorAttributesLookup() {
+    const endpoint = 'behavior/attribute/*';
+    const response = await this.client.get({ endpoint });
+    return new BrandBehaviorAttributeLookupResponse({ response, resource: this });
   }
 }
 

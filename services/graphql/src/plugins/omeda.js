@@ -123,6 +123,21 @@ class OmedaGraphQLPlugin {
       })().catch(newrelic.noticeError.bind(newrelic));
     }
 
+    // @todo cleanup
+    // keep brand behavior categories in-sync.
+    const behaviorAttributes = await repos.brandBehaviorAttribute.status();
+    if (!behaviorAttributes.exists) {
+      // save the data for the first time.
+      const response = await apiClient.resource('brand').behaviorAttributesLookup();
+      await repos.brandBehaviorAttribute.upsert({ attributes: response.data });
+    } else if (!behaviorAttributes.isFresh || forceSync) {
+      // refresh the data, but do not await
+      (async () => {
+        const response = await apiClient.resource('brand').behaviorAttributesLookup();
+        await repos.brandBehaviorAttribute.upsert({ attributes: response.data });
+      })().catch(newrelic.noticeError.bind(newrelic));
+    }
+
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);
       // eslint-disable-next-line no-param-reassign

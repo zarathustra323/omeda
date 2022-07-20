@@ -17,6 +17,12 @@ enum BehaviorCategoryStatusCodeEnum {
   INACTIVE
 }
 
+enum BehaviorAttributeTypeEnum {
+  DEFINED_VALUES
+  OPEN_TEXT
+  OPEN_TEXT_NUMBER
+}
+
 enum ContactTypeStatusCodeEnum {
   ACTIVE
   PRIMARY
