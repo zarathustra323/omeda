@@ -37,7 +37,7 @@ class SyncableRepo extends OmedaRepo {
    */
   async upsert(params = {}) {
     const { data, remove } = await validateAsync(Joi.object({
-      data: Joi.array().items(Joi.object().required()).required(),
+      data: Joi.array().items(Joi.object()).required(),
       remove: Joi.bool().default(true),
     }).required(), params);
     if (!data.length) return null;
