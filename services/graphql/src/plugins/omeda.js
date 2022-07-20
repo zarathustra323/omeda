@@ -64,20 +64,6 @@ class OmedaGraphQLPlugin {
 
     this.logRequest({ context, request });
 
-    // keep brand data in-sync.
-    const brandData = await repos.brand.status();
-    if (!brandData.exists) {
-      // save the brand data for the first time.
-      const response = await apiClient.resource('brand').comprehensiveLookup();
-      await repos.brand.upsert({ data: response.data });
-    } else if (!brandData.isFresh || forceSync) {
-      // refresh the brand data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').comprehensiveLookup();
-        await repos.brand.upsert({ data: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
-
     // @todo cleanup
     // keep brand behaviors in-sync.
     const behaviors = await repos.brandBehavior.status();
@@ -122,6 +108,21 @@ class OmedaGraphQLPlugin {
         await repos.brandBehaviorCategory.upsert({ categories: response.data });
       })().catch(newrelic.noticeError.bind(newrelic));
     }
+    const syncRepo = async ({ name, method }) => {
+      const repo = repos[name];
+      const brandData = await repo.status();
+      if (!brandData.exists) {
+        // save the brand data for the first time.
+        const response = await apiClient.resource('brand')[method]();
+        await repo.upsert({ data: response.data });
+      } else if (!brandData.isFresh || forceSync) {
+        // refresh the brand data, but do not await
+        (async () => {
+          const response = await apiClient.resource('brand')[method]();
+          await repo.upsert({ data: response.data });
+        })().catch(newrelic.noticeError.bind(newrelic));
+      }
+    };
 
     // @todo cleanup
     // keep brand behavior categories in-sync.
@@ -137,6 +138,10 @@ class OmedaGraphQLPlugin {
         await repos.brandBehaviorAttribute.upsert({ attributes: response.data });
       })().catch(newrelic.noticeError.bind(newrelic));
     }
+    // keep brand data in-sync.
+    await Promise.all([
+      syncRepo({ name: 'brand', method: 'comprehensiveLookup' }),
+    ]);
 
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);

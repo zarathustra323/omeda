@@ -1,4 +1,4 @@
-const { getAsArray } = require("@parameter1/utils");
+const { getAsArray } = require('@parameter1/utils');
 
 module.exports = {
   /**
@@ -114,7 +114,6 @@ module.exports = {
     async behaviorAttributes(_, __, { repos }) {
       const data = await repos.brandBehaviorAttribute.find();
       const r = await data.toArray();
-      console.log(r);
       return r.map((doc) => ({ ...doc, ...doc.data }));
     },
   },
