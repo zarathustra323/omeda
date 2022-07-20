@@ -64,50 +64,6 @@ class OmedaGraphQLPlugin {
 
     this.logRequest({ context, request });
 
-    // @todo cleanup
-    // keep brand behaviors in-sync.
-    const behaviors = await repos.brandBehavior.status();
-    if (!behaviors.exists) {
-      // save the data for the first time.
-      const response = await apiClient.resource('brand').behaviorLookup();
-      await repos.brandBehavior.upsert({ behaviors: response.data });
-    } else if (!behaviors.isFresh || forceSync) {
-      // refresh the data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').behaviorLookup();
-        await repos.brandBehavior.upsert({ behaviors: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
-
-    // @todo cleanup
-    // keep brand behavior actions in-sync.
-    const behaviorActions = await repos.brandBehaviorAction.status();
-    if (!behaviorActions.exists) {
-      // save the data for the first time.
-      const response = await apiClient.resource('brand').behaviorActionsLookup();
-      await repos.brandBehaviorAction.upsert({ actions: response.data });
-    } else if (!behaviorActions.isFresh || forceSync) {
-      // refresh the data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').behaviorActionsLookup();
-        await repos.brandBehaviorAction.upsert({ actions: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
-
-    // @todo cleanup
-    // keep brand behavior categories in-sync.
-    const behaviorCategories = await repos.brandBehaviorCategory.status();
-    if (!behaviorCategories.exists) {
-      // save the data for the first time.
-      const response = await apiClient.resource('brand').behaviorCategoriesLookup();
-      await repos.brandBehaviorCategory.upsert({ categories: response.data });
-    } else if (!behaviorCategories.isFresh || forceSync) {
-      // refresh the data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').behaviorCategoriesLookup();
-        await repos.brandBehaviorCategory.upsert({ categories: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
     const syncRepo = async ({ name, method }) => {
       const repo = repos[name];
       const brandData = await repo.status();
@@ -124,23 +80,13 @@ class OmedaGraphQLPlugin {
       }
     };
 
-    // @todo cleanup
-    // keep brand behavior categories in-sync.
-    const behaviorAttributes = await repos.brandBehaviorAttribute.status();
-    if (!behaviorAttributes.exists) {
-      // save the data for the first time.
-      const response = await apiClient.resource('brand').behaviorAttributesLookup();
-      await repos.brandBehaviorAttribute.upsert({ attributes: response.data });
-    } else if (!behaviorAttributes.isFresh || forceSync) {
-      // refresh the data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').behaviorAttributesLookup();
-        await repos.brandBehaviorAttribute.upsert({ attributes: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
     // keep brand data in-sync.
     await Promise.all([
       syncRepo({ name: 'brand', method: 'comprehensiveLookup' }),
+      syncRepo({ name: 'brandBehavior', method: 'behaviorLookup' }),
+      syncRepo({ name: 'brandBehaviorAction', method: 'behaviorActionsLookup' }),
+      syncRepo({ name: 'brandBehaviorAttribute', method: 'behaviorAttributesLookup' }),
+      syncRepo({ name: 'brandBehaviorCategory', method: 'behaviorCategoriesLookup' }),
     ]);
 
     if (isFn(this.setContext)) {
