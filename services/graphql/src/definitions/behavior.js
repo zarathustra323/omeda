@@ -13,6 +13,7 @@ extend type Query {
   behaviorCategories: [BehaviorCategory!]!
 }
 
+"A behavior that can be tied to a user record (via CustomerBehavior). Comprised of a description, action, and optionally product and/or behavior categories"
 type Behavior {
   id: Int! @apiValue
   "The behavior action this behavior belongs to"

@@ -3,6 +3,22 @@ module.exports = {
     { brand: 1 },
     [{ date: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 30 }],
   ],
+  'brand-behaviors': [
+    { brand: 1 },
+    [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
+  'brand-behavior-actions': [
+    { brand: 1 },
+    [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
+  'brand-behavior-attributes': [
+    { brand: 1 },
+    [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
+  'brand-behavior-categories': [
+    { brand: 1 },
+    [{ 'data.Id': 1, brand: 1 }, { unique: true }],
+  ],
   'brand-demographics': [
     { brand: 1 },
     [{ 'data.Id': 1, brand: 1 }, { unique: true }],
