@@ -61,7 +61,7 @@ class BrandResource extends AbstractResource {
    */
   async behaviorCategoriesLookup() {
     const endpoint = 'behavior/category/*';
-    const response = await this.client.get({ endpoint });
+    const response = await this.client.get({ endpoint, errorOnNotFound: false });
     return new BrandBehaviorCategoryLookupResponse({ response, resource: this });
   }
 
