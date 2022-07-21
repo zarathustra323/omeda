@@ -249,6 +249,10 @@ input RapidCustomerIdentificationMutationInput {
 
   "Demographics to assign to the customer."
   demographics: [RapidCustomerIdentificationDemographicInput!] = []
+
+  "Behaviors to assign to the customer."
+  behaviors: [RapidCustomerIdentificationBehaviorInput!] = []
+
   "An optional promo code for tracking the identification acquisition source."
   promoCode: String
   "An optional input ID to use when identifying."
@@ -276,6 +280,15 @@ input RapidCustomerIdentificationDemographicInput {
   values: [String!]!
   "“Other” text description, only applicable to demographic values with value type of “Other”."
   writeInValue: String
+}
+
+input RapidCustomerIdentificationBehaviorInput {
+  "The Omeda Behavior ID to assign."
+  id: Int!
+  "The date the behavior occurred."
+  date: DateTime
+  # "Custom BehaviorAttributes to send with this behavior."
+  # attributes: [CustomerBehaviorAttributeInput!] = []
 }
 
 `;

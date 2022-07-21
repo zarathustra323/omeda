@@ -1,6 +1,7 @@
 const { UserInputError } = require('apollo-server-express');
 const { get, getAsArray } = require('@parameter1/utils');
 const newrelic = require('../newrelic');
+const dayjs = require('../dayjs');
 
 const noticeError = newrelic.noticeError.bind(newrelic);
 
@@ -365,6 +366,7 @@ module.exports = {
         postalCode,
         demographics,
         subscriptions,
+        behaviors,
       } = input;
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
@@ -459,6 +461,12 @@ module.exports = {
             OmedaDemographicId: demo.id,
             OmedaDemographicValue: demo.values,
             ...(demo.writeInValue && { WriteInDesc: demo.writeInValue }),
+          })),
+        }),
+        ...(behaviors.length && {
+          CustomerBehaviors: behaviors.map(({ id, date }) => ({
+            BehaviorId: id,
+            BehaviorDate: dayjs(date || new Date()).format('YYYY-MM-DD HH:mm:ss'),
           })),
         }),
         ...(promoCode && { PromoCode: promoCode }),
