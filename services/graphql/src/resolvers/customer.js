@@ -242,7 +242,10 @@ module.exports = {
     /**
      *
      */
-    behavior: async ({ BehaviorId }, _, { loaders }) => loaders.brandBehaviors.load(BehaviorId),
+    behavior: async ({ BehaviorId }, _, { loaders }) => {
+      const r = await loaders.brandBehaviors.load(BehaviorId);
+      return r ? r.data : null;
+    },
     /**
      *
      */
