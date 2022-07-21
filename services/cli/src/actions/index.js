@@ -1,6 +1,6 @@
-const createIdentityXBehaviorActions = require('./create-identity-x-behavior-actions');
-const createIdentityXBehaviorCategories = require('./create-identity-x-behavior-categories');
-const createIdentityXBehaviors = require('./create-identity-x-behaviors');
+const createIdentityXBehaviorActions = require('./identity-x/create-behavior-actions');
+const createIdentityXBehaviorCategories = require('./identity-x/create-behavior-categories');
+const createIdentityXBehaviors = require('./identity-x/create-behaviors');
 
 module.exports = {
   createIdentityXBehaviorActions,

@@ -63,7 +63,7 @@ const main = async () => {
       type: 'input',
       when: (ans) => ans.actions.includes('createIdentityXBehaviors'),
       name: 'siteKey',
-      message: 'What site key should be used (optional suffix for behaviors)',
+      message: 'What site key should be used (optional behavior suffix)',
     },
   ]);
 
