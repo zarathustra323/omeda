@@ -16,6 +16,5 @@ module.exports = async ({
   });
 
   await Promise.allSettled(operations);
-
   log('All required behavior actions are present.');
 };
