@@ -20,6 +20,7 @@ const main = async () => {
     clientKey,
     useStaging,
     actions,
+    siteKey,
   } = await inquirer.prompt([
     {
       type: 'input',
@@ -58,6 +59,12 @@ const main = async () => {
       choices: Object.keys(availableActions),
       default: Object.keys(availableActions), // @todo remove
     },
+    {
+      type: 'input',
+      when: (ans) => ans.actions.includes('createIdentityXBehaviors'),
+      name: 'siteKey',
+      message: 'What site key should be used (optional suffix for behaviors)',
+    },
   ]);
 
   // Create API client
@@ -72,6 +79,7 @@ const main = async () => {
   log(`Executing ${actions.length} actions.`);
   await eachSeries(actions, async (action) => availableActions[action]({
     apiClient,
+    ...(siteKey && { siteKey }),
   }));
 
   log('Done!');

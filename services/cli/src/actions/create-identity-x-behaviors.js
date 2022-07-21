@@ -19,7 +19,14 @@ const { log } = console;
 
 module.exports = async ({
   apiClient,
+  siteKey,
 }) => {
+  if (siteKey) {
+    required.forEach((v, i) => {
+      required[i].Description = `${required[i].Description} (${siteKey})`;
+      required[i].AlternateId = `${required[i].AlternateId}_${siteKey}`;
+    });
+  }
   log('Loading behaviors and actions...');
   const [
     behaviors,
