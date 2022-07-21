@@ -49,6 +49,18 @@ services:
     ports:
       - "8990:8990"
 
+  cli:
+    <<: *node
+    working_dir: /omeda/services/cli
+    entrypoint: ["node"]
+    command: ["src/index.js"]
+    environment:
+      <<: *env
+      OMEDA_APP_ID: ${OMEDA_APP_ID-}
+      OMEDA_INPUT_ID: ${OMEDA_INPUT_ID-}
+      OMEDA_BRAND_KEY: ${OMEDA_BRAND_KEY-}
+      OMEDA_CLIENT_KEY: ${OMEDA_CLIENT_KEY-}
+
 volumes:
   yarn-cache: {}
   mongodb: {}
