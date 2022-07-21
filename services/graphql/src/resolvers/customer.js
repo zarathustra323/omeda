@@ -67,6 +67,29 @@ module.exports = {
     /**
      *
      */
+    async behaviors({ Id }, { input }, { loaders }) {
+      const {
+        behaviorIds,
+      } = input;
+      const response = await loaders.customerBehaviors.load(Id);
+      const data = response ? response.data : [];
+      const filtered = data.filter((item) => {
+        if (behaviorIds.length && !behaviorIds.includes(item.BehaviorId)) return false;
+        return true;
+      });
+
+      // ensure the behaviors still exist within Omeda
+      const ids = filtered.map(({ BehaviorId }) => BehaviorId);
+      const found = await loaders.brandBehaviors.loadMany(ids);
+      const foundMap = found.filter((v) => v).reduce((set, doc) => {
+        set.add(doc.data.Id);
+        return set;
+      }, new Set());
+      return filtered.filter(({ BehaviorId }) => foundMap.has(BehaviorId));
+    },
+    /**
+     *
+     */
     async companyName({ Id }, _, { loaders }) {
       const response = await loaders.customerPostalAddresses.load(Id);
       return response ? response.getCompanyName() : null;
@@ -210,6 +233,24 @@ module.exports = {
       // that no longer exist. as such, filter these.
       return subscriptions.filter(({ ProductId }) => verifedProductIds.has(ProductId));
     },
+  },
+
+  /**
+   *
+   */
+  CustomerBehavior: {
+    /**
+     *
+     */
+    behavior: async ({ BehaviorId }, _, { loaders }) => loaders.brandBehaviors.load(BehaviorId),
+    /**
+     *
+     */
+    occurrences: (doc) => ({
+      first: doc.FirstOccurrenceDate,
+      last: doc.LastOccurrenceDate,
+      count: doc.NumberOfOccurrences,
+    }),
   },
 
   /**

@@ -28,6 +28,12 @@ type Behavior {
   status: BehaviorStatusCodeEnum @apiValue(path: "StatusCode")
 }
 
+type BehaviorAction {
+  id: Int! @apiValue
+  description: String! @apiValue
+  status: BehaviorActionStatusCodeEnum @apiValue(path: "StatusCode")
+}
+
 type BehaviorCategory {
   id: Int! @apiValue
   description: String! @apiValue
@@ -36,17 +42,11 @@ type BehaviorCategory {
   behaviors: [Behavior!]!
 }
 
-type BehaviorAction {
-  id: Int! @apiValue
-  description: String! @apiValue
-  status: BehaviorActionStatusCodeEnum @apiValue(path: "StatusCode")
-}
-
 type BehaviorAttribute {
   id: Int! @apiValue
   description: String! @apiValue
   type: BehaviorAttributeTypeEnum! @apiValue(path: "Type")
-  values: [BehaviorAttributeDefinedValue!]!
+  values: [BehaviorAttributeDefinedValue!]! @apiValue(path: "DefinedValues")
 }
 
 type BehaviorAttributeDefinedValue {

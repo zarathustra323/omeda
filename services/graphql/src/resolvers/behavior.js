@@ -1,5 +1,3 @@
-const { getAsArray } = require('@parameter1/utils');
-
 module.exports = {
   /**
    *
@@ -10,32 +8,43 @@ module.exports = {
      */
     async product({ ProductId }, _, { loaders }) {
       if (!ProductId) return null;
-      const response = await loaders.brandProducts.load(ProductId);
-      return response ? response.data : null;
+      const r = await loaders.brandProducts.load(ProductId);
+      return r ? r.data : null;
     },
     /**
      *
      */
     async action({ ActionId }, _, { loaders }) {
-      const response = await loaders.brandBehaviorActions.load(ActionId);
-      return response.data;
+      if (!ActionId) return null;
+      const r = await loaders.brandBehaviorActions.load(ActionId);
+      return r ? r.data : null;
     },
     /**
      *
      */
-    async categories({ Category }, _, { repos }) {
+    async categories({ Category }, _, { loaders }) {
       if (!Category) return [];
-      const data = await repos.brandBehaviorCategory.find({ query: { 'data.Id': { $in: Category } } });
-      const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+      const r = await loaders.brandBehaviorCategories.loadMany(Category);
+      return r.map(((o) => o.data));
     },
   },
 
   /**
    *
    */
+  BehaviorAction: {
+    /**
+     *
+     */
+  },
+
+  /**
+   *
+   */
   BehaviorAttribute: {
-    values: (doc) => getAsArray(doc, 'data.DefinedValues'),
+    /**
+     *
+     */
   },
   /**
    *
@@ -44,10 +53,9 @@ module.exports = {
     /**
      *
      */
-    async behaviors({ BehaviorId }, _, { repos }) {
-      const data = await repos.brandBehavior.find({ query: { 'data.Id': { $in: BehaviorId } } });
-      const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+    async behaviors({ data }, _, { loaders }) {
+      const r = await loaders.brandBehaviors.loadMany(data.BehaviorId);
+      return r.map((o) => o.data);
     },
   },
 
@@ -90,7 +98,7 @@ module.exports = {
     async behaviors(_, __, { repos }) {
       const data = await repos.brandBehavior.find();
       const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+      return r.map((doc) => doc.data);
     },
     /**
      *
@@ -98,7 +106,7 @@ module.exports = {
     async behaviorCategories(_, __, { repos }) {
       const data = await repos.brandBehaviorCategory.find();
       const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+      return r.map((doc) => doc.data);
     },
     /**
      *
@@ -106,7 +114,7 @@ module.exports = {
     async behaviorActions(_, __, { repos }) {
       const data = await repos.brandBehaviorAction.find();
       const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+      return r.map((doc) => doc.data);
     },
     /**
      *
@@ -114,7 +122,7 @@ module.exports = {
     async behaviorAttributes(_, __, { repos }) {
       const data = await repos.brandBehaviorAttribute.find();
       const r = await data.toArray();
-      return r.map((doc) => ({ ...doc, ...doc.data }));
+      return r.map((doc) => doc.data);
     },
   },
 };

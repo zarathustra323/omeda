@@ -46,6 +46,7 @@ type Customer {
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
+  behaviors(input: CustomerBehaviorsInput = {}): [CustomerBehavior!]!
   demographics(input: CustomerDemographicsInput = {}): [CustomerDemographic!]!
   emailAddresses: [CustomerEmailAddress!]!
   externalIds(input: CustomerExternalIdsInput = {}): [CustomerExternalId!]!
@@ -63,6 +64,18 @@ type Customer {
 
   "Customer IDs that were merged into this customer."
   mergeHistory: [Int!]!
+}
+
+type CustomerBehavior {
+  id: Int! @apiValue(path: "BehaviorId")
+  occurrences: CustomerBehaviorOccurrence!
+  behavior: Behavior!
+}
+
+type CustomerBehaviorOccurrence {
+  first: DateTime!
+  last: DateTime!
+  count: Int!
 }
 
 type CustomerDemographic {
@@ -175,6 +188,11 @@ input CustomersByEmailAddressQueryInput {
   emailAddress: String!
   "An (optional) product ID to filter the response by."
   productId: Int
+}
+
+input CustomerBehaviorsInput {
+  "Filters the customer behaviors by one or more Behavior IDs. An empty value will return all customer behaviors."
+  behaviorIds: [Int!] = []
 }
 
 input CustomerDemographicsInput {
