@@ -28,24 +28,6 @@ module.exports = {
       return r.map(((o) => o.data));
     },
   },
-
-  /**
-   *
-   */
-  BehaviorAction: {
-    /**
-     *
-     */
-  },
-
-  /**
-   *
-   */
-  BehaviorAttribute: {
-    /**
-     *
-     */
-  },
   /**
    *
    */
