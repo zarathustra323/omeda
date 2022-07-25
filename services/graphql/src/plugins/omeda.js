@@ -6,6 +6,7 @@ const { createRepos } = require('@parameter1/omeda-mongodb');
 const mongodb = require('../mongodb');
 const newrelic = require('../newrelic');
 const createLoaders = require('../dataloaders');
+const syncFactory = require('../sync-repo');
 
 class OmedaGraphQLPlugin {
   /**
@@ -64,29 +65,14 @@ class OmedaGraphQLPlugin {
 
     this.logRequest({ context, request });
 
-    const syncRepo = async ({ name, method }) => {
-      const repo = repos[name];
-      const brandData = await repo.status();
-      if (!brandData.exists) {
-        // save the brand data for the first time.
-        const response = await apiClient.resource('brand')[method]();
-        await repo.upsert({ data: response.data });
-      } else if (!brandData.isFresh || forceSync) {
-        // refresh the brand data, but do not await
-        (async () => {
-          const response = await apiClient.resource('brand')[method]();
-          await repo.upsert({ data: response.data });
-        })().catch(newrelic.noticeError.bind(newrelic));
-      }
-    };
-
     // keep brand data in-sync.
+    const sync = syncFactory({ apiClient, repos, force: forceSync });
     await Promise.all([
-      syncRepo({ name: 'brand', method: 'comprehensiveLookup' }),
-      syncRepo({ name: 'brandBehavior', method: 'behaviorLookup' }),
-      syncRepo({ name: 'brandBehaviorAction', method: 'behaviorActionsLookup' }),
-      syncRepo({ name: 'brandBehaviorAttribute', method: 'behaviorAttributesLookup' }),
-      syncRepo({ name: 'brandBehaviorCategory', method: 'behaviorCategoriesLookup' }),
+      sync.brand(),
+      sync.brandBehavior(),
+      sync.brandBehaviorAction(),
+      sync.brandBehaviorAttribute(),
+      sync.brandBehaviorCategory(),
     ]);
 
     if (isFn(this.setContext)) {
