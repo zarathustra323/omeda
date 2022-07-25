@@ -1,6 +1,6 @@
-const SyncableRepo = require('./syncable');
+const OmedaRepo = require('./abstract');
 
-class BrandBehaviorActionRepo extends SyncableRepo {
+class BrandBehaviorActionRepo extends OmedaRepo {
   /**
    *
    */
