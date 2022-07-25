@@ -192,7 +192,7 @@ input CustomersByEmailAddressQueryInput {
 
 input CustomerBehaviorsInput {
   "Filters the customer behaviors by one or more Behavior IDs. An empty value will return all customer behaviors."
-  behaviorIds: [Int!] = []
+  behaviorIds: [Int!]! = []
 }
 
 input CustomerDemographicsInput {
@@ -251,7 +251,7 @@ input RapidCustomerIdentificationMutationInput {
   demographics: [RapidCustomerIdentificationDemographicInput!] = []
 
   "Behaviors to assign to the customer."
-  behaviors: [RapidCustomerIdentificationBehaviorInput!] = []
+  behaviors: [RapidCustomerIdentificationBehaviorInput!]! = []
 
   "An optional promo code for tracking the identification acquisition source."
   promoCode: String
@@ -288,7 +288,7 @@ input RapidCustomerIdentificationBehaviorInput {
   "The date the behavior occurred."
   date: DateTime
   # "Custom BehaviorAttributes to send with this behavior."
-  # attributes: [CustomerBehaviorAttributeInput!] = []
+  # attributes: [CustomerBehaviorAttributeInput!]! = []
 }
 
 `;
