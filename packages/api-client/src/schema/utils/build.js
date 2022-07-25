@@ -57,6 +57,10 @@ module.exports = ({ schema, obj, builder } = {}) => {
       data[name] = Array.isArray(value) ? value : [];
       return;
     }
+    if (['integer array'].includes(type)) {
+      data[name] = (Array.isArray(value) ? value : []).map((v) => parseInt(v, 10));
+      return;
+    }
     throw new TypeError(`An unknown Omeda data type was encountered: '${type}'`);
   });
   return data;

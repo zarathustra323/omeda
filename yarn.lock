@@ -1033,6 +1033,18 @@
     lodash.merge "^4.6.2"
     mongodb-extended-json "^1.11.1"
 
+"@parameter1/graphql-mongodb-pagination@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-mongodb-pagination/-/graphql-mongodb-pagination-2.3.0.tgz#56471872dbf86c325be25f490d7002b758d6dbb0"
+  integrity sha512-b+OTtOtOxxXGIzYxLMEDnJzSROI5Gdg+ZqPd16Z4OemLYDvy9z4MXutc4D5koAiTUxJuby42aGpSOhVBmE41qg==
+  dependencies:
+    "@parameter1/utils" "^1.1.24"
+    base64-url "^2.3.3"
+    graphql "^15.6.1"
+    graphql-tag "^2.11.0"
+    lodash.merge "^4.6.2"
+    mongodb-extended-json "^1.11.1"
+
 "@parameter1/gulp@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.2.0.tgz#9844a82a0dea43b0bec23b464f74b88b785b9e3f"
@@ -4321,7 +4333,7 @@ graphql-type-json@^0.3.2:
   resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.3.2.tgz#f53a851dbfe07bd1c8157d24150064baab41e115"
   integrity sha512-J+vjof74oMlCWXSvt0DOf2APEdZOCdubEvGDUAlqH//VBYcOYsGgRW7Xzorr44LvkjiuvecWc8fChxuZZbChtg==
 
-graphql@^15.8.0:
+graphql@^15.6.1, graphql@^15.8.0:
   version "15.8.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.8.0.tgz#33410e96b012fa3bdb1091cc99a94769db212b38"
   integrity sha512-5gghUc24tP9HRznNpV2+FIoq3xKkj5dTQqf4v0CpdPbFVwFkWoxOM+o+2OC9ZSvjEMTjfmG9QT+gcvggTwW1zw==

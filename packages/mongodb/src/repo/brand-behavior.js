@@ -1,18 +1,18 @@
 const OmedaRepo = require('./abstract');
 
-class BrandProductRepo extends OmedaRepo {
+class BrandBehaviorRepo extends OmedaRepo {
   /**
    *
    */
   constructor({ brandKey, client, dbName } = {}) {
     super({
       brandKey,
-      name: 'brand product',
-      collectionName: 'brand-products',
+      name: 'brand behavior',
+      collectionName: 'brand-behaviors',
       dbName,
       client,
     });
   }
 }
 
-module.exports = BrandProductRepo;
+module.exports = BrandBehaviorRepo;

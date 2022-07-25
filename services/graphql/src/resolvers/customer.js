@@ -1,6 +1,7 @@
 const { UserInputError } = require('apollo-server-express');
 const { get, getAsArray } = require('@parameter1/utils');
 const newrelic = require('../newrelic');
+const dayjs = require('../dayjs');
 
 const noticeError = newrelic.noticeError.bind(newrelic);
 
@@ -64,6 +65,29 @@ module.exports = {
    *
    */
   Customer: {
+    /**
+     *
+     */
+    async behaviors({ Id }, { input }, { loaders }) {
+      const {
+        behaviorIds,
+      } = input;
+      const response = await loaders.customerBehaviors.load(Id);
+      const data = response ? response.data : [];
+      const filtered = data.filter((item) => {
+        if (behaviorIds.length && !behaviorIds.includes(item.BehaviorId)) return false;
+        return true;
+      });
+
+      // ensure the behaviors still exist within Omeda
+      const ids = filtered.map(({ BehaviorId }) => BehaviorId);
+      const found = await loaders.brandBehaviors.loadMany(ids);
+      const foundMap = found.filter((v) => v).reduce((set, doc) => {
+        set.add(doc.data.Id);
+        return set;
+      }, new Set());
+      return filtered.filter(({ BehaviorId }) => foundMap.has(BehaviorId));
+    },
     /**
      *
      */
@@ -215,6 +239,27 @@ module.exports = {
   /**
    *
    */
+  CustomerBehavior: {
+    /**
+     *
+     */
+    behavior: async ({ BehaviorId }, _, { loaders }) => {
+      const r = await loaders.brandBehaviors.load(BehaviorId);
+      return r ? r.data : null;
+    },
+    /**
+     *
+     */
+    occurrences: (doc) => ({
+      first: doc.FirstOccurrenceDate,
+      last: doc.LastOccurrenceDate,
+      count: doc.NumberOfOccurrences,
+    }),
+  },
+
+  /**
+   *
+   */
   CustomerDemographic: {
     /**
      *
@@ -321,6 +366,7 @@ module.exports = {
         postalCode,
         demographics,
         subscriptions,
+        behaviors,
       } = input;
 
       const promoCode = input.promoCode ? input.promoCode.trim() : null;
@@ -415,6 +461,12 @@ module.exports = {
             OmedaDemographicId: demo.id,
             OmedaDemographicValue: demo.values,
             ...(demo.writeInValue && { WriteInDesc: demo.writeInValue }),
+          })),
+        }),
+        ...(behaviors.length && {
+          CustomerBehaviors: behaviors.map(({ id, date }) => ({
+            BehaviorId: id,
+            BehaviorDate: dayjs(date || new Date()).format('YYYY-MM-DD HH:mm:ss'),
           })),
         }),
         ...(promoCode && { PromoCode: promoCode }),

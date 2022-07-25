@@ -57,10 +57,14 @@ module.exports = ({ apiClient, repos } = {}) => {
     brandDemographics: new DataLoader(createRepoLoader({ name: 'brandDemographic' })),
     brandDeploymentTypes: new DataLoader(createRepoLoader({ name: 'brandDeploymentType' })),
     brandProducts: new DataLoader(createRepoLoader({ name: 'brandProduct' })),
+    brandBehaviors: new DataLoader(createRepoLoader({ name: 'brandBehavior' })),
+    brandBehaviorActions: new DataLoader(createRepoLoader({ name: 'brandBehaviorAction' })),
+    brandBehaviorCategories: new DataLoader(createRepoLoader({ name: 'brandBehaviorCategory' })),
 
     customerApi: new DataLoader(createCustomerApiLoader()),
     emailAddressOptInStatus: new DataLoader(createEmailOptInStatusLoader()),
 
+    customerBehaviors: new DataLoader(createCustomerRelLoader({ method: 'lookupBehaviors' })),
     customerDemographics: new DataLoader(createCustomerRelLoader({ method: 'lookupDemographics' })),
     customerEmails: new DataLoader(createCustomerRelLoader({ method: 'lookupEmails' })),
     customerExternalIds: new DataLoader(createCustomerRelLoader({ method: 'lookupExternalIds' })),

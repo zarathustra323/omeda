@@ -4,6 +4,7 @@ const merge = require('lodash.merge');
 const pagination = require('@parameter1/graphql-mongodb-pagination/resolvers');
 const GraphQLDateTime = require('../types/date-time');
 
+const behavior = require('./behavior');
 const codesAndTypes = require('./codes-and-types');
 const customer = require('./customer');
 const demographic = require('./demographic');
@@ -49,4 +50,4 @@ module.exports = merge(pagination, {
       return repos.brand.findById();
     },
   },
-}, codesAndTypes, customer, demographic, deploymentType, email, product);
+}, behavior, codesAndTypes, customer, demographic, deploymentType, email, product);

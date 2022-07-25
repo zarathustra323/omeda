@@ -2,6 +2,27 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 
+enum BehaviorStatusCodeEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum BehaviorActionStatusCodeEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum BehaviorCategoryStatusCodeEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum BehaviorAttributeTypeEnum {
+  DEFINED_VALUES
+  OPEN_TEXT
+  OPEN_TEXT_NUMBER
+}
+
 enum ContactTypeStatusCodeEnum {
   ACTIVE
   PRIMARY

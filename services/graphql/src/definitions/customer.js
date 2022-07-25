@@ -46,6 +46,7 @@ type Customer {
   statusCode: CustomerStatusCode @codeOrType(instance: "CustomerStatusCode")
   mergeCode: CustomerMergeCode! @codeOrType(instance: "CustomerMergeCode")
 
+  behaviors(input: CustomerBehaviorsInput = {}): [CustomerBehavior!]!
   demographics(input: CustomerDemographicsInput = {}): [CustomerDemographic!]!
   emailAddresses: [CustomerEmailAddress!]!
   externalIds(input: CustomerExternalIdsInput = {}): [CustomerExternalId!]!
@@ -63,6 +64,18 @@ type Customer {
 
   "Customer IDs that were merged into this customer."
   mergeHistory: [Int!]!
+}
+
+type CustomerBehavior {
+  id: Int! @apiValue(path: "BehaviorId")
+  occurrences: CustomerBehaviorOccurrence!
+  behavior: Behavior!
+}
+
+type CustomerBehaviorOccurrence {
+  first: DateTime!
+  last: DateTime!
+  count: Int!
 }
 
 type CustomerDemographic {
@@ -177,6 +190,11 @@ input CustomersByEmailAddressQueryInput {
   productId: Int
 }
 
+input CustomerBehaviorsInput {
+  "Filters the customer behaviors by one or more Behavior IDs. An empty value will return all customer behaviors."
+  behaviorIds: [Int!]! = []
+}
+
 input CustomerDemographicsInput {
   "Filters the customer demographics by one or more demographic IDs. An empty value will return all customer demographics."
   demographicIds: [Int!] = []
@@ -231,6 +249,10 @@ input RapidCustomerIdentificationMutationInput {
 
   "Demographics to assign to the customer."
   demographics: [RapidCustomerIdentificationDemographicInput!] = []
+
+  "Behaviors to assign to the customer."
+  behaviors: [RapidCustomerIdentificationBehaviorInput!]! = []
+
   "An optional promo code for tracking the identification acquisition source."
   promoCode: String
   "An optional input ID to use when identifying."
@@ -258,6 +280,15 @@ input RapidCustomerIdentificationDemographicInput {
   values: [String!]!
   "“Other” text description, only applicable to demographic values with value type of “Other”."
   writeInValue: String
+}
+
+input RapidCustomerIdentificationBehaviorInput {
+  "The Omeda Behavior ID to assign."
+  id: Int!
+  "The date the behavior occurred."
+  date: DateTime
+  # "Custom BehaviorAttributes to send with this behavior."
+  # attributes: [CustomerBehaviorAttributeInput!]! = []
 }
 
 `;

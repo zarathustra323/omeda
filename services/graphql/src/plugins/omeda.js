@@ -6,6 +6,7 @@ const { createRepos } = require('@parameter1/omeda-mongodb');
 const mongodb = require('../mongodb');
 const newrelic = require('../newrelic');
 const createLoaders = require('../dataloaders');
+const syncFactory = require('../sync-repo');
 
 class OmedaGraphQLPlugin {
   /**
@@ -65,18 +66,14 @@ class OmedaGraphQLPlugin {
     this.logRequest({ context, request });
 
     // keep brand data in-sync.
-    const brandData = await repos.brand.status();
-    if (!brandData.exists) {
-      // save the brand data for the first time.
-      const response = await apiClient.resource('brand').comprehensiveLookup();
-      await repos.brand.upsert({ data: response.data });
-    } else if (!brandData.isFresh || forceSync) {
-      // refresh the brand data, but do not await
-      (async () => {
-        const response = await apiClient.resource('brand').comprehensiveLookup();
-        await repos.brand.upsert({ data: response.data });
-      })().catch(newrelic.noticeError.bind(newrelic));
-    }
+    const sync = syncFactory({ apiClient, repos, force: forceSync });
+    await Promise.all([
+      sync.brand(),
+      sync.brandBehavior(),
+      sync.brandBehaviorAction(),
+      sync.brandBehaviorAttribute(),
+      sync.brandBehaviorCategory(),
+    ]);
 
     if (isFn(this.setContext)) {
       const contextFromServer = await this.setContext(requestContext);
