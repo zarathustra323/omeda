@@ -33,7 +33,7 @@ class BrandResource extends AbstractResource {
    */
   async behaviorLookup() {
     const endpoint = 'behavior/*';
-    const response = await this.client.get({ endpoint });
+    const response = await this.client.get({ endpoint, errorOnNotFound: false });
     return new BrandBehaviorLookupResponse({ response, resource: this });
   }
 
@@ -47,7 +47,7 @@ class BrandResource extends AbstractResource {
    */
   async behaviorActionsLookup() {
     const endpoint = 'behavior/action/*';
-    const response = await this.client.get({ endpoint });
+    const response = await this.client.get({ endpoint, errorOnNotFound: false });
     return new BrandBehaviorActionLookupResponse({ response, resource: this });
   }
 
@@ -77,7 +77,7 @@ class BrandResource extends AbstractResource {
    */
   async behaviorAttributesLookup() {
     const endpoint = 'behavior/attribute/*';
-    const response = await this.client.get({ endpoint });
+    const response = await this.client.get({ endpoint, errorOnNotFound: false });
     return new BrandBehaviorAttributeLookupResponse({ response, resource: this });
   }
 }
