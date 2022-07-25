@@ -70,41 +70,4 @@ module.exports = {
     ACTIVE: 1,
     INACTIVE: 0,
   },
-  /**
-   *
-   */
-  Query: {
-    /**
-     *
-     */
-    async behaviors(_, __, { repos }) {
-      const data = await repos.brandBehavior.find();
-      const r = await data.toArray();
-      return r.map((doc) => doc.data);
-    },
-    /**
-     *
-     */
-    async behaviorCategories(_, __, { repos }) {
-      const data = await repos.brandBehaviorCategory.find();
-      const r = await data.toArray();
-      return r.map((doc) => doc.data);
-    },
-    /**
-     *
-     */
-    async behaviorActions(_, __, { repos }) {
-      const data = await repos.brandBehaviorAction.find();
-      const r = await data.toArray();
-      return r.map((doc) => doc.data);
-    },
-    /**
-     *
-     */
-    async behaviorAttributes(_, __, { repos }) {
-      const data = await repos.brandBehaviorAttribute.find();
-      const r = await data.toArray();
-      return r.map((doc) => doc.data);
-    },
-  },
 };

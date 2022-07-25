@@ -2,17 +2,6 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 
-extend type Query {
-  "Finds all defined Behaviors for the current brand."
-  behaviors: [Behavior!]!
-  "Finds all defined Behavior Actions for the current brand."
-  behaviorActions: [BehaviorAction!]!
-  "Finds all defined Behavior Attributes for the current brand."
-  behaviorAttributes: [BehaviorAttribute!]!
-  "Finds all defined Behavior Categories for the current brand."
-  behaviorCategories: [BehaviorCategory!]!
-}
-
 "A behavior that can be tied to a user record (via CustomerBehavior). Comprised of a description, action, and optionally product and/or behavior categories"
 type Behavior {
   id: Int! @apiValue
