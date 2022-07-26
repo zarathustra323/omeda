@@ -31,16 +31,4 @@ type BehaviorCategory {
   behaviors: [Behavior!]!
 }
 
-type BehaviorAttribute {
-  id: Int! @apiValue
-  description: String! @apiValue
-  type: BehaviorAttributeTypeEnum! @apiValue(path: "Type")
-  values: [BehaviorAttributeDefinedValue!]! @apiValue(path: "DefinedValues")
-}
-
-type BehaviorAttributeDefinedValue {
-  id: Int! @apiValue(path: "DefinedValueId")
-  description: String! @apiValue(path: "ValueDescription")
-}
-
 `;

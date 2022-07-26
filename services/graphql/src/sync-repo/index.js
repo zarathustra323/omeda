@@ -18,11 +18,6 @@ module.exports = ({ apiClient, repos, force = false }) => ({
     force,
     lookupFn: () => apiClient.resource('brand').behaviorActionsLookup(),
   }),
-  brandBehaviorAttribute: () => sync({
-    repo: repos.brandBehaviorAttribute,
-    force,
-    lookupFn: () => apiClient.resource('brand').behaviorAttributesLookup(),
-  }),
   brandBehaviorCategory: () => sync({
     repo: repos.brandBehaviorCategory,
     force,
