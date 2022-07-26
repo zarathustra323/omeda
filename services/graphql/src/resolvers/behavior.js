@@ -49,14 +49,6 @@ module.exports = {
     INACTIVE: 0,
   },
   /**
-   * https://training.omeda.com/knowledge-base/api-store-behavior-attribute/#articleTOC_7
-   */
-  BehaviorAttributeTypeEnum: {
-    DEFINED_VALUES: 1,
-    OPEN_TEXT: 2,
-    OPEN_TEXT_NUMBER: 3,
-  },
-  /**
    *
    */
   BehaviorCategoryStatusCodeEnum: {

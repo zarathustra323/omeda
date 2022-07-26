@@ -287,8 +287,6 @@ input RapidCustomerIdentificationBehaviorInput {
   id: Int!
   "The date the behavior occurred."
   date: DateTime
-  # "Custom BehaviorAttributes to send with this behavior."
-  # attributes: [CustomerBehaviorAttributeInput!]! = []
 }
 
 `;

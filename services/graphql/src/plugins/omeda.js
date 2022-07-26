@@ -71,7 +71,6 @@ class OmedaGraphQLPlugin {
       sync.brand(),
       sync.brandBehavior(),
       sync.brandBehaviorAction(),
-      sync.brandBehaviorAttribute(),
       sync.brandBehaviorCategory(),
     ]);
 
