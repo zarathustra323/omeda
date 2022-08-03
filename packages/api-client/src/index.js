@@ -91,7 +91,7 @@ class OmedaApiClient {
    * @returns {string}
    */
   get environment() {
-    return this.useStaging ? 'staging' : 'prodcution';
+    return this.useStaging ? 'staging' : 'production';
   }
 
   /**
