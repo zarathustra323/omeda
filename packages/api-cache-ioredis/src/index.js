@@ -3,7 +3,7 @@ const OmedaApiCacheInterface = require('@parameter1/omeda-api-client/cache-inter
 
 class OmedaApiRedisCache extends OmedaApiCacheInterface {
   constructor({ settings, ...rest }) {
-    super(...rest);
+    super({ ...rest });
     this.redis = new Redis(settings);
   }
 
