@@ -287,6 +287,18 @@ input RapidCustomerIdentificationBehaviorInput {
   id: Int!
   "The date the behavior occurred."
   date: DateTime
+  "An array of pre-defined key-values to send with the behavior."
+  attributes: [RapidCustomerIdentificationBehaviorAttributeInput!]! = []
+}
+
+"Input for asisgning a behavior attribute. Id and one of valueId or value must be present."
+input RapidCustomerIdentificationBehaviorAttributeInput {
+  "The Omeda BehaviorAttributeTypeId to assign."
+  id: Int!
+  "The Omeda BehaviorAttribute DefinedValue ID to assign."
+  valueId: Int
+  "The value to assign (for non-pre-defined attributes)."
+  value: String
 }
 
 `;
