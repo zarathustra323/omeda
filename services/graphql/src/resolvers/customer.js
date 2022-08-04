@@ -464,9 +464,20 @@ module.exports = {
           })),
         }),
         ...(behaviors.length && {
-          CustomerBehaviors: behaviors.map(({ id, date }) => ({
+          CustomerBehaviors: behaviors.map(({ id, date, attributes }) => ({
             BehaviorId: id,
             BehaviorDate: dayjs(date || new Date()).format('YYYY-MM-DD HH:mm:ss'),
+            ...(attributes.length && {
+              BehaviorAttributes: attributes.map((attr) => {
+                if (!attr.valueId && !attr.value) throw new UserInputError('One of `valueId` or `value` must be specified for behavior attribute!');
+                if (attr.valueId && attr.value) throw new UserInputError('Only one of `valueId` and `value` can be specified for behavior attribute!');
+                return {
+                  BehaviorAttributeTypeId: attr.id,
+                  ...(attr.valueId && { BehaviorAttributeValueId: attr.valueId }),
+                  ...(attr.value && { BehaviorAttributeValue: attr.value }),
+                };
+              }),
+            }),
           })),
         }),
         ...(promoCode && { PromoCode: promoCode }),
